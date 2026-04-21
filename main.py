@@ -1,6 +1,10 @@
-def main():
-    print("Hello from code-translation-engine!")
-
+from agno.agent import Agent
+from agno.models.ollama import Ollama
 
 if __name__ == "__main__":
-    main()
+    agent = Agent(
+        model=Ollama(id="gemma3:latest"),
+        markdown=True
+    )
+    
+    agent.print_response("Testing: can you read this?")
