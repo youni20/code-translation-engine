@@ -8,6 +8,7 @@ dependencies = [
     "agno[os]>=2.5.17",
     "fastapi[standard]>=0.136.0",
     "pydantic>=2.13.2",
+    "pytest>=9.0.3",
 ]
 
 [dependency-groups]
