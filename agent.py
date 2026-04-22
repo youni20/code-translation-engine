@@ -1,20 +1,20 @@
 from agno.agent import Agent
 from agno.run.agent import RunOutput
+from typing import Optional
 
 #  Models
 # from agno.models.ollama.chat import Ollama
-from agno.models.groq import Groq
-
+from agno.models.google import Gemini
 
 class Agno_Agent:
     def __init__(self, model_id: str) -> None:  # Initializes Agent 
         self.model_id: str = model_id
         self._tool_registry: list = []
-        self.instance: Agent = self._build_instance()
+        self.instance: Optional[Agent] = None
         
     def _build_instance(self) -> Agent:
         return Agent(
-            model = Groq(id=self.model_id),
+            model = Gemini(id=self.model_id),
             tools=self._tool_registry,
             markdown=True,
             debug_mode=True
@@ -22,7 +22,9 @@ class Agno_Agent:
         
     def add_tool(self, new_tool) -> None:
         self._tool_registry.append(new_tool)
-        self.instance = self._build_instance()  # Rebuild the agent instace after adding new tool
+        self.instance = None  # Instance gets rebuilt on next "ask"
     
     def ask(self, question: str) -> RunOutput:
+        if self.instance is None:
+            self.instance = self._build_instance()
         return self.instance.run(question)

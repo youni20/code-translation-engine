@@ -8,8 +8,7 @@ from agent import Agno_Agent
 from agno.tools.hackernews import HackerNewsTools
 
 if __name__ == "__main__":
-    agent: Agno_Agent = Agno_Agent(model_id="llama-3.3-70b-versatile")
-    
+    agent: Agno_Agent = Agno_Agent(model_id="gemini-2.5-flash")    
     #  Testing adding a tool
     agent.add_tool(HackerNewsTools())
     
