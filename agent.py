@@ -1,5 +1,5 @@
-from configparser import NoOptionError
 from agno.agent import Agent
+from agno.models.message import Citations
 from agno.models.ollama.chat import Ollama
 from agno.run.agent import RunOutput
 
@@ -10,15 +10,16 @@ load_dotenv()
 
 class Agno_Agent:
     def __init__(self, model_id: str) -> None:  # Initializes Agent 
-        self.model_id = model_id
-        self._tool_registry = []
-        self.instance = self._build_instance()
+        self.model_id: str = model_id
+        self._tool_registry: list = []
+        self.instance: Agent = self._build_instance()
         
     def _build_instance(self) -> Agent:
         return Agent(
             model = Ollama(id=self.model_id),
+            tools=self._tool_registry,
             markdown=True,
-            tools=[]
+            debug_mode=True
         )
         
     def add_tool(self, new_tool) -> None:
