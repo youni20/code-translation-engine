@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "agno[os]>=2.5.17",
     "fastapi[standard]>=0.136.0",
+    "groq>=1.2.0",
     "ollama>=0.6.1",
     "openai>=2.32.0",
     "pydantic>=2.13.2",

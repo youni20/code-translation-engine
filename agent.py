@@ -1,12 +1,10 @@
 from agno.agent import Agent
-from agno.models.message import Citations
-from agno.models.ollama.chat import Ollama
 from agno.run.agent import RunOutput
 
-from dotenv import load_dotenv
-import os
+#  Models
+# from agno.models.ollama.chat import Ollama
+from agno.models.groq import Groq
 
-load_dotenv()
 
 class Agno_Agent:
     def __init__(self, model_id: str) -> None:  # Initializes Agent 
@@ -16,7 +14,7 @@ class Agno_Agent:
         
     def _build_instance(self) -> Agent:
         return Agent(
-            model = Ollama(id=self.model_id),
+            model = Groq(id=self.model_id),
             tools=self._tool_registry,
             markdown=True,
             debug_mode=True
