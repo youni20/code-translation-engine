@@ -9,6 +9,6 @@ if __name__ == "__main__":
     agent: Agno_Agent = Agno_Agent(model_id="gemini-2.5-flash")    
     
     # run the agent with a prompt
-    agent_response: RunOutput = agent.ask("What is the top story on HackerNews?")
+    agent_response: RunOutput = agent.ask("Test Prompt")
     
     print(agent_response.content)
