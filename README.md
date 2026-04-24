@@ -1,5 +1,29 @@
 # Bsc Thesis
 
+# Setup
+```
+git clone git@github.com:youni20/code-translation-engine.git
+```
+```
+cd code-translation-engine/
+```
+create virtual env
+```
+uv venv --python 3.12
+```
+install reqs
+```
+uv pip install -r requirements.txt
+```
+source (bash/zsh)
+```
+source .venv/bin/activate
+```
+source (fish)
+```
+source .venv/bin/activate.fish
+```
+
 ### Research Topic
 
 We are testing whether the quality of the feedback signal in a post-translation repair loop causally affects translation success, by isolating feedback type (raw compiler output vs structured LSP diagnostics) as the sole independent variable in an agentic code translation pipeline.
