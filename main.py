@@ -18,8 +18,6 @@ def local_file_writer(content: str) -> None:
 
 
 if __name__ == "__main__":
-    SYSTEM_PROMPT = """You are an expert code translator specialising in C++ to Rust migration. You output only valid Rust source code. No explanations, no markdown, no commentary."""
-
     code_translation_agent: Agno_Agent = Agno_Agent(model_id="gemma3:latest")
     # OpenAI Model: gpt-5.4-2026-03-05
     # repair_agent: Agno_Agent = Agno_Agent(model_id="gemma3:latest")
@@ -28,7 +26,7 @@ if __name__ == "__main__":
 
     # run the agent with a prompt
     agent_response: RunOutput = code_translation_agent.ask(
-        f"""Translate the following C++ code into idiomatic, compilable Rust.
+        f"""You are an expert code translator specialising in C++ to Rust migration. You output only valid Rust source code. No explanations, no markdown, no commentary. Translate the following C++ code into idiomatic, compilable Rust.
 
 Rules:
 1. Translate faithfully. Do not add, remove, or alter any functionality.

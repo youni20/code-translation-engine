@@ -16,7 +16,7 @@ class Agno_Agent:
         return Agent(
             model = Ollama(id=self.model_id),
             tools=self._tool_registry,
-            markdown=True,
+            markdown=False,
             debug_mode=True
         )
         
