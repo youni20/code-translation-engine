@@ -7,8 +7,9 @@ from agno.models.ollama.chat import Ollama
 from agno.models.openai import OpenAIChat
 
 class Agno_Agent:
-    def __init__(self, model_id: str) -> None:  # Initializes Agent 
+    def __init__(self, model_id: str, description: str = "") -> None:  # Initializes Agent 
         self.model_id: str = model_id
+        self.description = description
         self._tool_registry: list = []
         self.instance: Optional[Agent] = None
         
@@ -17,7 +18,8 @@ class Agno_Agent:
             model = Ollama(id=self.model_id),
             tools=self._tool_registry,
             markdown=False,
-            debug_mode=True
+            debug_mode=True,
+            description=self.description
         )
         
     def add_tool(self, new_tool) -> None:
