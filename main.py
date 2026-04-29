@@ -6,7 +6,7 @@ load_dotenv()
 from agent import Agno_Agent
 
 if __name__ == "__main__":
-    agent: Agno_Agent = Agno_Agent(model_id="gemini-2.5-flash")    
+    agent: Agno_Agent = Agno_Agent(model_id="gemma3:latest")
     
     # run the agent with a prompt
     agent_response: RunOutput = agent.ask("Test Prompt")

@@ -3,8 +3,8 @@ from agno.run.agent import RunOutput
 from typing import Optional
 
 #  Models
-# from agno.models.ollama.chat import Ollama
-from agno.models.google import Gemini
+from agno.models.ollama.chat import Ollama
+from agno.models.openai import OpenAIChat
 
 class Agno_Agent:
     def __init__(self, model_id: str) -> None:  # Initializes Agent 
@@ -14,7 +14,7 @@ class Agno_Agent:
         
     def _build_instance(self) -> Agent:
         return Agent(
-            model = Gemini(id=self.model_id),
+            model = Ollama(id=self.model_id),
             tools=self._tool_registry,
             markdown=True,
             debug_mode=True
