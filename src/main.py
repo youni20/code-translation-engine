@@ -1,20 +1,9 @@
 from dotenv import load_dotenv
 from prompts import TRANSLATION_SYSTEM_PROMPT, REPAIR_SYSTEM_PROMPT
+from io_utils import local_file_reader, local_file_writer
 
 load_dotenv()
 from agent import Agno_Agent
-
-
-
-def local_file_reader() -> str:
-    with open("./inputs/two_sum.cpp", "r") as file:
-        file_content = file.read()
-        return file_content
-
-
-def local_file_writer(content: str) -> None:
-    with open("./outputs/output.rs", "w") as file:
-        file.write(content)
 
 
 
