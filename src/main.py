@@ -14,7 +14,7 @@ if __name__ == "__main__":
     repair_agent: Agno_Agent = Agno_Agent(model_id="gemma3:latest", description=REPAIR_SYSTEM_PROMPT)
 
 
-    cpp_code = local_file_reader()
+    cpp_code = local_file_reader("./inputs/two_sum.cpp")
 
     # run the agent with a prompt
     agent_response = code_translation_agent.ask(
@@ -25,5 +25,5 @@ if __name__ == "__main__":
     Rust output:"""
     )
 
-    response = agent_response.content
-    local_file_writer(response or "")
+    response = agent_response.content or ""
+    local_file_writer(response, "./outputs/output.rs")

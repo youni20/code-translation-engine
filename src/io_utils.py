@@ -1,9 +1,11 @@
-def local_file_reader() -> str:
-    with open("./inputs/two_sum.cpp", "r") as file:
-        file_content = file.read()
-        return file_content
+from pathlib import Path
 
 
-def local_file_writer(content: str) -> None:
-    with open("./outputs/output.rs", "w") as file:
-        file.write(content)
+def local_file_reader(path: str | Path) -> str:
+    return Path(path).read_text(encoding="utf-8")
+
+
+def local_file_writer(content: str, path: str | Path) -> None:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
