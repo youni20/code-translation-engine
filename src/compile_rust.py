@@ -13,7 +13,7 @@ def compile_rust(rust_code: str, timeout: int = 30) -> tuple[bool, str]:
 
     Returns:
         (success, stderr): success is True if compilation succeeded with no errors.
-        stderr contains the compiler output (errors and warnings).
+        stderr contains the compiler output.
     """
     with tempfile.TemporaryDirectory() as tmpdir:
         src_path = Path(tmpdir) / "main.rs"
@@ -27,8 +27,7 @@ def compile_rust(rust_code: str, timeout: int = 30) -> tuple[bool, str]:
                 text=True,
                 timeout=timeout,
             )
-            success = result.returncode == 0
-            return success, result.stderr
+            return result.returncode == 0, result.stderr
         except subprocess.TimeoutExpired:
             return False, f"Compilation timed out after {timeout}s"
         except FileNotFoundError:

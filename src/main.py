@@ -1,9 +1,11 @@
 from dotenv import load_dotenv
 from prompts import TRANSLATION_SYSTEM_PROMPT, REPAIR_SYSTEM_PROMPT
 from io_utils import local_file_reader, local_file_writer
+from compile_rust import compile_rust
 
 load_dotenv()
 from agent import Agno_Agent
+
 
 
 
