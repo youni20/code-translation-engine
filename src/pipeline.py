@@ -37,8 +37,9 @@ def run_translation_pipeline(
     # Initial translation
     translation_prompt = f"C++ input:\n\n{cpp_code}\n\nRust output:"
     response = translator.ask(translation_prompt)
-    rust_code = response.content
-    if not rust_code:
+    if response is not None and response.content is not None:
+        rust_code = strip_markdown_fences(response.content)
+    else:
         raise RuntimeError(
             f"Translation agent returned no content. Full response: {response}"
         )
@@ -65,8 +66,9 @@ def run_translation_pipeline(
             f"Corrected code:"
         )
         response = repairer.ask(repair_prompt)
-        new_code = response.content
-        if not new_code:
+        if response is not None and response.content is not None:
+            new_code = strip_markdown_fences(response.content)
+        else:
             raise RuntimeError(
                 f"Repair agent returned no content on iteration {iteration}. "
                 f"Full response: {response}"
