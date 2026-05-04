@@ -9,6 +9,7 @@ dependencies = [
     "fastapi[standard]>=0.136.0",
     "google-genai>=1.73.1",
     "groq>=1.2.0",
+    "multilspy>=0.0.15",
     "ollama>=0.6.1",
     "openai>=2.32.0",
     "pydantic>=2.13.2",

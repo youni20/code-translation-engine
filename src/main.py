@@ -23,9 +23,8 @@ if __name__ == "__main__":
         cpp_code=cpp_code,
         translator=code_translation_agent,
         repairer=repair_agent,
-        condition="A",
-        max_iterations=5,
+        condition="A"
     )
 
-    local_file_writer(rust_code, "./outputs/output.rs")
+    local_file_writer(rust_code, "./outputs/rust_project/src/output.rs")
     print(f"Success: {success}, Iterations: {iterations}")
