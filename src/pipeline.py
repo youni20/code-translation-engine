@@ -1,6 +1,5 @@
 from agent import Agno_Agent
 from compile_rust import compile_rust
-from lsp_client import format_diagnostics_for_prompt, get_lsp_diagnostics
 import re
 
 
@@ -54,8 +53,7 @@ def run_translation_pipeline(
         if condition == "A":
             feedback = stderr
         elif condition == "B":
-            diagnostics = get_lsp_diagnostics("./outputs/rust_project")
-            feedback = format_diagnostics_for_prompt(diagnostics=diagnostics)
+            pass
         else:
             raise ValueError(f"Unknown condition: {condition!r}. Use 'A' or 'B'.")
 
