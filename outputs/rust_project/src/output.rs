@@ -6,24 +6,21 @@ fn two_sum(x: i32, y: i32) -> i32 {
 }
 
 fn main() {
-    let mut x: i32 = 0;
-    let mut y: i32 = 0;
+    let mut x = String::new();
+    let mut y = String::new();
 
     print!("What two numbers would you like to add?\nNumber 1: ");
     io::stdout().flush().unwrap();
-    io::stdin().read_line(&mut String::new()).unwrap();
-
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).unwrap();
-    x = input.trim().parse().unwrap();
+    io::stdin().read_line(&mut x).unwrap();
 
     print!("Number 2: ");
     io::stdout().flush().unwrap();
-    input.clear();
-    io::stdin().read_line(&mut input).unwrap();
-    y = input.trim().parse().unwrap();
+    io::stdin().read_line(&mut y).unwrap();
 
     println!();
+
+    let x: i32 = x.trim().parse().unwrap();
+    let y: i32 = y.trim().parse().unwrap();
 
     let result = two_sum(x, y);
     println!("The Result: {}", result);
