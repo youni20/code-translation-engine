@@ -8,9 +8,9 @@ from pipeline import run_translation_pipeline
 from prompts import TRANSLATION_SYSTEM_PROMPT, REPAIR_SYSTEM_PROMPT
 from io_utils import local_file_reader
 
-cpp = local_file_reader("./tests/two_sum.cpp")
+cpp = local_file_reader("./tests/tests_cpp/pilot/two_sum.cpp")
 unit = TranslationUnit(
-    project="tests",
+    project="pilot",
     relative_path="two_sum.cpp",
     source_code=cpp,
     loc=len(cpp.splitlines()),
