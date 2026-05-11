@@ -15,7 +15,7 @@ class Agno_Agent:
         
     def _build_instance(self) -> Agent:
         return Agent(
-            model = Ollama(id=self.model_id),
+            model = OpenAIChat(id=self.model_id),
             tools=self._tool_registry,
             markdown=False,
             debug_mode=True,

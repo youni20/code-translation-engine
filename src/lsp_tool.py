@@ -1,5 +1,7 @@
 import asyncio
 import pathlib
+from collections.abc import Sequence
+from typing import Any
 from multilspy import SyncLanguageServer
 from multilspy.multilspy_config import MultilspyConfig, Language
 from multilspy.multilspy_logger import MultilspyLogger
@@ -26,7 +28,7 @@ def get_lsp_diagnostics(rust_code: str) -> str:
     logger = MultilspyLogger()
     lsp = SyncLanguageServer.create(config, logger, PROJECT_DIR)
 
-    diagnostics: list[dict] = []
+    diagnostics: Sequence[Any] = []
 
     with lsp.start_server():
         with lsp.open_file(RELATIVE_FILE):
@@ -49,7 +51,7 @@ def get_lsp_diagnostics(rust_code: str) -> str:
     return _format_diagnostics(diagnostics)
 
 
-def _format_diagnostics(diagnostics: list[dict]) -> str:
+def _format_diagnostics(diagnostics: Sequence[Any]) -> str:
     severity_map = {1: "error", 2: "warning", 3: "information", 4: "hint"}
     lines = []
     for d in diagnostics:

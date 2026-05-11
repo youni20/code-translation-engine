@@ -8,21 +8,21 @@ load_dotenv()
 
 from agent import Agno_Agent
 
-N_RUNS = 5
-MAX_ITERATIONS = 5
-CONDITION = "A"
+N_RUNS = 1
+MAX_ITERATIONS = 3
+CONDITION = "B"
 
 if __name__ == "__main__":
     code_translation_agent: Agno_Agent = Agno_Agent(
-        model_id="gemma3:latest",  # gpt-5.4-mini
+        model_id="gpt-5.4-mini",  # gemma3:latest
         description=TRANSLATION_SYSTEM_PROMPT  
     )
     repair_agent: Agno_Agent = Agno_Agent(
-        model_id="gemma3:latest", 
+        model_id="gpt-5.4-mini", 
         description=REPAIR_SYSTEM_PROMPT
     )
 
-    cpp_code = local_file_reader("./inputs/two_sum.cpp")
+    cpp_code = local_file_reader("./tests/two_sum.cpp")  # ./inputs/projects/project.txt
 
     runs: list[tuple[str, bool, int]] = []
     rust_code: str = ""

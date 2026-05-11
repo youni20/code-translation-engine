@@ -1,24 +1,29 @@
-use std::io;
+use std::io::{self, Write};
 
 fn two_sum(x: i32, y: i32) -> i32 {
-    x + y
+    let result = x + y;
+    result
 }
 
 fn main() {
-    println!("What two numbers would you like to add?");
-    println!("Number 1: ");
-
     let mut x: i32 = 0;
-    io::stdin()
-        .read_line(&mut String::new())
-        .expect("Failed to read line");
-
-    println!("Number 2: ");
-
     let mut y: i32 = 0;
-    io::stdin()
-        .read_line(&mut String::new())
-        .expect("Failed to read line");
+
+    print!("What two numbers would you like to add?\nNumber 1: ");
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(&mut String::new()).unwrap();
+
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    x = input.trim().parse().unwrap();
+
+    print!("Number 2: ");
+    io::stdout().flush().unwrap();
+    input.clear();
+    io::stdin().read_line(&mut input).unwrap();
+    y = input.trim().parse().unwrap();
+
+    println!();
 
     let result = two_sum(x, y);
     println!("The Result: {}", result);
