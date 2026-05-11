@@ -1,6 +1,8 @@
 from agent import Agno_Agent
 from compile_rust import compile_rust
+from lsp_tool import get_lsp_diagnostics
 import re
+
 
 
 # To remove redundent markdown from llm
@@ -53,7 +55,7 @@ def run_translation_pipeline(
         if condition == "A":
             feedback = stderr
         elif condition == "B":
-            pass
+            feedback = get_lsp_diagnostics(rust_code=rust_code)
         else:
             raise ValueError(f"Unknown condition: {condition!r}. Use 'A' or 'B'.")
 
