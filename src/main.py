@@ -11,7 +11,7 @@ from config import ExperimentConfig
 
 if __name__ == "__main__":
     config = ExperimentConfig(
-        projects_dir=Path("./tests/tests_cpp/"),
+        projects_dir=Path("./inputs/projects/"),
         conditions=("A",),  # For only one condition do:  conditions=("A",),  
         repetitions=1,
         max_iterations=3,
