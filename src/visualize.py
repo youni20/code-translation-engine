@@ -50,22 +50,33 @@ def visualize_results(results_path: Path, output_path: Path) -> None:
     ).round(3)
     summary.to_csv(output_path / "summary.csv")
 
-    # 1. Success rate by condition (headline result)
+    # 1. Success rate by condition (headline result) — point + CI on top of jittered raw runs
     fig, ax = plt.subplots(figsize=(7, 5))
-    sns.barplot(
+    sns.stripplot(
         data=df, x="condition", y="success",
         order=order, palette=CONDITION_PALETTE,
-        errorbar="ci", capsize=0.15, err_kws={"linewidth": 1.5}, ax=ax,
+        jitter=0.18, alpha=0.35, size=7, ax=ax,
     )
-    ax.set_ylim(0, 1.05)
+    sns.pointplot(
+        data=df, x="condition", y="success",
+        order=order, palette=CONDITION_PALETTE,
+        errorbar=("ci", 95), capsize=0.12,
+        markers="D", linestyle="none",
+        err_kws={"linewidth": 2}, ax=ax,
+    )
+    means = df.groupby("condition")["success"].mean().reindex(order)
+    for i, (cond, m) in enumerate(means.items()):
+        ax.text(i, m + 0.05, f"{m*100:.0f}%",
+                ha="center", va="bottom", fontsize=12, fontweight="bold")
+    ax.set_ylim(-0.1, 1.15)
+    ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1, decimals=0))
     ax.set_ylabel("Compilation success rate")
     ax.set_xlabel("")
-    ax.set_title("Compilation success by feedback condition")
-    for container in ax.containers:
-        ax.bar_label(container, fmt="%.0f%%",
-                     labels=[f"{v*100:.0f}%" for v in container.datavalues],
-                     padding=4, fontsize=11)
+    ax.set_title("Compilation success by feedback condition\n(diamond = mean, bar = 95% CI, dots = individual runs)",
+                 fontsize=12)
+    ax.axhline(0, color="grey", linewidth=0.8, alpha=0.4)
+    ax.axhline(1, color="grey", linewidth=0.8, alpha=0.4)
     _annotate_n(ax, df)
     fig.tight_layout()
     fig.savefig(output_path / "success_rate.png", dpi=150, bbox_inches="tight")
