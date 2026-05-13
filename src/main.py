@@ -15,8 +15,8 @@ if __name__ == "__main__":
         conditions=("A", "B"),  # For only one condition do:  conditions=("A",),
         repetitions=3,
         max_iterations=3,
-        translator_model="gpt-4o-mini",
-        repair_model="gpt-4o-mini",
+        translator_model="gpt-4o",
+        repair_model="gpt-4o",
     )
     run_experiment(config)
     visualize_results(results_path=config.results_path, output_path=config.run_dir)
