@@ -21,4 +21,6 @@ if __name__ == "__main__":
     run_experiment(config)
 
     print("Here are the results:\n")
-    visualize_results(results_path=config.results_path, output_path=config.results_path)
+
+    diagrams_path = Path("outputs") / "runs" / "graphs"
+    visualize_results(results_path=config.results_path, output_path=diagrams_path)
