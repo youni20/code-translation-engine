@@ -55,18 +55,22 @@ def run_experiment(config: ExperimentConfig) -> None:
     total_invocations = len(units) * len(config.conditions) * config.repetitions
     invocation_idx = 0
 
-    print(f"Run ID: {config.run_id}")
-    print(f"Units: {len(units)} | Conditions: {len(config.conditions)} | Repetitions: {config.repetitions}")
-    print(f"Total invocations: {total_invocations}")
-    print(f"Results will be written to: {config.results_path}")
-    print("-" * 60)
+    print("=" * 70)
+    print(f"  Run ID:            {config.run_id}")
+    print(f"  Units:             {len(units)}")
+    print(f"  Conditions:        {', '.join(config.conditions)}")
+    print(f"  Repetitions:       {config.repetitions}")
+    print(f"  Total invocations: {total_invocations}")
+    print(f"  Results file:      {config.results_path}")
+    print("=" * 70)
 
     for unit in units:
         for condition in config.conditions:
             for repetition in range(config.repetitions):
                 invocation_idx += 1
                 prefix = f"[{invocation_idx}/{total_invocations}]"
-                print(f"{prefix} {unit.unit_id} | cond={condition} | rep={repetition}")
+                print()
+                print(f"{prefix} {unit.unit_id}  (cond={condition}, rep={repetition})")
 
                 try:
                     result = run_translation_pipeline(
@@ -78,16 +82,19 @@ def run_experiment(config: ExperimentConfig) -> None:
                         max_iterations=config.max_iterations,
                     )
                 except Exception as e:
-                    print(f"  ERROR: {type(e).__name__}: {e}")
+                    print(f"  [ERROR]     {type(e).__name__}: {e}")
                     continue
 
                 writer.append(result)
                 save_translation(config, result)
+                outcome = "SUCCESS" if result.success else "FAILED "
                 print(
-                    f"  success={result.success} "
-                    f"iters={result.iterations_used} "
+                    f"  [done]      {outcome}  "
+                    f"iters={result.iterations_used}  "
                     f"time={result.wall_time_seconds:.1f}s"
                 )
 
-    print("-" * 60)
-    print(f"Experiment complete. Results: {config.results_path}")
+    print()
+    print("=" * 70)
+    print(f"  Experiment complete. Results: {config.results_path}")
+    print("=" * 70)

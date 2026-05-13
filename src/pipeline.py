@@ -40,8 +40,10 @@ def run_translation_pipeline(
     """
     start_time = time.monotonic()
     feedback_history: list[str] = []
+    feedback_source = "compiler stderr" if condition == "A" else "LSP diagnostics"
 
     # Initial translation
+    print("    [translate] generating initial Rust translation ...")
     translation_prompt = f"C++ input:\n\n{unit.source_code}\n\nRust output:"
     response = translator.ask(translation_prompt)
     if response is None or response.content is None:
@@ -59,6 +61,8 @@ def run_translation_pipeline(
     for iteration in range(max_iterations):
         success, stderr = compile_rust(rust_code)
         final_stderr = stderr
+        status = "PASS" if success else "FAIL"
+        print(f"    [compile]   iter {iteration}: {status}")
         if success:
             iterations_used = iteration
             break
@@ -72,6 +76,7 @@ def run_translation_pipeline(
 
         feedback_history.append(feedback)
 
+        print(f"    [repair]    iter {iteration + 1}: sending {feedback_source} to repair agent ...")
         repair_prompt = (
             f"The following Rust code failed to compile.\n\n"
             f"Code:\n{rust_code}\n\n"
@@ -89,6 +94,8 @@ def run_translation_pipeline(
     else:
         # Loop completed without break: run one final compile check
         success, final_stderr = compile_rust(rust_code)
+        status = "PASS" if success else "FAIL"
+        print(f"    [compile]   final check: {status}")
 
     wall_time = time.monotonic() - start_time
 
