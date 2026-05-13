@@ -1,15 +1,20 @@
-from __future__ import annotations
-
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, cast
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from scipy import stats
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
+from matplotlib.lines import Line2D
+
+try:
+    from scipy import stats
+except ImportError:
+    stats = None  # type: ignore[assignment]
 
 CONDITION_LABELS = {
     "A": "A: compiler stderr",
@@ -35,6 +40,7 @@ MIN_RUNS_FOR_CI = 3
 @dataclass(frozen=True)
 class FigureSpec:
     """Container for the dimensions and naming of a single figure."""
+
     name: str
     width_in: float
     height_in: float
@@ -44,6 +50,7 @@ class FigureSpec:
 # Matplotlib styling
 # --------------------------------------------------------------------------- #
 
+
 def _configure_publication_style() -> None:
     """Set rcParams for camera-ready figures.
 
@@ -51,30 +58,32 @@ def _configure_publication_style() -> None:
     Sizes target 9-10 pt captions, matching IEEE conference templates.
     """
     sns.set_theme(style="whitegrid", context="paper")
-    plt.rcParams.update({
-        "font.family": "serif",
-        "font.serif": ["Times New Roman", "Nimbus Roman", "DejaVu Serif"],
-        "mathtext.fontset": "stix",
-        "axes.titlesize": 10,
-        "axes.labelsize": 9,
-        "xtick.labelsize": 8,
-        "ytick.labelsize": 8,
-        "legend.fontsize": 8,
-        "legend.frameon": False,
-        "axes.spines.top": False,
-        "axes.spines.right": False,
-        "axes.linewidth": 0.6,
-        "grid.linewidth": 0.4,
-        "grid.alpha": 0.4,
-        "lines.linewidth": 1.0,
-        "savefig.bbox": "tight",
-        "savefig.pad_inches": 0.02,
-        "pdf.fonttype": 42,  # TrueType, required by most publishers
-        "ps.fonttype": 42,
-    })
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.serif": ["Times New Roman", "Nimbus Roman", "DejaVu Serif"],
+            "mathtext.fontset": "stix",
+            "axes.titlesize": 10,
+            "axes.labelsize": 9,
+            "xtick.labelsize": 8,
+            "ytick.labelsize": 8,
+            "legend.fontsize": 8,
+            "legend.frameon": False,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "axes.linewidth": 0.6,
+            "grid.linewidth": 0.4,
+            "grid.alpha": 0.4,
+            "lines.linewidth": 1.0,
+            "savefig.bbox": "tight",
+            "savefig.pad_inches": 0.02,
+            "pdf.fonttype": 42,  # TrueType, required by most publishers
+            "ps.fonttype": 42,
+        }
+    )
 
 
-def _save(fig: plt.Figure, output_path: Path, name: str) -> None:
+def _save(fig: Figure, output_path: Path, name: str) -> None:
     """Save in both PDF (vector) and PNG (300 dpi) for flexibility."""
     fig.savefig(output_path / f"{name}.pdf")
     fig.savefig(output_path / f"{name}.png", dpi=300)
@@ -84,6 +93,7 @@ def _save(fig: plt.Figure, output_path: Path, name: str) -> None:
 # --------------------------------------------------------------------------- #
 # Data preparation
 # --------------------------------------------------------------------------- #
+
 
 def _label_conditions(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
@@ -95,34 +105,30 @@ def _ordered_conditions(df: pd.DataFrame) -> list[str]:
     return [v for v in CONDITION_LABELS.values() if v in df["condition"].unique()]
 
 
-def _annotate_n(ax: plt.Axes, df: pd.DataFrame, order: Iterable[str]) -> None:
+def _annotate_n(ax: Axes, df: pd.DataFrame, order: Iterable[str]) -> None:
     counts = df.groupby("condition").size()
     ax.set_xticks(range(len(list(order))))
-    ax.set_xticklabels(
-        [f"{lbl}\n$n={counts.get(lbl, 0)}$" for lbl in order]
-    )
+    ax.set_xticklabels([f"{lbl}\n$n={counts.get(lbl, 0)}$" for lbl in order])
 
 
 # --------------------------------------------------------------------------- #
 # Statistical reporting
 # --------------------------------------------------------------------------- #
 
+
 def _per_unit_outcomes(df: pd.DataFrame) -> pd.DataFrame:
     """Aggregate replicate runs into per-unit, per-condition success rates."""
-    return (
-        df.groupby(["unit_id", "condition"])["success"]
-        .mean()
-        .unstack("condition")
-    )
+    grouped = cast(pd.Series, df.groupby(["unit_id", "condition"])["success"].mean())
+    return cast(pd.DataFrame, grouped.unstack("condition"))
 
 
 def _mcnemar_table(df: pd.DataFrame, order: list[str]) -> dict | None:
     """Build the 2x2 contingency table and run McNemar's test.
 
     Returns None if pairing is impossible (e.g. only one condition present
-    or no unit appears in both conditions).
+    or no unit appears in both conditions), or if scipy is unavailable.
     """
-    if len(order) < 2:
+    if len(order) < 2 or stats is None:
         return None
 
     per_unit = _per_unit_outcomes(df)
@@ -130,7 +136,6 @@ def _mcnemar_table(df: pd.DataFrame, order: list[str]) -> dict | None:
     if paired.empty:
         return None
 
-    # Binarise per-unit outcome by majority across replicates.
     a = (paired[order[0]] >= 0.5).astype(int)
     b = (paired[order[1]] >= 0.5).astype(int)
 
@@ -139,7 +144,6 @@ def _mcnemar_table(df: pd.DataFrame, order: list[str]) -> dict | None:
     b10 = int(((a == 1) & (b == 0)).sum())  # A succeeds where B fails
     b11 = int(((a == 1) & (b == 1)).sum())
 
-    # Exact binomial McNemar (preferred for small discordant counts).
     n_discordant = b01 + b10
     if n_discordant == 0:
         p_value = 1.0
@@ -160,16 +164,20 @@ def _mcnemar_table(df: pd.DataFrame, order: list[str]) -> dict | None:
 
 
 def _write_summary(df: pd.DataFrame, output_path: Path, order: list[str]) -> None:
-    summary = df.groupby("condition").agg(
-        n_runs=("success", "size"),
-        n_units=("unit_id", "nunique"),
-        success_rate=("success", "mean"),
-        success_rate_sd=("success", "std"),
-        mean_iterations=("iterations_used", "mean"),
-        median_iterations=("iterations_used", "median"),
-        mean_wall_time_s=("wall_time_seconds", "mean"),
-        median_wall_time_s=("wall_time_seconds", "median"),
-    ).round(4)
+    summary = (
+        df.groupby("condition")
+        .agg(
+            n_runs=("success", "size"),
+            n_units=("unit_id", "nunique"),
+            success_rate=("success", "mean"),
+            success_rate_sd=("success", "std"),
+            mean_iterations=("iterations_used", "mean"),
+            median_iterations=("iterations_used", "median"),
+            mean_wall_time_s=("wall_time_seconds", "mean"),
+            median_wall_time_s=("wall_time_seconds", "median"),
+        )
+        .round(4)
+    )
     summary.to_csv(output_path / "summary.csv")
 
     mcnemar = _mcnemar_table(df, order)
@@ -183,16 +191,19 @@ def _write_summary(df: pd.DataFrame, output_path: Path, order: list[str]) -> Non
             f.write(f"Discordant pairs: {mcnemar['discordant']}\n")
             f.write(f"p-value: {mcnemar['p_value']:.4f}\n\n")
             f.write("Contingency table (rows = A outcome, cols = B outcome)\n")
-            f.write(pd.DataFrame(
-                mcnemar["table"],
-                index=["A: fail", "A: pass"],
-                columns=["B: fail", "B: pass"],
-            ).to_string())
+            f.write(
+                pd.DataFrame(
+                    mcnemar["table"],
+                    index=["A: fail", "A: pass"],
+                    columns=["B: fail", "B: pass"],
+                ).to_string()
+            )
 
 
 # --------------------------------------------------------------------------- #
 # Plotting primitives
 # --------------------------------------------------------------------------- #
+
 
 def _plot_success_rate(df: pd.DataFrame, order: list[str], output_path: Path) -> None:
     fig, ax = plt.subplots(figsize=(SINGLE_COLUMN_IN, 2.6))
@@ -201,22 +212,47 @@ def _plot_success_rate(df: pd.DataFrame, order: list[str], output_path: Path) ->
     use_ci = (n_per_cond >= MIN_RUNS_FOR_CI).all()
 
     sns.stripplot(
-        data=df, x="condition", y="success",
-        order=order, palette=CONDITION_PALETTE,
-        jitter=0.15, alpha=0.4, size=4, ax=ax, legend=False,
+        data=df,
+        x="condition",
+        y="success",
+        order=order,
+        hue="condition",
+        hue_order=order,
+        palette=CONDITION_PALETTE,
+        jitter=0.15,
+        alpha=0.4,
+        size=4,
+        ax=ax,
+        legend=False,
     )
     sns.pointplot(
-        data=df, x="condition", y="success",
-        order=order, palette=CONDITION_PALETTE,
+        data=df,
+        x="condition",
+        y="success",
+        order=order,
+        hue="condition",
+        hue_order=order,
+        palette=CONDITION_PALETTE,
         errorbar=("ci", 95) if use_ci else None,
-        capsize=0.1, markers="D", linestyle="none",
-        err_kws={"linewidth": 1.2}, ax=ax,
+        capsize=0.1,
+        markers="D",
+        linestyle="none",
+        err_kws={"linewidth": 1.2},
+        ax=ax,
+        legend=False,
     )
 
-    means = df.groupby("condition")["success"].mean().reindex(order)
+    means = cast(pd.Series, df.groupby("condition")["success"].mean()).reindex(order)
     for i, m in enumerate(means.values):
-        ax.text(i, min(m + 0.08, 1.08), f"{m * 100:.0f}\\%",
-                ha="center", va="bottom", fontsize=8, fontweight="bold")
+        ax.text(
+            i,
+            min(m + 0.08, 1.08),
+            f"{m * 100:.0f}%",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+            fontweight="bold",
+        )
 
     ax.set_ylim(-0.08, 1.18)
     ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
@@ -236,26 +272,55 @@ def _plot_iterations(df: pd.DataFrame, order: list[str], output_path: Path) -> N
 
     if use_box:
         sns.boxplot(
-            data=df, x="condition", y="iterations_used",
-            order=order, palette=CONDITION_PALETTE,
-            width=0.45, fliersize=0, linewidth=0.8, ax=ax,
+            data=df,
+            x="condition",
+            y="iterations_used",
+            order=order,
+            hue="condition",
+            hue_order=order,
+            palette=CONDITION_PALETTE,
+            width=0.45,
+            fliersize=0,
+            linewidth=0.8,
+            ax=ax,
+            legend=False,
         )
         sns.stripplot(
-            data=df, x="condition", y="iterations_used",
-            order=order, color="black", size=2.5, alpha=0.6,
-            jitter=0.12, ax=ax,
+            data=df,
+            x="condition",
+            y="iterations_used",
+            order=order,
+            color="black",
+            size=2.5,
+            alpha=0.6,
+            jitter=0.12,
+            ax=ax,
         )
     else:
         # Fall back to a bar of the mean with raw points overlaid.
         sns.barplot(
-            data=df, x="condition", y="iterations_used",
-            order=order, palette=CONDITION_PALETTE,
-            errorbar=None, alpha=0.5, ax=ax,
+            data=df,
+            x="condition",
+            y="iterations_used",
+            order=order,
+            hue="condition",
+            hue_order=order,
+            palette=CONDITION_PALETTE,
+            errorbar=None,
+            alpha=0.5,
+            ax=ax,
+            legend=False,
         )
         sns.stripplot(
-            data=df, x="condition", y="iterations_used",
-            order=order, color="black", size=3.5, alpha=0.8,
-            jitter=0.12, ax=ax,
+            data=df,
+            x="condition",
+            y="iterations_used",
+            order=order,
+            color="black",
+            size=3.5,
+            alpha=0.8,
+            jitter=0.12,
+            ax=ax,
         )
 
     ax.yaxis.set_major_locator(mticker.MaxNLocator(integer=True))
@@ -283,11 +348,34 @@ def _plot_paired_deltas(df: pd.DataFrame, order: list[str], output_path: Path) -
 
     fig, ax = plt.subplots(figsize=(SINGLE_COLUMN_IN, 3.0))
 
+    colour_b_better = "#009E73"
+    colour_a_better = "#CC79A7"
+    colour_tie = "grey"
+
     for unit_id, row in per_unit.iterrows():
         a_val, b_val = row[order[0]], row[order[1]]
-        colour = "#009E73" if b_val > a_val else "#CC79A7" if b_val < a_val else "grey"
-        ax.plot([0, 1], [a_val, b_val], color=colour, alpha=0.6,
-                linewidth=0.8, marker="o", markersize=3)
+        if b_val > a_val:
+            colour = colour_b_better
+        elif b_val < a_val:
+            colour = colour_a_better
+        else:
+            colour = colour_tie
+        ax.plot(
+            [0, 1],
+            [a_val, b_val],
+            color=colour,
+            alpha=0.6,
+            linewidth=0.8,
+            marker="o",
+            markersize=3,
+        )
+
+    legend_handles = [
+        Line2D([0], [0], color=colour_b_better, marker="o", label="B better"),
+        Line2D([0], [0], color=colour_a_better, marker="o", label="A better"),
+        Line2D([0], [0], color=colour_tie, marker="o", label="Tie"),
+    ]
+    ax.legend(handles=legend_handles, loc="lower right", fontsize=7)
 
     ax.set_xticks([0, 1])
     ax.set_xticklabels(order)
@@ -299,17 +387,28 @@ def _plot_paired_deltas(df: pd.DataFrame, order: list[str], output_path: Path) -
     _save(fig, output_path, "paired_deltas")
 
 
-def _plot_iterations_vs_loc(df: pd.DataFrame, order: list[str], output_path: Path) -> None:
+def _plot_iterations_vs_loc(
+    df: pd.DataFrame, order: list[str], output_path: Path
+) -> None:
     if len(df) < MIN_RUNS_FOR_DISTRIBUTION:
         return
 
     fig, ax = plt.subplots(figsize=(DOUBLE_COLUMN_IN * 0.6, 2.8))
     sns.scatterplot(
-        data=df, x="loc", y="iterations_used",
-        hue="condition", hue_order=order, palette=CONDITION_PALETTE,
-        style="success", style_order=[True, False],
+        data=df,
+        x="loc",
+        y="iterations_used",
+        hue="condition",
+        hue_order=order,
+        palette=CONDITION_PALETTE,
+        style="success",
+        style_order=[True, False],
         markers={True: "o", False: "X"},
-        s=55, alpha=0.85, ax=ax, edgecolor="white", linewidth=0.4,
+        s=55,
+        alpha=0.85,
+        ax=ax,
+        edgecolor="white",
+        linewidth=0.4,
     )
     ax.yaxis.set_major_locator(mticker.MaxNLocator(integer=True))
     ax.set_ylim(bottom=-0.3)
@@ -330,10 +429,16 @@ def _plot_heatmap(df: pd.DataFrame, order: list[str], output_path: Path) -> None
     height = max(2.0, 0.28 * len(pivot) + 0.8)
     fig, ax = plt.subplots(figsize=(SINGLE_COLUMN_IN, height))
     sns.heatmap(
-        pivot, annot=True, fmt=".0%",
-        cmap="RdYlGn", vmin=0, vmax=1,
+        pivot,
+        annot=True,
+        fmt=".0%",
+        cmap="RdYlGn",
+        vmin=0,
+        vmax=1,
         cbar_kws={"label": "Success rate", "shrink": 0.7},
-        linewidths=0.4, linecolor="white", ax=ax,
+        linewidths=0.4,
+        linecolor="white",
+        ax=ax,
         annot_kws={"fontsize": 7},
     )
     ax.set_xlabel("")
@@ -345,6 +450,7 @@ def _plot_heatmap(df: pd.DataFrame, order: list[str], output_path: Path) -> None
 # --------------------------------------------------------------------------- #
 # Entry point
 # --------------------------------------------------------------------------- #
+
 
 def visualize_results(results_path: Path, output_path: Path) -> None:
     df = pd.read_json(results_path, lines=True)
