@@ -8,7 +8,7 @@ class Agno_Agent:
         self.instance: Agent = Agent(
             model=OpenAIChat(id=model_id),
             markdown=False,
-            debug_mode=True,
+            debug_mode=False,
             description=description,
         )
 

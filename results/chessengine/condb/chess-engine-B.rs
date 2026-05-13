@@ -1,8 +1,7 @@
 use std::cmp::{max, min};
-use std::collections::VecDeque;
 use std::io::{self, BufRead};
-use std::sync::Mutex;
-use std::time::{Duration, Instant};
+use std::sync::{Mutex, LazyLock};
+use std::time::Instant;
 
 type U64 = u64;
 
@@ -204,14 +203,15 @@ impl SearchStats {
     }
     fn nps(&self) -> i64 {
         let elapsed = Instant::now().saturating_duration_since(self.start_time);
-        let ms = elapsed.as_millis();
+        let ms = elapsed.as_millis() as i128;
         if ms == 0 {
             return 0;
         }
-        ((self.nodes + self.qnodes) * 1000) as i128 / ms as i128 as i64
+        let total = (self.nodes + self.qnodes) as i128 * 1000;
+        (total / ms) as i64
     }
 }
-static SEARCH_STATS: Mutex<SearchStats> = Mutex::new(SearchStats::new());
+static SEARCH_STATS: LazyLock<Mutex<SearchStats>> = LazyLock::new(|| Mutex::new(SearchStats::new()));
 
 // Zobrist
 static mut ZOBRIST_PIECES: [[[U64; 64]; 6]; 2] = [[[0u64; 64]; 6]; 2];
@@ -818,7 +818,7 @@ fn search(b: &Board, depth: i32, mut alpha: i32, beta: i32, best_move_out: &mut 
         }
     }
 
-    let mut moves = generate_moves(b);
+    let mut moves = generate_moves(b, false);
     if moves.is_empty() {
         if in_check { return -MATE + ply as i32; }
         return 0;
@@ -1039,7 +1039,7 @@ fn init_tables() {
 
 // Parse UCI move
 fn parse_move(b: &Board, move_str: &str, parsed_move: &mut Move) -> bool {
-    let moves = generate_moves(b);
+    let moves = generate_moves(b, false);
     if move_str.len() < 4 { return false; }
     let from = (move_str.as_bytes()[0] - b'a') as i32 + ((move_str.as_bytes()[1] - b'1') as i32) * 8;
     let to = (move_str.as_bytes()[2] - b'a') as i32 + ((move_str.as_bytes()[3] - b'1') as i32) * 8;
@@ -1223,7 +1223,7 @@ fn main() {
                 }
                 println!("bestmove {}", move_str);
             } else {
-                let moves = generate_moves(&board);
+                let moves = generate_moves(&board, false);
                 if !moves.is_empty() {
                     let fallback = moves[0];
                     let mut move_str = String::new();
