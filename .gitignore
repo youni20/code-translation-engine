@@ -1,3 +1,4 @@
 .env
 __pycache__
 inputs/projects/*
+/outputs/runs/*
