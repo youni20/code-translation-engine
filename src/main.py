@@ -19,8 +19,4 @@ if __name__ == "__main__":
         repair_model="gpt-4o-mini",
     )
     run_experiment(config)
-
-    print("Here are the results:\n")
-
-    diagrams_path = Path("outputs") / "runs" / "graphs"
-    visualize_results(results_path=config.results_path, output_path=diagrams_path)
+    visualize_results(results_path=config.results_path, output_path=config.run_dir)
