@@ -3,3 +3,4 @@ __pycache__
 inputs/projects/*
 /outputs/runs/*
 /experiment-results/*
+/full-results/*
