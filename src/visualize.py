@@ -217,8 +217,8 @@ def _plot_success_rate(df: pd.DataFrame, order: list[str], output_path: Path) ->
         rate = k / n if n else 0.0
         lo, hi = _wilson_ci(k, n)
         rates.append(rate)
-        err_low.append(rate - lo)
-        err_high.append(hi - rate)
+        err_low.append(max(0.0, rate - lo))
+        err_high.append(max(0.0, hi - rate))
         ns.append(n)
 
     fig, ax = plt.subplots(figsize=(6, 4))
