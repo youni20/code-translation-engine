@@ -208,41 +208,32 @@ def _export_summary(df: pd.DataFrame, order: list[str], output_path: Path) -> No
 # --------------------------------------------------------------------------- #
 
 def _plot_success_rate(df: pd.DataFrame, order: list[str], output_path: Path) -> None:
-    """Plot 1: final success rate per condition, Wilson 95% CI bars."""
-    rates, err_low, err_high, ns = [], [], [], []
+    """Plot 1: final success rate per condition."""
+    rates, ns = [], []
     for cond in order:
         sub = df[df["condition"] == cond]
         n = len(sub)
         k = int(sub["success"].sum())
-        rate = k / n if n else 0.0
-        lo, hi = _wilson_ci(k, n)
-        rates.append(rate)
-        err_low.append(max(0.0, rate - lo))
-        err_high.append(max(0.0, hi - rate))
+        rates.append(k / n if n else 0.0)
         ns.append(n)
 
     fig, ax = plt.subplots(figsize=(6, 4))
     xpos = np.arange(len(order))
     colours = [CONDITION_PALETTE[c] for c in order]
     ax.bar(
-        xpos, rates, yerr=[err_low, err_high], color=colours,
-        capsize=8, edgecolor="black", linewidth=0.8, alpha=0.9,
+        xpos, rates, color=colours,
+        edgecolor="black", linewidth=0.8, alpha=0.9,
     )
-    for i, (r, eh) in enumerate(zip(rates, err_high)):
-        ax.text(i, min(r + eh + 0.03, 1.10), f"{r * 100:.0f}%",
+    for i, r in enumerate(rates):
+        ax.text(i, r + 0.02, f"{r * 100:.0f}%",
                 ha="center", va="bottom", fontweight="bold")
 
-    ax.set_ylim(0, 1.18)
+    ax.set_ylim(0, 1.1)
     ax.set_xticks(xpos)
     ax.set_xticklabels([f"{c}\n$n={n}$" for c, n in zip(order, ns)])
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1, decimals=0))
     ax.set_ylabel("Compilation success rate")
-
-    title = "Compilation success by feedback condition"
-    mc = _mcnemar(df, order)
-    if mc is not None:
-        title += f"\n(McNemar paired test: $p = {mc['p']:.3f}$, $n_\\mathrm{{paired}} = {mc['n']}$)"
-    ax.set_title(title)
+    ax.set_title("Compilation success by feedback condition")
 
     fig.tight_layout()
     _save(fig, output_path, "plot1_success_rate")
@@ -282,14 +273,14 @@ def _plot_cumulative_success(df: pd.DataFrame, order: list[str], output_path: Pa
     sns.lineplot(
         data=per_iter, x="iteration", y="cumulative_pass",
         hue="condition", hue_order=order, palette=CONDITION_PALETTE,
-        errorbar=("ci", 95), marker="o", ax=ax,
+        errorbar=None, marker="o", ax=ax,
     )
     ax.xaxis.set_major_locator(mticker.MaxNLocator(integer=True))
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1, decimals=0))
     ax.set_ylim(-0.02, 1.05)
     ax.set_xlabel("Repair iteration")
     ax.set_ylabel("Cumulative success rate")
-    ax.set_title("Cumulative success rate vs. repair iteration\n(shaded = 95% CI)")
+    ax.set_title("Cumulative success rate vs. repair iteration")
     ax.legend(title="")
     fig.tight_layout()
     _save(fig, output_path, "plot2_cumulative_success")
@@ -302,47 +293,73 @@ def _plot_iterations(df: pd.DataFrame, order: list[str], output_path: Path) -> N
         return
 
     fig, ax = plt.subplots(figsize=(6, 4))
-    sns.boxplot(
+    sns.stripplot(
         data=successes, x="condition", y="iterations_used",
         order=order, hue="condition", hue_order=order,
         palette=CONDITION_PALETTE,
-        width=0.45, fliersize=0, linewidth=0.8, ax=ax, legend=False,
+        size=5, alpha=0.6, jitter=0.15, ax=ax, legend=False,
     )
-    sns.stripplot(
-        data=successes, x="condition", y="iterations_used",
-        order=order, color="black", size=4, alpha=0.6, jitter=0.15, ax=ax,
-    )
+    means = successes.groupby("condition")["iterations_used"].mean()
+    for i, cond in enumerate(order):
+        if cond in means.index:
+            ax.hlines(means[cond], i - 0.3, i + 0.3,
+                      color="black", linewidth=2.5, zorder=10)
+
     ax.yaxis.set_major_locator(mticker.MaxNLocator(integer=True))
     ax.set_ylim(bottom=-0.3)
     ax.set_xlabel("")
     ax.set_ylabel("Iterations to first compile success")
-    ax.set_title("Iterations to first success (successful runs only)")
+    ax.set_title("Iterations to first success (successful runs only)\nBlack bar = mean")
     fig.tight_layout()
     _save(fig, output_path, "plot4_iterations")
 
 
-def _plot_mcnemar_heatmap(df: pd.DataFrame, order: list[str], output_path: Path) -> None:
-    """Plot 7: 2x2 paired contingency heatmap."""
-    mc = _mcnemar(df, order)
-    if mc is None:
+def _plot_paired_slope(df: pd.DataFrame, order: list[str], output_path: Path) -> None:
+    """Plot 7: per-unit paired slope chart (A success rate -> B success rate)."""
+    if len(order) < 2:
         return
-    table = pd.DataFrame(
-        mc["table"],
-        index=[f"{order[0]}\nfail", f"{order[0]}\npass"],
-        columns=[f"{order[1]}\nfail", f"{order[1]}\npass"],
-    )
-    fig, ax = plt.subplots(figsize=(5, 4))
-    sns.heatmap(
-        table, annot=True, fmt="d", cmap="Blues",
-        cbar_kws={"label": "Unit count"}, linewidths=1, linecolor="white",
-        annot_kws={"fontsize": 14, "fontweight": "bold"}, ax=ax,
-    )
+    per_unit = _per_unit_outcomes(df).dropna(subset=order)
+    if per_unit.empty:
+        return
+
+    rng = np.random.default_rng(0)
+    jitter = rng.uniform(-0.012, 0.012, size=(len(per_unit), 2))
+
+    fig, ax = plt.subplots(figsize=(5.5, 5))
+
+    n_b_better = n_a_better = n_tied = 0
+    for (_uid, row), j in zip(per_unit.iterrows(), jitter):
+        a, b = float(row[order[0]]), float(row[order[1]])
+        if b > a:
+            colour = CONDITION_PALETTE[order[1]]
+            n_b_better += 1
+        elif a > b:
+            colour = CONDITION_PALETTE[order[0]]
+            n_a_better += 1
+        else:
+            colour = "lightgrey"
+            n_tied += 1
+        ax.plot([0, 1], [a + j[0], b + j[1]],
+                color=colour, alpha=0.45, marker="o", markersize=4, linewidth=1)
+
+    mean_a = float(per_unit[order[0]].mean())
+    mean_b = float(per_unit[order[1]].mean())
+    ax.plot([0, 1], [mean_a, mean_b], color="black",
+            marker="D", markersize=8, linewidth=2.5, label="Mean across units")
+
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(order)
+    ax.set_xlim(-0.25, 1.25)
+    ax.set_ylim(-0.05, 1.08)
+    ax.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1, decimals=0))
+    ax.set_ylabel("Per-unit success rate")
     ax.set_title(
-        f"Paired outcomes per translation unit\n"
-        f"(McNemar $p = {mc['p']:.3f}$, discordant pairs = {mc['discordant']})"
+        f"Per-unit outcomes (paired)\n"
+        f"B better: {n_b_better}    A better: {n_a_better}    tied: {n_tied}"
     )
+    ax.legend(loc="lower right")
     fig.tight_layout()
-    _save(fig, output_path, "plot7_mcnemar_heatmap")
+    _save(fig, output_path, "plot7_paired_slope")
 
 
 def _plot_per_unit_success(df: pd.DataFrame, order: list[str], output_path: Path) -> None:
@@ -354,21 +371,23 @@ def _plot_per_unit_success(df: pd.DataFrame, order: list[str], output_path: Path
         .rename(columns={"success": "per_unit_success"})
     )
     fig, ax = plt.subplots(figsize=(6, 4))
-    sns.boxplot(
+    sns.stripplot(
         data=rates, x="condition", y="per_unit_success",
         order=order, hue="condition", hue_order=order,
         palette=CONDITION_PALETTE,
-        width=0.45, fliersize=0, linewidth=0.8, ax=ax, legend=False,
+        size=6, alpha=0.7, jitter=0.15, ax=ax, legend=False,
     )
-    sns.stripplot(
-        data=rates, x="condition", y="per_unit_success",
-        order=order, color="black", size=5, alpha=0.7, jitter=0.15, ax=ax,
-    )
+    means = rates.groupby("condition")["per_unit_success"].mean()
+    for i, cond in enumerate(order):
+        if cond in means.index:
+            ax.hlines(means[cond], i - 0.3, i + 0.3,
+                      color="black", linewidth=2.5, zorder=10)
+
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(xmax=1, decimals=0))
     ax.set_ylim(-0.05, 1.05)
     ax.set_xlabel("")
     ax.set_ylabel("Per-unit success rate (across repetitions)")
-    ax.set_title("Per-translation-unit success variability")
+    ax.set_title("Per-translation-unit success variability\nBlack bar = mean")
     fig.tight_layout()
     _save(fig, output_path, "plot8_per_unit_success")
 
@@ -397,7 +416,7 @@ def visualize_results(results_path: Path, output_path: Path) -> None:
     _plot_success_rate(df, order, output_path)
     _plot_cumulative_success(df, order, output_path)
     _plot_iterations(df, order, output_path)
-    _plot_mcnemar_heatmap(df, order, output_path)
+    _plot_paired_slope(df, order, output_path)
     _plot_per_unit_success(df, order, output_path)
 
     print(f"[visualize] Wrote CSVs and plots to {output_path}")
