@@ -1,0 +1,8 @@
+[package]
+name = "translated_output"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "translated_output"
+path = "src/output.rs"

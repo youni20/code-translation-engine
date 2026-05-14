@@ -1,0 +1,52 @@
+   0.006895193s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: false }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
+   0.006920313s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-e1b8e821f2f7393f/bin-translated_output`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: <unknown>
+   1: <unknown>
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+  11: <unknown>
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: __libc_start_main
+  16: <unknown>
+   0.007542075s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: true }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
+   0.007550085s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-7752a7ed8e3d32a8/test-bin-translated_output`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: <unknown>
+   1: <unknown>
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+  11: <unknown>
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: __libc_start_main
+  16: <unknown>
+    Checking translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)
+error: could not compile `translated_output` (bin "translated_output") due to 5 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `translated_output` (bin "translated_output" test) due to 5 previous errors
