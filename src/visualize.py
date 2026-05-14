@@ -259,6 +259,25 @@ def _plot_cumulative_success(df: pd.DataFrame, order: list[str], output_path: Pa
         .astype(int)
     )
 
+    # Runs that finish early (success or failure before max_iter) have no rows
+    # for later iterations, so seaborn's aggregation at those x-positions only
+    # sees still-active runs — making the curve collapse instead of staying flat.
+    # Pad every run out to max_iteration carrying its final cumulative_pass value.
+    max_iter = int(per_iter["iteration"].max())
+    pad_rows = []
+    for (cond, uid, rep), grp in per_iter.groupby(
+        ["condition", "unit_id", "repetition"], sort=False
+    ):
+        last_iter = int(grp["iteration"].max())
+        carry = int(grp["cumulative_pass"].max())
+        for it in range(last_iter + 1, max_iter + 1):
+            pad_rows.append({
+                "unit_id": uid, "condition": cond, "repetition": rep,
+                "iteration": it, "passed": carry, "cumulative_pass": carry,
+            })
+    if pad_rows:
+        per_iter = pd.concat([per_iter, pd.DataFrame(pad_rows)], ignore_index=True)
+
     fig, ax = plt.subplots(figsize=(7, 4.5))
     sns.lineplot(
         data=per_iter, x="iteration", y="cumulative_pass",
