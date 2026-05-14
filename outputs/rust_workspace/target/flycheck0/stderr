@@ -1,52 +1,52 @@
-   0.006895193s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: false }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
-   0.006920313s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-e1b8e821f2f7393f/bin-translated_output`
+   0.012314459s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace)/Check { test: false }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
+   0.012340919s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-c9f088d784f6f8bc/bin-translated_output`
 
 Caused by:
     No such file or directory (os error 2)
 
 Stack backtrace:
-   0: <unknown>
-   1: <unknown>
-   2: <unknown>
-   3: <unknown>
-   4: <unknown>
-   5: <unknown>
-   6: <unknown>
-   7: <unknown>
-   8: <unknown>
-   9: <unknown>
-  10: <unknown>
-  11: <unknown>
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: __libc_start_main
-  16: <unknown>
-   0.007542075s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: true }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
-   0.007550085s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-7752a7ed8e3d32a8/test-bin-translated_output`
-
-Caused by:
-    No such file or directory (os error 2)
-
-Stack backtrace:
-   0: <unknown>
-   1: <unknown>
-   2: <unknown>
-   3: <unknown>
-   4: <unknown>
-   5: <unknown>
-   6: <unknown>
-   7: <unknown>
-   8: <unknown>
-   9: <unknown>
-  10: <unknown>
-  11: <unknown>
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: __libc_start_main
-  16: <unknown>
-    Checking translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)
-error: could not compile `translated_output` (bin "translated_output") due to 5 previous errors
+   0: cargo_util::paths::read_bytes
+   1: cargo_util::paths::read
+   2: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   3: cargo::core::compiler::fingerprint::prepare_target
+   4: cargo::core::compiler::compile
+   5: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   6: cargo::ops::cargo_compile::compile_ws
+   7: cargo::ops::cargo_compile::compile_with_exec
+   8: cargo::ops::cargo_compile::compile
+   9: cargo::commands::check::exec
+  10: <cargo::cli::Exec>::exec
+  11: cargo::main
+  12: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  13: std::rt::lang_start::<()>::{closure#0}
+  14: <&dyn core::ops::function::Fn<(), Output = i32> + core::marker::Sync + core::panic::unwind_safe::RefUnwindSafe as core::ops::function::FnOnce<()>>::call_once
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/core/src/ops/function.rs:287:21
+  15: std::panicking::catch_unwind::do_call::<&dyn core::ops::function::Fn<(), Output = i32> + core::marker::Sync + core::panic::unwind_safe::RefUnwindSafe, i32>
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/panicking.rs:581:40
+  16: std::panicking::catch_unwind::<i32, &dyn core::ops::function::Fn<(), Output = i32> + core::marker::Sync + core::panic::unwind_safe::RefUnwindSafe>
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/panicking.rs:544:19
+  17: std::panic::catch_unwind::<&dyn core::ops::function::Fn<(), Output = i32> + core::marker::Sync + core::panic::unwind_safe::RefUnwindSafe, i32>
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/panic.rs:359:14
+  18: std::rt::lang_start_internal::{closure#0}
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/rt.rs:175:24
+  19: std::panicking::catch_unwind::do_call::<std::rt::lang_start_internal::{closure#0}, isize>
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/panicking.rs:581:40
+  20: std::panicking::catch_unwind::<isize, std::rt::lang_start_internal::{closure#0}>
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/panicking.rs:544:19
+  21: std::panic::catch_unwind::<std::rt::lang_start_internal::{closure#0}, isize>
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/panic.rs:359:14
+  22: std::rt::lang_start_internal
+             at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/rt.rs:171:5
+  23: main
+  24: <unknown>
+  25: __libc_start_main
+  26: <unknown>
+   0.020945649s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: stale: changed "/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/src/output.rs"
+   0.020956099s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:           (vs) "/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-c801f3038c5f1bcd/dep-test-bin-translated_output"
+   0.020960377s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 1778790025, nanos: 59580263 } < FileTime { seconds: 1778790166, nanos: 322427446 }
+   0.021004008s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint dirty for translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace)/Check { test: true }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
+   0.021019718s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-c801f3038c5f1bcd/dep-test-bin-translated_output", reference_mtime: FileTime { seconds: 1778790025, nanos: 59580263 }, stale: "/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace/src/output.rs", stale_mtime: FileTime { seconds: 1778790166, nanos: 322427446 } }))
+    Checking translated_output v0.1.0 (/home/youni/Documents/work/Thesis/code-translation-engine/outputs/rust_workspace)
+error: could not compile `translated_output` (bin "translated_output") due to 3 previous errors
 warning: build failed, waiting for other jobs to finish...
-error: could not compile `translated_output` (bin "translated_output" test) due to 5 previous errors
+error: could not compile `translated_output` (bin "translated_output" test) due to 3 previous errors
