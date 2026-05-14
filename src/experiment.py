@@ -70,7 +70,7 @@ def run_experiment(config: ExperimentConfig) -> None:
                 invocation_idx += 1
                 prefix = f"[{invocation_idx}/{total_invocations}]"
                 print()
-                print(f"{prefix} {unit.unit_id}  (cond={condition}, rep={repetition})")
+                print(f"{prefix} {unit.unit_id}  (cond={condition}, rep={repetition+1})")
 
                 try:
                     result = run_translation_pipeline(
