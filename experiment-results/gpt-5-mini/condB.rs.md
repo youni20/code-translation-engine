@@ -1,6 +1,6 @@
 use std::cmp::{max, min};
 use std::io::{self, BufRead};
-use std::time::{Duration, Instant};
+use std::time::Instant;
 
 type U64 = u64;
 
@@ -11,21 +11,27 @@ const ROOK: usize = 3;
 const QUEEN: usize = 4;
 const KING: usize = 5;
 
-const WHITE: i32 = 0;
-const BLACK: i32 = 1;
+const WHITE: usize = 0;
+const BLACK: usize = 1;
 
 const INF: i32 = 999_999;
 const MATE: i32 = 100_000;
 const MAX_QUIESCENCE_DEPTH: i32 = 6;
 const MAX_PLY: usize = 128;
 
-const TT_SIZE: usize = 1 << 20; // 1,048,576
+const TT_SIZE: usize = 1 << 20; // 1M entries
 
 static mut KING_MOVES: [U64; 64] = [0; 64];
 static mut KNIGHT_MOVES: [U64; 64] = [0; 64];
 
+static mut ZOBRIST_PIECES: [[[U64; 64]; 6]; 2] = [[[0; 64]; 6]; 2];
+static mut ZOBRIST_CASTLE: [U64; 16] = [0; 16];
+static mut ZOBRIST_EP: [U64; 64] = [0; 64];
+static mut ZOBRIST_SIDE: U64 = 0;
+
 #[derive(Copy, Clone)]
 struct HistoryTable {
+    // [side][from][to]
     scores: [[[i32; 64]; 64]; 2],
 }
 impl HistoryTable {
@@ -62,18 +68,18 @@ impl HistoryTable {
 }
 static mut HISTORY_TABLE: HistoryTable = HistoryTable::new();
 
-#[derive(Copy, Clone, Default, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 struct Move {
     from: usize,
     to: usize,
     score: i32,
-    piece: i32,
+    piece: usize,
     captured: i32,
-    promo: i32,
+    promo: usize,
 }
 impl Move {
-    fn new(f: usize, t: usize, p: i32, c: i32, pr: i32) -> Move {
-        Move {
+    const fn new(f: usize, t: usize, p: usize, c: i32, pr: usize) -> Self {
+        Self {
             from: f,
             to: t,
             piece: p,
@@ -83,6 +89,11 @@ impl Move {
         }
     }
 }
+impl Default for Move {
+    fn default() -> Self {
+        Self::new(0, 0, 0, -1, 0)
+    }
+}
 
 #[derive(Copy, Clone)]
 struct KillerMoves {
@@ -90,9 +101,9 @@ struct KillerMoves {
 }
 impl KillerMoves {
     const fn new() -> Self {
-        const NONE_MOVE: Option<Move> = None;
+        const NONE_PAIR: [Option<Move>; 2] = [None, None];
         Self {
-            killers: [[NONE_MOVE; 2]; MAX_PLY],
+            killers: [NONE_PAIR; MAX_PLY],
         }
     }
     fn init(&mut self) {
@@ -109,11 +120,6 @@ impl KillerMoves {
     }
     fn is_killer(&self, m: &Move, ply: usize) -> bool {
         self.killers[ply][0] == Some(*m) || self.killers[ply][1] == Some(*m)
-    }
-}
-impl Default for KillerMoves {
-    fn default() -> Self {
-        KillerMoves::new()
     }
 }
 static mut KILLER_MOVES: KillerMoves = KillerMoves::new();
@@ -137,12 +143,14 @@ impl TTEntry {
         }
     }
 }
-static mut TRANSPOSITION_TABLE: [TTEntry; TT_SIZE] = [TTEntry::new(); TT_SIZE];
+const TT_ENTRY_INIT: TTEntry = TTEntry::new();
+static mut TRANSPOSITION_TABLE: [TTEntry; TT_SIZE] = [TT_ENTRY_INIT; TT_SIZE];
 
 const TT_EXACT: i32 = 0;
 const TT_ALPHA: i32 = 1;
 const TT_BETA: i32 = 2;
 
+#[derive(Copy, Clone)]
 struct UCIOptions {
     depth: i32,
     use_quiescence: bool,
@@ -163,6 +171,7 @@ static mut UCI_OPTIONS: UCIOptions = UCIOptions {
     quiescence_depth: 4,
 };
 
+#[derive(Copy, Clone)]
 struct SearchStats {
     nodes: i64,
     qnodes: i64,
@@ -170,14 +179,6 @@ struct SearchStats {
     start_time: Option<Instant>,
 }
 impl SearchStats {
-    fn new() -> Self {
-        Self {
-            nodes: 0,
-            qnodes: 0,
-            current_depth: 0,
-            start_time: Some(Instant::now()),
-        }
-    }
     fn init(&mut self) {
         self.nodes = 0;
         self.qnodes = 0;
@@ -185,18 +186,15 @@ impl SearchStats {
         self.start_time = Some(Instant::now());
     }
     fn nps(&self) -> i64 {
-        let start = match &self.start_time {
-            Some(t) => t,
+        let elapsed = match self.start_time {
+            Some(t) => Instant::now().duration_since(t),
             None => return 0,
         };
-        let elapsed = Instant::now() - *start;
-        let ms = elapsed.as_millis();
+        let ms = elapsed.as_millis() as i64;
         if ms == 0 {
             return 0;
         }
-        let num = ((self.nodes + self.qnodes) * 1000) as i128;
-        let denom = ms as i128;
-        (num / denom) as i64
+        (self.nodes + self.qnodes) * 1000 / ms
     }
 }
 static mut SEARCH_STATS: SearchStats = SearchStats {
@@ -206,44 +204,12 @@ static mut SEARCH_STATS: SearchStats = SearchStats {
     start_time: None,
 };
 
-static mut ZOBRIST_PIECES: [[[U64; 64]; 6]; 2] = [[[0; 64]; 6]; 2];
-static mut ZOBRIST_CASTLE: [U64; 16] = [0; 16];
-static mut ZOBRIST_EP: [U64; 64] = [0; 64];
-static mut ZOBRIST_SIDE: U64 = 0;
-
-fn lcg_rand(state: &mut u64) -> u64 {
-    // Simple LCG for reproducible numbers
-    *state = state.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
-    *state
-}
-
-fn init_zobrist() {
-    unsafe {
-        let mut seed: u64 = 12345;
-        for c in 0..2 {
-            for p in 0..6 {
-                for sq in 0..64 {
-                    let r = lcg_rand(&mut seed);
-                    ZOBRIST_PIECES[c][p][sq] = r;
-                }
-            }
-        }
-        for i in 0..16 {
-            ZOBRIST_CASTLE[i] = lcg_rand(&mut seed);
-        }
-        for i in 0..64 {
-            ZOBRIST_EP[i] = lcg_rand(&mut seed);
-        }
-        ZOBRIST_SIDE = lcg_rand(&mut seed);
-    }
-}
-
 #[derive(Clone)]
 struct Board {
     pieces: [[U64; 6]; 2],
     occupied: [U64; 2],
     all: U64,
-    side: i32,
+    side: usize,
     ep: i32,
     castle: i32,
     hash: U64,
@@ -266,19 +232,19 @@ impl Board {
                 self.pieces[c][p] = 0;
             }
         }
-        self.pieces[WHITE as usize][PAWN] = 0xFF00u64;
-        self.pieces[WHITE as usize][KNIGHT] = 0x42u64;
-        self.pieces[WHITE as usize][BISHOP] = 0x24u64;
-        self.pieces[WHITE as usize][ROOK] = 0x81u64;
-        self.pieces[WHITE as usize][QUEEN] = 0x8u64;
-        self.pieces[WHITE as usize][KING] = 0x10u64;
+        self.pieces[WHITE][PAWN] = 0xFF00u64;
+        self.pieces[WHITE][KNIGHT] = 0x42u64;
+        self.pieces[WHITE][BISHOP] = 0x24u64;
+        self.pieces[WHITE][ROOK] = 0x81u64;
+        self.pieces[WHITE][QUEEN] = 0x8u64;
+        self.pieces[WHITE][KING] = 0x10u64;
 
-        self.pieces[BLACK as usize][PAWN] = 0xFF000000000000u64;
-        self.pieces[BLACK as usize][KNIGHT] = 0x4200000000000000u64;
-        self.pieces[BLACK as usize][BISHOP] = 0x2400000000000000u64;
-        self.pieces[BLACK as usize][ROOK] = 0x8100000000000000u64;
-        self.pieces[BLACK as usize][QUEEN] = 0x800000000000000u64;
-        self.pieces[BLACK as usize][KING] = 0x1000000000000000u64;
+        self.pieces[BLACK][PAWN] = 0xFF000000000000u64;
+        self.pieces[BLACK][KNIGHT] = 0x4200000000000000u64;
+        self.pieces[BLACK][BISHOP] = 0x2400000000000000u64;
+        self.pieces[BLACK][ROOK] = 0x8100000000000000u64;
+        self.pieces[BLACK][QUEEN] = 0x800000000000000u64;
+        self.pieces[BLACK][KING] = 0x1000000000000000u64;
 
         self.update();
         self.side = WHITE;
@@ -289,13 +255,13 @@ impl Board {
         }
     }
     fn update(&mut self) {
-        self.occupied[WHITE as usize] = 0;
-        self.occupied[BLACK as usize] = 0;
+        self.occupied[WHITE] = 0;
+        self.occupied[BLACK] = 0;
         for p in PAWN..=KING {
-            self.occupied[WHITE as usize] |= self.pieces[WHITE as usize][p];
-            self.occupied[BLACK as usize] |= self.pieces[BLACK as usize][p];
+            self.occupied[WHITE] |= self.pieces[WHITE][p];
+            self.occupied[BLACK] |= self.pieces[BLACK][p];
         }
-        self.all = self.occupied[WHITE as usize] | self.occupied[BLACK as usize];
+        self.all = self.occupied[WHITE] | self.occupied[BLACK];
     }
     fn evaluate(&self) -> i32 {
         let mut eval: i32 = 0;
@@ -304,11 +270,7 @@ impl Board {
         for c in 0..2 {
             for p in 0..6 {
                 let count = self.pieces[c][p].count_ones() as i32;
-                if c == WHITE as usize {
-                    eval += count * values[p];
-                } else {
-                    eval -= count * values[p];
-                }
+                eval += if c == WHITE { count } else { -count } * values[p];
             }
         }
 
@@ -316,8 +278,8 @@ impl Board {
             if self.pieces[c][KING] == 0 {
                 continue;
             }
-            let king_sq = self.pieces[c][KING].trailing_zeros() as i32;
-            if c == WHITE as usize {
+            let king_sq = self.pieces[c][KING].trailing_zeros() as usize;
+            if c == WHITE {
                 if king_sq == 6 || king_sq == 2 {
                     eval += 40;
                 } else if king_sq == 4 {
@@ -333,10 +295,10 @@ impl Board {
         }
 
         let center: U64 = 0x0000001818000000u64;
-        eval += ( (self.pieces[WHITE as usize][PAWN] & center).count_ones() as i32
-            - (self.pieces[BLACK as usize][PAWN] & center).count_ones() as i32) * 20;
+        eval += (self.pieces[WHITE][PAWN] & center).count_ones() as i32 * 20;
+        eval -= (self.pieces[BLACK][PAWN] & center).count_ones() as i32 * 20;
 
-        let mut wpawns = self.pieces[WHITE as usize][PAWN];
+        let mut wpawns = self.pieces[WHITE][PAWN];
         while wpawns != 0 {
             let sq = wpawns.trailing_zeros() as i32;
             let rank = sq / 8;
@@ -346,7 +308,7 @@ impl Board {
             wpawns &= wpawns - 1;
         }
 
-        let mut bpawns = self.pieces[BLACK as usize][PAWN];
+        let mut bpawns = self.pieces[BLACK][PAWN];
         while bpawns != 0 {
             let sq = bpawns.trailing_zeros() as i32;
             let rank = sq / 8;
@@ -356,7 +318,68 @@ impl Board {
             bpawns &= bpawns - 1;
         }
 
-        if self.side == WHITE { eval } else { -eval }
+        if self.side == WHITE {
+            eval
+        } else {
+            -eval
+        }
+    }
+}
+
+fn init_zobrist() {
+    struct SimpleRng {
+        state: u64,
+    }
+    impl SimpleRng {
+        fn new(seed: u64) -> Self {
+            Self { state: seed }
+        }
+        fn next_u32(&mut self) -> u32 {
+            // Xorshift64*
+            let mut x = self.state;
+            x ^= x >> 12;
+            x ^= x << 25;
+            x ^= x >> 27;
+            self.state = x;
+            ((x.wrapping_mul(0x2545F4914F6CDD1D) >> 32) & 0xFFFF_FFFF) as u32
+        }
+    }
+
+    let mut rng = SimpleRng::new(12345);
+    unsafe {
+        for c in 0..2 {
+            for p in 0..6 {
+                for sq in 0..64 {
+                    let a = (rng.next_u32() as U64) << 48;
+                    let b = (rng.next_u32() as U64) << 32;
+                    let cval = (rng.next_u32() as U64) << 16;
+                    let d = rng.next_u32() as U64;
+                    ZOBRIST_PIECES[c][p][sq] = a | b | cval | d;
+                }
+            }
+        }
+
+        for i in 0..16 {
+            let a = (rng.next_u32() as U64) << 48;
+            let b = (rng.next_u32() as U64) << 32;
+            let cval = (rng.next_u32() as U64) << 16;
+            let d = rng.next_u32() as U64;
+            ZOBRIST_CASTLE[i] = a | b | cval | d;
+        }
+
+        for i in 0..64 {
+            let a = (rng.next_u32() as U64) << 48;
+            let b = (rng.next_u32() as U64) << 32;
+            let cval = (rng.next_u32() as U64) << 16;
+            let d = rng.next_u32() as U64;
+            ZOBRIST_EP[i] = a | b | cval | d;
+        }
+
+        let a = (rng.next_u32() as U64) << 48;
+        let b = (rng.next_u32() as U64) << 32;
+        let cval = (rng.next_u32() as U64) << 16;
+        let d = rng.next_u32() as U64;
+        ZOBRIST_SIDE = a | b | cval | d;
     }
 }
 
@@ -373,6 +396,7 @@ fn zobrist_hash(b: &Board) -> U64 {
                 }
             }
         }
+
         hash ^= ZOBRIST_CASTLE[b.castle as usize];
         if b.ep != -1 {
             hash ^= ZOBRIST_EP[b.ep as usize];
@@ -389,31 +413,35 @@ fn get_rook_attacks(sq: usize, blockers: U64) -> U64 {
     let tr = (sq / 8) as i32;
     let tf = (sq % 8) as i32;
 
+    // up
     for r in (tr + 1)..=7 {
-        let idx = (r * 8 + tf) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (r * 8 + tf) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
     }
+    // down
     for r in (0..tr).rev() {
-        let idx = (r * 8 + tf) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (r * 8 + tf) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
     }
+    // right
     for f in (tf + 1)..=7 {
-        let idx = (tr * 8 + f) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (tr * 8 + f) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
     }
+    // left
     for f in (0..tf).rev() {
-        let idx = (tr * 8 + f) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (tr * 8 + f) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
     }
@@ -428,45 +456,45 @@ fn get_bishop_attacks(sq: usize, blockers: U64) -> U64 {
     let mut r = tr + 1;
     let mut f = tf + 1;
     while r <= 7 && f <= 7 {
-        let idx = (r * 8 + f) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (r * 8 + f) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
         r += 1;
         f += 1;
     }
 
-    r = tr + 1;
-    f = tf - 1;
+    let mut r = tr + 1;
+    let mut f = tf - 1;
     while r <= 7 && f >= 0 {
-        let idx = (r * 8 + f) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (r * 8 + f) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
         r += 1;
         f -= 1;
     }
 
-    r = tr - 1;
-    f = tf + 1;
+    let mut r = tr - 1;
+    let mut f = tf + 1;
     while r >= 0 && f <= 7 {
-        let idx = (r * 8 + f) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (r * 8 + f) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
         r -= 1;
         f += 1;
     }
 
-    r = tr - 1;
-    f = tf - 1;
+    let mut r = tr - 1;
+    let mut f = tf - 1;
     while r >= 0 && f >= 0 {
-        let idx = (r * 8 + f) as usize;
-        attacks |= 1u64 << idx;
-        if (1u64 << idx) & blockers != 0 {
+        let pos = (r * 8 + f) as usize;
+        attacks |= 1u64 << pos;
+        if (1u64 << pos) & blockers != 0 {
             break;
         }
         r -= 1;
@@ -476,36 +504,36 @@ fn get_bishop_attacks(sq: usize, blockers: U64) -> U64 {
     attacks
 }
 
-fn is_attacked(sq: usize, attacker: i32, b: &Board) -> bool {
+fn is_attacked(sq: usize, attacker: usize, b: &Board) -> bool {
     unsafe {
         if attacker == WHITE {
-            if sq >= 9 && sq % 8 != 0 && ((1u64 << (sq - 9)) & b.pieces[WHITE as usize][PAWN]) != 0 {
+            if sq >= 9 && (sq % 8) != 0 && ((1u64 << (sq - 9)) & b.pieces[WHITE][PAWN]) != 0 {
                 return true;
             }
-            if sq >= 7 && sq % 8 != 7 && ((1u64 << (sq - 7)) & b.pieces[WHITE as usize][PAWN]) != 0 {
+            if sq >= 7 && (sq % 8) != 7 && ((1u64 << (sq - 7)) & b.pieces[WHITE][PAWN]) != 0 {
                 return true;
             }
         } else {
-            if sq <= 56 && sq % 8 != 0 && ((1u64 << (sq + 7)) & b.pieces[BLACK as usize][PAWN]) != 0 {
+            if sq <= 56 && (sq % 8) != 0 && ((1u64 << (sq + 7)) & b.pieces[BLACK][PAWN]) != 0 {
                 return true;
             }
-            if sq <= 54 && sq % 8 != 7 && ((1u64 << (sq + 9)) & b.pieces[BLACK as usize][PAWN]) != 0 {
+            if sq <= 54 && (sq % 8) != 7 && ((1u64 << (sq + 9)) & b.pieces[BLACK][PAWN]) != 0 {
                 return true;
             }
         }
 
-        if (KNIGHT_MOVES[sq] & b.pieces[attacker as usize][KNIGHT]) != 0 {
+        if (KNIGHT_MOVES[sq] & b.pieces[attacker][KNIGHT]) != 0 {
             return true;
         }
-        if (KING_MOVES[sq] & b.pieces[attacker as usize][KING]) != 0 {
+        if (KING_MOVES[sq] & b.pieces[attacker][KING]) != 0 {
             return true;
         }
     }
 
-    if (get_rook_attacks(sq, b.all) & (b.pieces[attacker as usize][ROOK] | b.pieces[attacker as usize][QUEEN])) != 0 {
+    if (get_rook_attacks(sq, b.all) & (b.pieces[attacker][ROOK] | b.pieces[attacker][QUEEN])) != 0 {
         return true;
     }
-    if (get_bishop_attacks(sq, b.all) & (b.pieces[attacker as usize][BISHOP] | b.pieces[attacker as usize][QUEEN])) != 0 {
+    if (get_bishop_attacks(sq, b.all) & (b.pieces[attacker][BISHOP] | b.pieces[attacker][QUEEN])) != 0 {
         return true;
     }
 
@@ -513,15 +541,14 @@ fn is_attacked(sq: usize, attacker: i32, b: &Board) -> bool {
 }
 
 fn is_in_check(b: &Board) -> bool {
-    let side = b.side as usize;
-    if b.pieces[side][KING] == 0 {
+    if b.pieces[b.side][KING] == 0 {
         return false;
     }
-    let king_sq = b.pieces[side][KING].trailing_zeros() as usize;
+    let king_sq = b.pieces[b.side][KING].trailing_zeros() as usize;
     is_attacked(king_sq, 1 - b.side, b)
 }
 
-fn make_move(b: &mut Board, m: Move) {
+fn make_move(b: &mut Board, m: &Move) {
     let from_bb: U64 = 1u64 << m.from;
     let to_bb: U64 = 1u64 << m.to;
 
@@ -529,8 +556,8 @@ fn make_move(b: &mut Board, m: Move) {
     let prev_ep = b.ep;
 
     unsafe {
-        b.hash ^= ZOBRIST_PIECES[b.side as usize][m.piece as usize][m.from];
-        b.hash ^= ZOBRIST_PIECES[b.side as usize][m.piece as usize][m.to];
+        b.hash ^= ZOBRIST_PIECES[b.side][m.piece][m.from];
+        b.hash ^= ZOBRIST_PIECES[b.side][m.piece][m.to];
 
         if b.ep != -1 {
             b.hash ^= ZOBRIST_EP[b.ep as usize];
@@ -538,7 +565,7 @@ fn make_move(b: &mut Board, m: Move) {
         b.hash ^= ZOBRIST_CASTLE[b.castle as usize];
     }
 
-    if m.piece == KING as i32 {
+    if m.piece == KING {
         if b.side == WHITE {
             b.castle &= !3;
         } else {
@@ -563,71 +590,74 @@ fn make_move(b: &mut Board, m: Move) {
     }
     b.ep = -1;
 
-    // Move piece
-    let side_idx = b.side as usize;
-    b.pieces[side_idx][m.piece as usize] ^= from_bb | to_bb;
+    b.pieces[b.side][m.piece] ^= from_bb | to_bb;
 
-    // Handle captures
-    let opponent_idx = opponent as usize;
+    // handle captures
     for p in PAWN..=KING {
-        if (b.pieces[opponent_idx][p] & to_bb) != 0 {
-            b.pieces[opponent_idx][p] ^= to_bb;
+        if (b.pieces[opponent][p] & to_bb) != 0 {
+            b.pieces[opponent][p] ^= to_bb;
             unsafe {
-                b.hash ^= ZOBRIST_PIECES[opponent_idx][p][m.to];
+                b.hash ^= ZOBRIST_PIECES[opponent][p][m.to];
             }
             break;
         }
     }
 
-    // Special moves
-    if m.piece == PAWN as i32 {
+    if m.piece == PAWN {
         if m.to as i32 == prev_ep {
-            let captured_pawn_sq = if b.side == WHITE { (m.to as i32) - 8 } else { (m.to as i32) + 8 };
-            let sq = captured_pawn_sq as usize;
-            b.pieces[opponent_idx][PAWN] ^= 1u64 << sq;
+            let captured_pawn_sq = if b.side == WHITE {
+                (m.to as i32) - 8
+            } else {
+                (m.to as i32) + 8
+            } as usize;
+            b.pieces[opponent][PAWN] ^= 1u64 << captured_pawn_sq;
             unsafe {
-                b.hash ^= ZOBRIST_PIECES[opponent_idx][PAWN][sq];
+                b.hash ^= ZOBRIST_PIECES[opponent][PAWN][captured_pawn_sq];
             }
         }
         if (m.from as i32 - m.to as i32).abs() == 16 {
-            b.ep = if b.side == WHITE { (m.from as i32) + 8 } else { (m.from as i32) - 8 };
+            b.ep = if b.side == WHITE {
+                (m.from as i32) + 8
+            } else {
+                (m.from as i32) - 8
+            };
             unsafe {
                 b.hash ^= ZOBRIST_EP[b.ep as usize];
             }
         }
         if m.promo != 0 {
-            b.pieces[side_idx][PAWN] ^= to_bb;
-            b.pieces[side_idx][m.promo as usize] ^= to_bb;
+            b.pieces[b.side][PAWN] ^= to_bb;
+            b.pieces[b.side][m.promo] ^= to_bb;
             unsafe {
-                b.hash ^= ZOBRIST_PIECES[side_idx][PAWN][m.to];
-                b.hash ^= ZOBRIST_PIECES[side_idx][m.promo as usize][m.to];
+                b.hash ^= ZOBRIST_PIECES[b.side][PAWN][m.to];
+                b.hash ^= ZOBRIST_PIECES[b.side][m.promo][m.to];
             }
         }
-    } else if m.piece == KING as i32 {
+    } else if m.piece == KING {
         if (m.from as i32 - m.to as i32).abs() == 2 {
             if m.to == 6 {
-                b.pieces[WHITE as usize][ROOK] ^= (1u64 << 7) | (1u64 << 5);
+                b.pieces[WHITE][ROOK] ^= (1u64 << 7) | (1u64 << 5);
                 unsafe {
-                    b.hash ^= ZOBRIST_PIECES[WHITE as usize][ROOK][7];
-                    b.hash ^= ZOBRIST_PIECES[WHITE as usize][ROOK][5];
+                    b.hash ^= ZOBRIST_PIECES[WHITE][ROOK][7];
+                    b.hash ^= ZOBRIST_PIECES[WHITE][ROOK][5];
                 }
             } else if m.to == 2 {
-                b.pieces[WHITE as usize][ROOK] ^= (1u64 << 0) | (1u64 << 3);
+                b.pieces[WHITE][ROOK] ^= (1u64 << 0) | (1u64 << 3);
                 unsafe {
-                    b.hash ^= ZOBRIST_PIECES[WHITE as usize][ROOK][0];
-                    b.hash ^= ZOBRIST_PIECES[WHITE as usize][ROOK][3];
+                    b.hash ^= ZOBRIST_PIECES[WHITE][ROOK][0];
+                    b.hash ^= ZOBRIST_PIECES[WHITE][ROOK][3];
                 }
             } else if m.to == 62 {
-                b.pieces[BLACK as usize][ROOK] ^= (1u64 << 63) | (1u64 << 61);
+                b.pieces[BLACK][ROOK] ^= (1u64 << 63) | (1u64 << 61);
                 unsafe {
-                    b.hash ^= ZOBRIST_PIECES[BLACK as usize][ROOK][63];
-                    b.hash ^= ZOBRIST_PIECES[BLACK as usize][ROOK][61];
+                    b.hash ^= ZOBRIST_PIECES[BLACK][ROOK][63];
+                    b.hash ^= ZOBRIST_PIECES[BLACK][ROOK][61];
                 }
             } else if m.to == 58 {
-                b.pieces[BLACK as usize][ROOK] ^= (1u64 << 56) | (1u64 << 59);
+                b.pieces[BLACK][ROOK] ^= (1u64 << 56) | (1u64 << 59);
                 unsafe {
-                    b.hash ^= ZOBRIST_PIECES[BLACK as usize][ROOK][56];
-                    b.hash ^= ZOBRIST_PIECES[BLACK as usize][ROOK][59];
+                    b.hash ^= ZOBRIST_PIECES[BLACK][ROOK][56];
+                    b.hash ^= ZOBRIST_PIECES[BLACK][ROOK][59];
                 }
             }
         }
@@ -640,13 +670,13 @@ fn make_move(b: &mut Board, m: Move) {
     }
 }
 
-fn is_legal_move(b: &Board, m: Move) -> bool {
+fn is_legal_move(b: &Board, m: &Move) -> bool {
     let mut copy = b.clone();
     make_move(&mut copy, m);
-    if copy.pieces[b.side as usize][KING] == 0 {
+    if copy.pieces[b.side][KING] == 0 {
         return false;
     }
-    let king_sq = copy.pieces[b.side as usize][KING].trailing_zeros() as usize;
+    let king_sq = copy.pieces[b.side][KING].trailing_zeros() as usize;
     !is_attacked(king_sq, copy.side, &copy)
 }
 
@@ -654,27 +684,27 @@ fn generate_moves(b: &Board, captures_only: bool) -> Vec<Move> {
     let mut moves: Vec<Move> = Vec::with_capacity(if captures_only { 32 } else { 128 });
 
     for p in PAWN..=KING {
-        let mut bitboard = b.pieces[b.side as usize][p];
+        let mut bitboard = b.pieces[b.side][p];
         while bitboard != 0 {
             let from = bitboard.trailing_zeros() as usize;
             let mut attacks: U64 = 0;
 
             if p == PAWN {
-                let dir = if b.side == WHITE { 8 } else { -8 };
-                let promo_rank = if b.side == WHITE { 7 } else { 0 };
+                let dir: i32 = if b.side == WHITE { 8 } else { -8 };
+                let promo_rank: i32 = if b.side == WHITE { 7 } else { 0 };
 
                 if !captures_only {
-                    let to_sq = (from as i32 + dir) as i32;
+                    let to_sq = from as i32 + dir;
                     if to_sq >= 0 && to_sq < 64 && (b.all & (1u64 << to_sq)) == 0 {
                         if (to_sq / 8) == promo_rank {
-                            moves.push(Move::new(from, to_sq as usize, p as i32, -1, QUEEN as i32));
+                            moves.push(Move::new(from, to_sq as usize, p, -1, QUEEN));
                         } else {
-                            moves.push(Move::new(from, to_sq as usize, p as i32, -1, 0));
+                            moves.push(Move::new(from, to_sq as usize, p, -1, 0));
                             let start_rank = if b.side == WHITE { 1 } else { 6 };
                             if (from / 8) == start_rank {
-                                let to_sq2 = (from as i32 + 2 * dir) as i32;
+                                let to_sq2 = from as i32 + 2 * dir;
                                 if (b.all & (1u64 << to_sq2)) == 0 {
-                                    moves.push(Move::new(from, to_sq2 as usize, p as i32, -1, 0));
+                                    moves.push(Move::new(from, to_sq2 as usize, p, -1, 0));
                                 }
                             }
                         }
@@ -683,46 +713,46 @@ fn generate_moves(b: &Board, captures_only: bool) -> Vec<Move> {
 
                 let cap_dirs = [dir - 1, dir + 1];
                 for &d in &cap_dirs {
-                    let to_i = from as i32 + d;
-                    if to_i < 0 || to_i > 63 || ( (from % 8) as i32 - (to_i as i32 % 8) ).abs() > 1 {
+                    let to = from as i32 + d;
+                    if to < 0 || to > 63 || ((from % 8) as i32 - (to as i32 % 8) as i32).abs() > 1 {
                         continue;
                     }
-                    let to = to_i as usize;
-                    if (b.occupied[1 - b.side as usize] & (1u64 << to)) != 0 {
-                        if (to / 8) as i32 == promo_rank {
-                            moves.push(Move::new(from, to, p as i32, 0, QUEEN as i32));
+                    let to_us = to as usize;
+                    if (b.occupied[1 - b.side] & (1u64 << to_us)) != 0 {
+                        if (to / 8) == promo_rank {
+                            moves.push(Move::new(from, to_us, p, 0, QUEEN));
                         } else {
-                            moves.push(Move::new(from, to, p as i32, -1, 0));
+                            moves.push(Move::new(from, to_us, p, -1, 0));
                         }
-                    } else if !captures_only && (to as i32) == b.ep {
-                        moves.push(Move::new(from, to, p as i32, -1, 0));
+                    } else if !captures_only && to as i32 == b.ep {
+                        moves.push(Move::new(from, to_us, p, -1, 0));
                     }
                 }
             } else if p == KING && !captures_only {
                 unsafe {
-                    attacks = KING_MOVES[from] & !b.occupied[b.side as usize];
+                    attacks = KING_MOVES[from] & !b.occupied[b.side];
                 }
                 if !is_in_check(b) {
                     if b.side == WHITE {
                         if (b.castle & 1) != 0 && (b.all & 0x60u64) == 0 {
                             if !is_attacked(5, BLACK, b) && !is_attacked(6, BLACK, b) {
-                                moves.push(Move::new(4, 6, KING as i32, -1, 0));
+                                moves.push(Move::new(4, 6, KING, -1, 0));
                             }
                         }
                         if (b.castle & 2) != 0 && (b.all & 0xEu64) == 0 {
                             if !is_attacked(3, BLACK, b) && !is_attacked(2, BLACK, b) {
-                                moves.push(Move::new(4, 2, KING as i32, -1, 0));
+                                moves.push(Move::new(4, 2, KING, -1, 0));
                             }
                         }
                     } else {
                         if (b.castle & 4) != 0 && (b.all & 0x6000000000000000u64) == 0 {
                             if !is_attacked(61, WHITE, b) && !is_attacked(62, WHITE, b) {
-                                moves.push(Move::new(60, 62, KING as i32, -1, 0));
+                                moves.push(Move::new(60, 62, KING, -1, 0));
                             }
                         }
                         if (b.castle & 8) != 0 && (b.all & 0xE00000000000000u64) == 0 {
                             if !is_attacked(59, WHITE, b) && !is_attacked(58, WHITE, b) {
-                                moves.push(Move::new(60, 58, KING as i32, -1, 0));
+                                moves.push(Move::new(60, 58, KING, -1, 0));
                             }
                         }
                     }
@@ -745,15 +775,15 @@ fn generate_moves(b: &Board, captures_only: bool) -> Vec<Move> {
                 }
 
                 if captures_only {
-                    attacks &= b.occupied[1 - b.side as usize];
+                    attacks &= b.occupied[1 - b.side];
                 } else {
-                    attacks &= !b.occupied[b.side as usize];
+                    attacks &= !b.occupied[b.side];
                 }
             }
 
             while attacks != 0 {
                 let to = attacks.trailing_zeros() as usize;
-                moves.push(Move::new(from, to, p as i32, -1, 0));
+                moves.push(Move::new(from, to, p, -1, 0));
                 attacks &= attacks - 1;
             }
 
@@ -763,27 +793,26 @@ fn generate_moves(b: &Board, captures_only: bool) -> Vec<Move> {
 
     let mut legal_moves: Vec<Move> = Vec::with_capacity(moves.len());
     for m in moves {
-        if is_legal_move(b, m) {
+        if is_legal_move(b, &m) {
             legal_moves.push(m);
         }
     }
     legal_moves
 }
 
-fn score_moves(moves: &mut [Move], b: &Board, tt_move: Option<Move>, ply: usize) {
+fn score_moves(moves: &mut [Move], b: &Board, tt_move: Option<&Move>, ply: usize) {
     for m in moves.iter_mut() {
         if let Some(ttm) = tt_move {
-            if *m == ttm {
+            if *m == *ttm {
                 m.score = 1_000_000;
                 continue;
             }
         }
-
-        if (b.occupied[1 - b.side as usize] & (1u64 << m.to)) != 0 {
-            let victim_values = [100, 300, 300, 500, 900, 10000];
+        if (b.occupied[1 - b.side] & (1u64 << m.to)) != 0 {
+            let victim_values = [100, 300, 300, 500, 900, 10_000];
             for p in (PAWN..=KING).rev() {
-                if (b.pieces[1 - b.side as usize][p] & (1u64 << m.to)) != 0 {
-                    m.score = 100_000 + victim_values[p] * 10 - victim_values[m.piece as usize];
+                if (b.pieces[1 - b.side][p] & (1u64 << m.to)) != 0 {
+                    m.score = 100_000 + victim_values[p] * 10 - victim_values[m.piece];
                     break;
                 }
             }
@@ -791,14 +820,13 @@ fn score_moves(moves: &mut [Move], b: &Board, tt_move: Option<Move>, ply: usize)
             unsafe {
                 if KILLER_MOVES.is_killer(m, ply) {
                     m.score = 90_000;
-                    continue;
+                } else {
+                    m.score = HISTORY_TABLE.get(b.side, m.from, m.to);
                 }
             }
-            unsafe {
-                m.score = HISTORY_TABLE.get(b.side as usize, m.from, m.to);
-            }
         }
-        if m.promo == QUEEN as i32 {
+
+        if m.promo == QUEEN {
             m.score += 80_000;
         }
     }
@@ -806,12 +834,11 @@ fn score_moves(moves: &mut [Move], b: &Board, tt_move: Option<Move>, ply: usize)
     moves.sort_by(|a, b| b.score.cmp(&a.score));
 }
 
-fn quiescence(b: &Board, alpha: i32, beta: i32, depth: i32) -> i32 {
+fn quiescence(b: &Board, mut alpha: i32, beta: i32, depth: i32) -> i32 {
     unsafe {
         SEARCH_STATS.qnodes += 1;
     }
 
-    let mut alpha = alpha;
     let stand_pat = b.evaluate();
 
     if stand_pat >= beta {
@@ -829,7 +856,7 @@ fn quiescence(b: &Board, alpha: i32, beta: i32, depth: i32) -> i32 {
 
     for m in captures {
         let mut gain = 200;
-        if m.piece != PAWN as i32 {
+        if m.piece != PAWN {
             gain = 900;
         }
         if stand_pat + gain < alpha && depth < -1 {
@@ -837,10 +864,9 @@ fn quiescence(b: &Board, alpha: i32, beta: i32, depth: i32) -> i32 {
         }
 
         let mut copy = b.clone();
-        make_move(&mut copy, m);
+        make_move(&mut copy, &m);
 
         let score = -quiescence(&copy, -beta, -alpha, depth - 1);
-
         if score >= beta {
             return beta;
         }
@@ -852,7 +878,15 @@ fn quiescence(b: &Board, alpha: i32, beta: i32, depth: i32) -> i32 {
     alpha
 }
 
-fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, ply: i32, null_move: bool) -> i32 {
+fn search(
+    b: &Board,
+    depth: i32,
+    mut alpha: i32,
+    beta: i32,
+    best_move: &mut Move,
+    ply: i32,
+    null_move: bool,
+) -> i32 {
     unsafe {
         SEARCH_STATS.nodes += 1;
     }
@@ -864,38 +898,33 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
     }
 
     let tt_index = (b.hash as usize) % TT_SIZE;
-    let mut tt_entry: TTEntry;
+    let mut tt_move_opt: Option<Move> = None;
     unsafe {
-        tt_entry = TRANSPOSITION_TABLE[tt_index];
-    }
-    let mut tt_move: Option<Move> = None;
-
-    if tt_entry.hash == b.hash && tt_entry.depth >= depth {
-        if tt_entry.flag == TT_EXACT {
-            if ply == 0 {
-                best_move.from = (tt_entry.best_move & 63) as usize;
-                best_move.to = ((tt_entry.best_move >> 6) & 63) as usize;
-                best_move.piece = ((tt_entry.best_move >> 12) & 7) as i32;
+        let tt_entry = TRANSPOSITION_TABLE[tt_index];
+        if tt_entry.hash == b.hash && tt_entry.depth >= depth {
+            if tt_entry.flag == TT_EXACT {
+                if ply == 0 {
+                    best_move.from = (tt_entry.best_move & 63) as usize;
+                    best_move.to = ((tt_entry.best_move >> 6) & 63) as usize;
+                    best_move.piece = ((tt_entry.best_move >> 12) & 7) as usize;
+                }
+                return tt_entry.score;
             }
-            return tt_entry.score;
+            if tt_entry.flag == TT_ALPHA && tt_entry.score <= alpha {
+                return alpha;
+            }
+            if tt_entry.flag == TT_BETA && tt_entry.score >= beta {
+                return beta;
+            }
         }
-        if tt_entry.flag == TT_ALPHA && tt_entry.score <= alpha {
-            return alpha;
-        }
-        if tt_entry.flag == TT_BETA && tt_entry.score >= beta {
-            return beta;
-        }
-    }
 
-    if tt_entry.hash == b.hash && tt_entry.best_move != 0 {
-        let mm = Move::new(
-            (tt_entry.best_move & 63) as usize,
-            ((tt_entry.best_move >> 6) & 63) as usize,
-            ((tt_entry.best_move >> 12) & 7) as i32,
-            -1,
-            0,
-        );
-        tt_move = Some(mm);
+        if tt_entry.hash == b.hash && tt_entry.best_move != 0 {
+            let mut mv = Move::default();
+            mv.from = (tt_entry.best_move & 63) as usize;
+            mv.to = ((tt_entry.best_move >> 6) & 63) as usize;
+            mv.piece = ((tt_entry.best_move >> 12) & 7) as usize;
+            tt_move_opt = Some(mv);
+        }
     }
 
     if depth <= 0 {
@@ -927,8 +956,12 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
         return 0;
     }
 
-    let tt_move_ref = if tt_entry.hash == b.hash { tt_move } else { None };
-    score_moves(&mut moves, b, tt_move_ref, ply as usize);
+    score_moves(
+        &mut moves,
+        b,
+        tt_move_opt.as_ref(),
+        ply as usize,
+    );
 
     if ply == 0 && !moves.is_empty() {
         *best_move = moves[0];
@@ -938,14 +971,17 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
     let mut best_score = -INF;
     let mut local_best = Move::default();
     let orig_alpha = alpha;
-    let mut alpha = alpha;
 
-    for m in moves {
+    for m in moves.into_iter() {
         move_count += 1;
+
         let mut reduction = 0;
-        if move_count > 4 && depth >= 3 && !in_check &&
-            (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 &&
-            m.promo == 0 {
+        if move_count > 4
+            && depth >= 3
+            && !in_check
+            && (b.occupied[1 - b.side] & (1u64 << m.to)) == 0
+            && m.promo == 0
+        {
             if move_count > 12 {
                 reduction = 3;
             } else if move_count > 6 {
@@ -954,14 +990,16 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
                 reduction = 1;
             }
             unsafe {
-                if KILLER_MOVES.is_killer(&m, ply as usize) || HISTORY_TABLE.get(b.side as usize, m.from, m.to) > 5000 {
+                if KILLER_MOVES.is_killer(&m, ply as usize)
+                    || HISTORY_TABLE.get(b.side, m.from, m.to) > 5000
+                {
                     reduction = max(0, reduction - 1);
                 }
             }
         }
 
         let mut copy = b.clone();
-        make_move(&mut copy, m);
+        make_move(&mut copy, &m);
 
         let score: i32;
         if move_count == 1 {
@@ -971,47 +1009,17 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
             let mut dummy = Move::default();
             let mut sc = -search(&copy, depth - 1 - reduction, -alpha - 1, -alpha, &mut dummy, ply + 1, true);
             if sc > alpha && sc < beta {
-                sc = -search(&copy, depth - 1, -beta, -alpha, &mut dummy, ply + 1, true);
+                let mut dummy2 = Move::default();
+                sc = -search(&copy, depth - 1, -beta, -alpha, &mut dummy2, ply + 1, true);
             }
-            score = sc;
-        }
-
-        if reduction > 0 && score > alpha {
-            let mut dummy = Move::default();
-            let sc = -search(&copy, depth - 1, -beta, -alpha, &mut dummy, ply + 1, true);
-            let score = sc;
-            if score > best_score {
-                best_score = score;
-                local_best = m;
-                if ply == 0 {
-                    *best_move = m;
-                }
+            // Reassign
+            let mut sc_final = sc;
+            // Re-search without reduction if reduced search failed high
+            if reduction > 0 && sc_final > alpha {
+                let mut dummy3 = Move::default();
+                sc_final = -search(&copy, depth - 1, -beta, -alpha, &mut dummy3, ply + 1, true);
             }
-            if score > alpha {
-                alpha = score;
-                unsafe {
-                    if (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 {
-                        HISTORY_TABLE.update(b.side as usize, m.from, m.to, depth);
-                    }
-                }
-            }
-            if alpha >= beta {
-                unsafe {
-                    if (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 {
-                        KILLER_MOVES.update(m, ply as usize);
-                    }
-                }
-                break;
-            }
-            // futility pruning check continues
-            if depth <= 2 && !in_check && move_count > 8 &&
-                (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 {
-                let futility_margin = depth * 100;
-                if b.evaluate() + futility_margin < alpha {
-                    break;
-                }
-            }
-            continue;
+            score = sc_final;
         }
 
         if score > best_score {
@@ -1024,24 +1032,23 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
 
         if score > alpha {
             alpha = score;
-            unsafe {
-                if (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 {
-                    HISTORY_TABLE.update(b.side as usize, m.from, m.to, depth);
+            if (b.occupied[1 - b.side] & (1u64 << m.to)) == 0 {
+                unsafe {
+                    HISTORY_TABLE.update(b.side, m.from, m.to, depth);
                 }
             }
         }
 
         if alpha >= beta {
-            unsafe {
-                if (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 {
+            if (b.occupied[1 - b.side] & (1u64 << m.to)) == 0 {
+                unsafe {
                     KILLER_MOVES.update(m, ply as usize);
                 }
             }
             break;
         }
 
-        if depth <= 2 && !in_check && move_count > 8 &&
-            (b.occupied[1 - b.side as usize] & (1u64 << m.to)) == 0 {
+        if depth <= 2 && !in_check && move_count > 8 && (b.occupied[1 - b.side] & (1u64 << m.to)) == 0 {
             let futility_margin = depth * 100;
             if b.evaluate() + futility_margin < alpha {
                 break;
@@ -1049,18 +1056,20 @@ fn search(b: &Board, depth: i32, alpha: i32, beta: i32, best_move: &mut Move, pl
         }
     }
 
-    // Store in transposition table
     unsafe {
-        TRANSPOSITION_TABLE[tt_index].hash = b.hash;
-        TRANSPOSITION_TABLE[tt_index].depth = depth;
-        TRANSPOSITION_TABLE[tt_index].score = best_score;
-        TRANSPOSITION_TABLE[tt_index].best_move = (local_best.from as i32) | ((local_best.to as i32) << 6) | ((local_best.piece as i32) << 12);
+        let tt_entry = &mut TRANSPOSITION_TABLE[tt_index];
+        tt_entry.hash = b.hash;
+        tt_entry.depth = depth;
+        tt_entry.score = best_score;
+        tt_entry.best_move =
+            (local_best.from as i32) | ((local_best.to as i32) << 6) | ((local_best.piece as i32) << 12);
+
         if best_score <= orig_alpha {
-            TRANSPOSITION_TABLE[tt_index].flag = TT_ALPHA;
+            tt_entry.flag = TT_ALPHA;
         } else if best_score >= beta {
-            TRANSPOSITION_TABLE[tt_index].flag = TT_BETA;
+            tt_entry.flag = TT_BETA;
         } else {
-            TRANSPOSITION_TABLE[tt_index].flag = TT_EXACT;
+            tt_entry.flag = TT_EXACT;
         }
     }
 
@@ -1088,27 +1097,27 @@ fn iterative_deepening(b: &Board, max_depth: i32, best_move: &mut Move, time_lim
         }
 
         let temp_score = {
-            let mut bm_local = Move::default();
-            search(b, depth, alpha, beta, &mut bm_local, 0, true)
+            let mut bm = Move::default();
+            search(b, depth, alpha, beta, &mut bm, 0, true)
         };
 
-        let mut temp_score = temp_score;
-        if temp_score <= alpha || temp_score >= beta {
-            let mut bm_local = Move::default();
-            temp_score = search(b, depth, -INF, INF, &mut bm_local, 0, true);
+        let mut final_score = temp_score;
+        if final_score <= alpha || final_score >= beta {
+            let mut bm = Move::default();
+            final_score = search(b, depth, -INF, INF, &mut bm, 0, true);
             window = 50;
         } else {
             window = 25;
         }
 
-        score = temp_score;
+        score = final_score;
 
         if time_limit > 0 {
             unsafe {
                 if let Some(start) = SEARCH_STATS.start_time {
-                    let elapsed = Instant::now() - start;
-                    let ms = elapsed.as_millis() as i128;
-                    if ms > (time_limit as i128) * 4 / 10 && depth > 4 {
+                    let elapsed = Instant::now().duration_since(start);
+                    let ms = elapsed.as_millis() as i32;
+                    if ms > (time_limit as i32) * 40 / 100 && depth > 4 {
                         break;
                     }
                 }
@@ -1118,10 +1127,11 @@ fn iterative_deepening(b: &Board, max_depth: i32, best_move: &mut Move, time_lim
         // Output UCI info
         print!("info depth {}", depth);
         print!(" score ");
-
         if score.abs() >= MATE - 1000 {
             let mut mate_in = (MATE - score.abs() + 1) / 2;
-            if score < 0 { mate_in = -mate_in; }
+            if score < 0 {
+                mate_in = -mate_in;
+            }
             print!("mate {}", mate_in);
         } else {
             print!("cp {}", score);
@@ -1133,22 +1143,21 @@ fn iterative_deepening(b: &Board, max_depth: i32, best_move: &mut Move, time_lim
         }
         print!(" pv ");
 
-        // Output best move
         let mut move_str = String::new();
-        move_str.push(( (best_move.from % 8) as u8 + b'a') as char);
-        move_str.push(( (best_move.from / 8) as u8 + b'1') as char);
-        move_str.push(( (best_move.to % 8) as u8 + b'a') as char);
-        move_str.push(( (best_move.to / 8) as u8 + b'1') as char);
+        move_str.push((('a' as u8) + (best_move.from % 8) as u8) as char);
+        move_str.push((('1' as u8) + (best_move.from / 8) as u8) as char);
+        move_str.push((('a' as u8) + (best_move.to % 8) as u8) as char);
+        move_str.push((('1' as u8) + (best_move.to / 8) as u8) as char);
         if best_move.promo != 0 {
             match best_move.promo {
-                x if x == QUEEN as i32 => move_str.push('q'),
-                x if x == ROOK as i32 => move_str.push('r'),
-                x if x == BISHOP as i32 => move_str.push('b'),
-                x if x == KNIGHT as i32 => move_str.push('n'),
+                QUEEN => move_str.push('q'),
+                ROOK => move_str.push('r'),
+                BISHOP => move_str.push('b'),
+                KNIGHT => move_str.push('n'),
                 _ => {}
             }
         }
-        println!(" {}", move_str);
+        println!("{}{}", " ", move_str);
 
         if score.abs() >= MATE - 1000 {
             break;
@@ -1160,43 +1169,46 @@ fn iterative_deepening(b: &Board, max_depth: i32, best_move: &mut Move, time_lim
 
 fn init_tables() {
     for sq in 0..64 {
-        let x = sq % 8;
-        let y = sq / 8;
+        let x = (sq % 8) as i32;
+        let y = (sq / 8) as i32;
+
         let mut km: U64 = 0;
         for dx in -1..=1 {
             for dy in -1..=1 {
                 if dx == 0 && dy == 0 {
                     continue;
                 }
-                let nx = x as i32 + dx;
-                let ny = y as i32 + dy;
+                let nx = x + dx;
+                let ny = y + dy;
                 if nx >= 0 && nx < 8 && ny >= 0 && ny < 8 {
-                    km |= 1u64 << ((ny * 8 + nx) as usize);
+                    km |= 1u64 << (ny * 8 + nx);
                 }
             }
         }
-        unsafe { KING_MOVES[sq] = km; }
+        unsafe {
+            KING_MOVES[sq] = km;
+        }
 
         let mut nm: U64 = 0;
         let kdx = [2, 2, -2, -2, 1, 1, -1, -1];
         let kdy = [1, -1, 1, -1, 2, -2, 2, -2];
         for i in 0..8 {
-            let nx = x as i32 + kdx[i];
-            let ny = y as i32 + kdy[i];
+            let nx = x + kdx[i];
+            let ny = y + kdy[i];
             if nx >= 0 && nx < 8 && ny >= 0 && ny < 8 {
-                nm |= 1u64 << ((ny * 8 + nx) as usize);
+                nm |= 1u64 << (ny * 8 + nx);
             }
         }
-        unsafe { KNIGHT_MOVES[sq] = nm; }
+        unsafe {
+            KNIGHT_MOVES[sq] = nm;
+        }
     }
 
     init_zobrist();
     unsafe {
         HISTORY_TABLE.init();
         KILLER_MOVES.init();
-        for i in 0..TT_SIZE {
-            TRANSPOSITION_TABLE[i] = TTEntry::new();
-        }
+        // TRANSPOSITION_TABLE already zero-initialized statically
     }
 }
 
@@ -1207,14 +1219,14 @@ fn parse_move(b: &Board, move_str: &str, parsed_move: &mut Move) -> bool {
     }
     let from = (move_str.as_bytes()[0] - b'a') as usize + ((move_str.as_bytes()[1] - b'1') as usize) * 8;
     let to = (move_str.as_bytes()[2] - b'a') as usize + ((move_str.as_bytes()[3] - b'1') as usize) * 8;
-    let mut promo_piece = 0;
+    let mut promo_piece = 0usize;
     if move_str.len() == 5 {
         match move_str.as_bytes()[4] as char {
-            'q' => promo_piece = QUEEN as i32,
-            'r' => promo_piece = ROOK as i32,
-            'b' => promo_piece = BISHOP as i32,
-            'n' => promo_piece = KNIGHT as i32,
-            _ => promo_piece = 0,
+            'q' => promo_piece = QUEEN,
+            'r' => promo_piece = ROOK,
+            'b' => promo_piece = BISHOP,
+            'n' => promo_piece = KNIGHT,
+            _ => {}
         }
     }
 
@@ -1234,21 +1246,43 @@ fn parse_move(b: &Board, move_str: &str, parsed_move: &mut Move) -> bool {
     false
 }
 
+fn format_move_str(mv: &Move) -> String {
+    let mut s = String::new();
+    s.push((('a' as u8) + (mv.from % 8) as u8) as char);
+    s.push((('1' as u8) + (mv.from / 8) as u8) as char);
+    s.push((('a' as u8) + (mv.to % 8) as u8) as char);
+    s.push((('1' as u8) + (mv.to / 8) as u8) as char);
+    if mv.promo != 0 {
+        match mv.promo {
+            QUEEN => s.push('q'),
+            ROOK => s.push('r'),
+            BISHOP => s.push('b'),
+            KNIGHT => s.push('n'),
+            _ => {}
+        }
+    }
+    s
+}
+
 fn main() {
     init_tables();
     let mut board = Board::new();
     board.init();
 
     let stdin = io::stdin();
-    for line in stdin.lock().lines() {
-        if line.is_err() { break; }
-        let line = line.unwrap();
-        let mut parts = line.split_whitespace();
-        let cmd = match parts.next() {
-            Some(c) => c,
-            None => continue,
-        };
-
+    for line_res in stdin.lock().lines() {
+        if line_res.is_err() {
+            break;
+        }
+        let line = line_res.unwrap();
+        if line.is_empty() {
+            continue;
+        }
+        let mut parts: Vec<&str> = line.split_whitespace().collect();
+        if parts.is_empty() {
+            continue;
+        }
+        let cmd = parts[0];
         if cmd == "uci" {
             println!("id name NanoChessTurbo");
             println!("id author CrvProject");
@@ -1256,32 +1290,36 @@ fn main() {
             println!("option name Hash type spin default 64 min 1 max 1024");
             println!("uciok");
         } else if cmd == "setoption" {
-            let mut token = parts.next();
-            if token == Some("name") {
-                let mut option_name = String::new();
-                if let Some(on) = parts.next() {
-                    option_name.push_str(on);
-                    while let Some(next_token) = parts.next() {
-                        if next_token == "value" {
-                            break;
-                        } else {
-                            option_name.push_str(next_token);
+            // naive parsing: find "name" then option name then optional "value"
+            let mut i = 1;
+            let mut name = String::new();
+            while i < parts.len() {
+                if parts[i] == "name" {
+                    i += 1;
+                    while i < parts.len() && parts[i] != "value" {
+                        if !name.is_empty() {
+                            name.push(' ');
                         }
+                        name.push_str(parts[i]);
+                        i += 1;
                     }
+                    break;
                 }
-                if option_name == "Depth" {
-                    if let Some(val_str) = parts.next() {
-                        if let Ok(value) = val_str.parse::<i32>() {
+                i += 1;
+            }
+            if name == "Depth" {
+                // find value token if present
+                if let Some(pos) = parts.iter().position(|&s| s == "value") {
+                    if pos + 1 < parts.len() {
+                        if let Ok(v) = parts[pos + 1].parse::<i32>() {
                             unsafe {
-                                UCI_OPTIONS.depth = max(1, min(30, value));
+                                UCI_OPTIONS.depth = max(1, min(30, v));
                             }
                         }
                     }
-                } else if option_name == "Hash" {
-                    if let Some(_val_str) = parts.next() {
-                        // Could resize TT here if needed
-                    }
                 }
+            } else if name == "Hash" {
+                // ignore for now
             }
         } else if cmd == "isready" {
             println!("readyok");
@@ -1291,157 +1329,141 @@ fn main() {
                 HISTORY_TABLE.init();
                 KILLER_MOVES.init();
                 for i in 0..TT_SIZE {
-                    TRANSPOSITION_TABLE[i] = TTEntry::new();
+                    TRANSPOSITION_TABLE[i] = TT_ENTRY_INIT;
                 }
             }
         } else if cmd == "position" {
-            let sub_cmd = parts.next().unwrap_or("");
-            let mut token = "";
-            if sub_cmd == "startpos" {
+            // position [startpos|fen ...] moves ...
+            let mut idx = 1;
+            if idx < parts.len() && parts[idx] == "startpos" {
                 board.init();
-                token = parts.next().unwrap_or("");
-            } else if sub_cmd == "fen" {
-                board.init();
-                // consume until "moves" or end
-                while let Some(t) = parts.next() {
-                    if t == "moves" {
-                        token = "moves";
-                        break;
-                    }
+                idx += 1;
+            } else if idx < parts.len() && parts[idx] == "fen" {
+                // skip fen fields until "moves" or end
+                idx += 1;
+                while idx < parts.len() && parts[idx] != "moves" {
+                    idx += 1;
                 }
             }
 
-            if token == "moves" {
-                let mut m = Move::default();
-                while let Some(tok) = parts.next() {
-                    if parse_move(&board, tok, &mut m) {
-                        make_move(&mut board, m);
+            if idx < parts.len() && parts[idx] == "moves" {
+                idx += 1;
+                while idx < parts.len() {
+                    let token = parts[idx];
+                    let mut m = Move::default();
+                    if parse_move(&board, token, &mut m) {
+                        make_move(&mut board, &m);
                     }
+                    idx += 1;
                 }
             }
         } else if cmd == "go" {
+            let mut search_depth: i32;
             unsafe {
-                // default
+                search_depth = UCI_OPTIONS.depth;
             }
-            let mut search_depth: i32 = unsafe { UCI_OPTIONS.depth };
-            let mut move_time: i32 = 0;
-            let mut wtime: i32 = 0;
-            let mut btime: i32 = 0;
-            let mut winc: i32 = 0;
-            let mut binc: i32 = 0;
-            let mut movestogo: i32 = 40;
+            let mut move_time = 0i32;
+            let mut wtime = 0i32;
+            let mut btime = 0i32;
+            let mut winc = 0i32;
+            let mut binc = 0i32;
+            let mut movestogo = 40i32;
             let mut infinite = false;
 
-            let mut token_iter = parts.peekable();
-            while let Some(token) = token_iter.next() {
-                match token {
+            let mut i = 1;
+            while i < parts.len() {
+                match parts[i] {
                     "depth" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
+                        if i + 1 < parts.len() {
+                            if let Ok(v) = parts[i + 1].parse::<i32>() {
                                 search_depth = max(1, min(30, v));
                             }
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "movetime" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
-                                move_time = v;
-                            }
+                        if i + 1 < parts.len() {
+                            move_time = parts[i + 1].parse::<i32>().unwrap_or(0);
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "wtime" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
-                                wtime = v;
-                            }
+                        if i + 1 < parts.len() {
+                            wtime = parts[i + 1].parse::<i32>().unwrap_or(0);
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "btime" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
-                                btime = v;
-                            }
+                        if i + 1 < parts.len() {
+                            btime = parts[i + 1].parse::<i32>().unwrap_or(0);
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "winc" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
-                                winc = v;
-                            }
+                        if i + 1 < parts.len() {
+                            winc = parts[i + 1].parse::<i32>().unwrap_or(0);
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "binc" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
-                                binc = v;
-                            }
+                        if i + 1 < parts.len() {
+                            binc = parts[i + 1].parse::<i32>().unwrap_or(0);
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "movestogo" => {
-                        if let Some(s) = token_iter.next() {
-                            if let Ok(v) = s.parse::<i32>() {
-                                movestogo = v;
-                            }
+                        if i + 1 < parts.len() {
+                            movestogo = parts[i + 1].parse::<i32>().unwrap_or(40);
+                            i += 2;
+                        } else {
+                            i += 1;
                         }
                     }
                     "infinite" => {
                         infinite = true;
                         search_depth = 20;
+                        i += 1;
                     }
-                    _ => {}
+                    _ => {
+                        i += 1;
+                    }
                 }
             }
 
-            let allocated_time: i32;
+            let mut allocated_time = 0i32;
             if !infinite && move_time == 0 && (wtime > 0 || btime > 0) {
                 let time_left = if board.side == WHITE { wtime } else { btime };
                 let increment = if board.side == WHITE { winc } else { binc };
-                let mut at = (time_left / movestogo) + ( (increment as f32 * 0.8) as i32 );
-                at = min(at, time_left / 3);
-                allocated_time = at;
+
+                allocated_time = (time_left / movestogo) + (increment as f32 * 0.8) as i32;
+                allocated_time = min(allocated_time, time_left / 3);
             } else if move_time > 0 {
                 allocated_time = (move_time as f32 * 0.95) as i32;
-            } else {
-                allocated_time = 0;
             }
 
             let mut best_move = Move::default();
             iterative_deepening(&board, search_depth, &mut best_move, allocated_time);
 
             if best_move.from != best_move.to || best_move.from != 0 {
-                let mut move_str = String::new();
-                move_str.push(((best_move.from % 8) as u8 + b'a') as char);
-                move_str.push(((best_move.from / 8) as u8 + b'1') as char);
-                move_str.push(((best_move.to % 8) as u8 + b'a') as char);
-                move_str.push(((best_move.to / 8) as u8 + b'1') as char);
-                if best_move.promo != 0 {
-                    match best_move.promo {
-                        x if x == QUEEN as i32 => move_str.push('q'),
-                        x if x == ROOK as i32 => move_str.push('r'),
-                        x if x == BISHOP as i32 => move_str.push('b'),
-                        x if x == KNIGHT as i32 => move_str.push('n'),
-                        _ => {}
-                    }
-                }
+                let move_str = format_move_str(&best_move);
                 println!("bestmove {}", move_str);
             } else {
                 let moves = generate_moves(&board, false);
                 if !moves.is_empty() {
                     let fallback = moves[0];
-                    let mut move_str = String::new();
-                    move_str.push(((fallback.from % 8) as u8 + b'a') as char);
-                    move_str.push(((fallback.from / 8) as u8 + b'1') as char);
-                    move_str.push(((fallback.to % 8) as u8 + b'a') as char);
-                    move_str.push(((fallback.to / 8) as u8 + b'1') as char);
-                    if fallback.promo != 0 {
-                        match fallback.promo {
-                            x if x == QUEEN as i32 => move_str.push('q'),
-                            x if x == ROOK as i32 => move_str.push('r'),
-                            x if x == BISHOP as i32 => move_str.push('b'),
-                            x if x == KNIGHT as i32 => move_str.push('n'),
-                            _ => {}
-                        }
-                    }
+                    let move_str = format_move_str(&fallback);
                     println!("bestmove {}", move_str);
                 } else {
                     println!("bestmove 0000");

@@ -1,5 +1,5 @@
-   0.006770798s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: false }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
-   0.006796377s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-e1b8e821f2f7393f/bin-translated_output`
+   0.007312322s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: false }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
+   0.007348312s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-e1b8e821f2f7393f/bin-translated_output`
 
 Caused by:
     No such file or directory (os error 2)
@@ -22,8 +22,8 @@ Stack backtrace:
   14: <unknown>
   15: __libc_start_main
   16: <unknown>
-   0.007410954s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: true }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
-   0.007418027s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-7752a7ed8e3d32a8/test-bin-translated_output`
+   0.008011232s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint: fingerprint error for translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)/Check { test: true }/TargetInner { name: "translated_output", doc: true, ..: with_path("/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/src/output.rs", Edition2021) }
+   0.008019179s  INFO prepare_target{force=false package_id=translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace) target="translated_output"}: cargo::core::compiler::fingerprint:     err: failed to read `/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace/target/debug/.fingerprint/translated_output-7752a7ed8e3d32a8/test-bin-translated_output`
 
 Caused by:
     No such file or directory (os error 2)
@@ -47,6 +47,6 @@ Stack backtrace:
   15: __libc_start_main
   16: <unknown>
     Checking translated_output v0.1.0 (/home/wef/coding-projects/code-translation-engine/outputs/rust_workspace)
-error: could not compile `translated_output` (bin "translated_output" test) due to 7 previous errors; 2 warnings emitted
+error: could not compile `translated_output` (bin "translated_output" test) due to 1 previous error; 3 warnings emitted
 warning: build failed, waiting for other jobs to finish...
-error: could not compile `translated_output` (bin "translated_output") due to 7 previous errors; 2 warnings emitted
+error: could not compile `translated_output` (bin "translated_output") due to 1 previous error; 3 warnings emitted

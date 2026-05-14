@@ -12,7 +12,7 @@ from config import ExperimentConfig
 if __name__ == "__main__":
     config = ExperimentConfig(
         projects_dir=Path("./inputs/projects"),
-        conditions=("A",),  # For only one condition do:  conditions=("A",),
+        conditions=("B",),  # For only one condition do:  conditions=("A",),
         repetitions=1,
         max_iterations=3,
         translator_model="gpt-5-mini",
