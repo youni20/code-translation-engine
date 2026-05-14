@@ -12,11 +12,11 @@ from config import ExperimentConfig
 if __name__ == "__main__":
     config = ExperimentConfig(
         projects_dir=Path("./inputs/projects"),
-        conditions=("A", "B"),  # For only one condition do:  conditions=("A",),
-        repetitions=3,
+        conditions=("A",),  # For only one condition do:  conditions=("A",),
+        repetitions=1,
         max_iterations=3,
-        translator_model="gpt-4o",
-        repair_model="gpt-4o",
+        translator_model="gpt-5-mini",
+        repair_model="gpt-5-mini",
     )
     run_experiment(config)
     visualize_results(results_path=config.results_path, output_path=config.run_dir)

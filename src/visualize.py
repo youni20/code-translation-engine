@@ -373,7 +373,7 @@ def visualize_results(results_path: Path, output_path: Path) -> None:
 
     _export_csv(df, output_path)
     _export_per_iteration(df, output_path)
-    _export_summary(df, output_path, order)
+    _export_summary(df, order, output_path)
 
     _plot_success_rate(df, order, output_path)
     _plot_cumulative_success(df, order, output_path)
