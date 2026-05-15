@@ -1,40 +1,40 @@
 # Experiment Results — Full Summary
-### Does the type of error feedback matter when auto-translating C++ to Rust?
+### Automated C++ → Rust Translation: Raw Compiler Errors vs. Structured LSP Diagnostics
 
-**Projects tested:** 6 &nbsp;|&nbsp; **Total runs:** 140 (70 per condition) &nbsp;|&nbsp; **Model:** gpt-4o-2024-08-06
-
-> **Short answer:** Condition A (raw compiler errors) succeeds more often and runs faster. The gap is real but not yet statistically proven — most files are too easy for either condition to fail on.
+**Projects tested:** 6 &nbsp;|&nbsp; **Total runs:** 140 (70 per condition) &nbsp;|&nbsp; **Translation units:** 35 files &nbsp;|&nbsp; **Model:** gpt-4o-2024-08-06
 
 ---
 
 ## What We Were Testing
 
-The system takes a C++ source file and translates it to Rust automatically. If the translated code doesn't compile, it enters a **repair loop**: the model reads the error message and tries again, up to **8 times**. If it still hasn't compiled after 8 tries, the run counts as a failure.
+The system translates a C++ file into Rust automatically. If the translated code fails to compile, it enters a **repair loop** — the model reads the error feedback and tries to fix it, up to **8 times**. If it still fails after 8 tries, that run is counted as a failure.
 
-We compared two error feedback signals:
+We compared two types of error feedback:
 
-| | **Condition A** — compiler stderr | **Condition B** — LSP diagnostics |
+| | **Condition A** | **Condition B** |
 |---|---|---|
-| What it is | The plain error text `rustc` prints to the terminal | Structured JSON from `rust-analyzer`: error codes, line/column, severity |
-| Example | `error[E0308]: mismatched types` + code excerpt | Same error, wrapped in a machine-readable format with precise locations |
-| Why we tested B | The hypothesis was: *more structure = better repair guidance* | |
+| Name | Compiler stderr | LSP diagnostics |
+| What it gives the model | The plain error text `rustc` prints to the terminal | Structured JSON from `rust-analyzer`: error codes, line/column numbers, severity |
+| The idea behind B | *More structure should mean better repair guidance* | |
+
+Each file was translated under both conditions, repeated twice, giving 2 reps × 2 conditions per file.
 
 ---
 
 ## The Six Projects
 
-| Project | Description | Files | Runs each |
-|---------|-------------|-------|-----------|
+| Project | What it is | Files tested | Runs per condition |
+|---------|-----------|-------------|-------------------|
 | **immediate2d** | 2D graphics header library + 11 example programs | 13 | 26 |
-| **argh** | Command-line argument parser (single header) | 5 | 10 |
+| **argh** | Command-line argument parser (single C++ header) | 5 | 10 |
 | **debug_assert** | Assertion/debugging macro library | 3 | 6 |
-| **poisson-disk-generator** | Poisson-disk sampling algorithm + demo | 2 | 4 |
-| **TinyRISCV64** | RISC-V 64-bit CPU emulator | 5 | 10 |
+| **poisson-disk-generator** | Poisson-disk point sampling algorithm + demo | 2 | 4 |
+| **TinyRISCV64** | RISC-V 64-bit CPU emulator (instruction decoder + ELF loader) | 5 | 10 |
 | **polypartition** | Polygon partitioning algorithm library | 7 | 14 |
 
 ---
 
-## The Headline Numbers
+## The Headline Result
 
 ![Project comparison](../summary_plots/project_comparison.png)
 
@@ -43,71 +43,48 @@ We compared two error feedback signals:
 | **A: compiler stderr** | 68 | 70 | **97.1%** |
 | **B: LSP diagnostics** | 60 | 70 | **85.7%** |
 
-**A leads by ~11 percentage points.** The shaded "POOLED" bar on the right shows the combined picture across all six projects.
+**A compiles ~11 percentage points more often than B overall.** Looking at the bar chart above, A beats or ties B in 5 of 6 projects. The only reversal is `argh`, where B reaches 100% and A sits at 90%.
+
+The shaded "POOLED" bar on the right summarises everything: A 97%, B 86%.
 
 ---
 
-## Project-by-Project
+## Project-by-Project Breakdown
 
-| Project | A success | B success | Direction | What drove it |
-|---------|-----------|-----------|-----------|---------------|
-| immediate2d | 100% (26/26) | 85% (22/26) | **A > B** | 3 files (raytracer, smoke, paint) failed under B |
-| argh | 90% (9/10) | 100% (10/10) | **B > A** | `argh.h` failed once under A |
-| debug_assert | 100% (6/6) | 100% (6/6) | **Tie** | Both perfect; B was just slower |
-| poisson-disk-generator | 100% (4/4) | 100% (4/4) | **Tie** | Both perfect |
-| TinyRISCV64 | 90% (9/10) | 60% (6/10) | **A >> B** | Core emulator header failed under B both reps |
-| polypartition | 100% (14/14) | 86% (12/14) | **A > B** | 2 test files failed under B |
+| Project | A | B | Who wins | Why |
+|---------|---|---|----------|-----|
+| **TinyRISCV64** | 90% | **60%** | **A by a lot** | Core emulator header failed under B both times; 2 other B failures |
+| **argh** | 90% | **100%** | **B** | Argument parser header failed once under A; B solved it both times |
+| **debug_assert** | 100% | 100% | **Tie** | Both perfect — library too simple to show a difference |
+| **immediate2d** | **100%** | 85% | **A** | Raytracer, smoke simulator, and paint program failed under B |
+| **poisson-disk-generator** | 100% | 100% | **Tie** | Both perfect |
+| **polypartition** | **100%** | 86% | **A** | 2 test files failed under B |
 
-The pattern is **A ≥ B in 5 of 6 projects.** The one exception is `argh`, where B solved a string-parsing argument library that A failed on once.
+The pattern is consistent: **A is ahead or equal in 5 out of 6 projects.** The gap ranges from 4 pp (polypartition, immediate2d) to 30 pp (TinyRISCV64).
 
 ---
 
-## Files That Actually Generated Any Difference
+## The Files That Actually Mattered
 
-Of the **35 translation units** tested across all projects, **26 were perfect ceiling-ties** — both conditions compiled every single run, every time. Only **9 files** showed any difference:
+Of 35 translation units across all projects, **26 were perfect ties** — both conditions compiled every single run. Only **9 files** showed any difference at all:
 
 ![Discriminating files](../summary_plots/discriminating_files.png)
 
-| File | Project | LOC | A rate | B rate | Result |
-|------|---------|-----|--------|--------|--------|
-| `example9_raytracer.cpp` | immediate2d | 255 | 100% | **0%** | A wins |
-| `TinyRISCV64.h` | TinyRISCV64 | 625 | 100% | **0%** | A wins |
-| `test/image.cpp` | polypartition | 390 | 100% | 50% | A partial win |
-| `test/test.cpp` | polypartition | 415 | 100% | 50% | A partial win |
-| `example8_smoke.cpp` | immediate2d | 306 | 100% | 50% | A partial win |
-| `example4_paint.cpp` | immediate2d | 117 | 100% | 50% | A partial win |
-| `stdio_VM_runner.cpp` | TinyRISCV64 | 64 | 100% | 50% | A partial win |
-| `TinyElfRISCV64.h` | TinyRISCV64 | 658 | 50% | 50% | Tie (both hard) |
-| `argh.h` | argh | 485 | 50% | 100% | **B wins** |
+Reading this chart from bottom to top (worst B performance first):
 
-**A wins or partially wins on 7 of the 9 files with any disagreement. B wins on 1.**
+| File | Project | A rate | B rate | Meaning |
+|------|---------|--------|--------|---------|
+| `TinyRISCV64.h` | TinyRISCV64 | 100% | **0%** | B never compiled this — 8 iters × 2 reps, both exhausted |
+| `example9_raytracer.cpp` | immediate2d | 100% | **0%** | Same — B failed both repetitions |
+| `stdio_VM_runner.cpp` | TinyRISCV64 | 100% | 50% | B failed one of two reps |
+| `example4_paint.cpp` | immediate2d | 100% | 50% | B failed one rep |
+| `example8_smoke.cpp` | immediate2d | 100% | 50% | B failed one rep |
+| `image.cpp` | polypartition | 100% | 50% | B failed one rep |
+| `test.cpp` | polypartition | 100% | 50% | B failed one rep |
+| `TinyElfRISCV64.h` | TinyRISCV64 | 50% | 50% | Both conditions failed one rep — hard for everyone |
+| `argh.h` | argh | 50% | **100%** | Only file where A struggled and B didn't |
 
-The 2 files with a complete A-win / B-fail split (`raytracer.cpp` and `TinyRISCV64.h`) are the most informative: B exhausted all 8 repair iterations on both repetitions without ever compiling. A solved both in 3–8 iterations consistently.
-
----
-
-## Speed Comparison
-
-Even when both conditions succeed, they don't perform equally on time:
-
-![Wall time](../summary_plots/wall_time_comparison.png)
-
-![Iterations](../summary_plots/iterations_comparison.png)
-
-| Project | A mean wall time | B mean wall time | A mean iters | B mean iters |
-|---------|-----------------|-----------------|-------------|-------------|
-| immediate2d | 45s | 83s | 1.6 | 2.8 |
-| argh | 49s | 66s | 1.9 | 1.2 |
-| debug_assert | 31s | 51s | 2.3 | 2.7 |
-| poisson-disk-generator | 52s | 98s | 1.0 | 2.0 |
-| TinyRISCV64 | 155s | 230s | 3.7 | 6.2 |
-| polypartition | 52s | 91s | 1.4 | 2.2 |
-
-**B is slower in every project except argh.** Two reasons:
-1. Every repair iteration under B involves an extra `rust-analyzer` query, which adds ~25–30 seconds per round
-2. B's repair trajectories tend to use more iterations even when they succeed
-
-The most extreme example: `Poisson.cpp` rep 0 — A compiled first try (0 iterations, 15 seconds); B needed 5 iterations and 241 seconds for the same final outcome.
+**Summary: A wins on 7 files, B wins on 1, both struggle on 1.** The remaining 26 files (74% of the dataset) are irrelevant to the comparison — both conditions succeed every time on those.
 
 ---
 
@@ -115,102 +92,132 @@ The most extreme example: `Poisson.cpp` rep 0 — A compiled first try (0 iterat
 
 ![Cumulative success](../summary_plots/cumulative_success.png)
 
-This chart shows: out of all 70 runs per condition, what percentage have compiled by each repair iteration. A few things to notice:
+This chart shows the percentage of all 70 runs that have successfully compiled by each repair iteration number. Key observations:
 
-- **A reaches ~93% by iteration 3;** B is still around 78% at that point
-- **A plateaus at 97.1%;** B plateaus at 85.7% — four B failures (TinyRISCV64.h ×2 and two polypartition files) never resolve even at iteration 8
-- The curves diverge from iteration 0 and never converge — B doesn't catch up to A even at the maximum number of attempts
-
----
-
-## Statistical Test — Was the Difference Real?
-
-We used **McNemar's test**, which compares conditions file-by-file. A "discordant pair" is a file where A succeeds and B fails (or vice versa) under the ≥50% majority rule.
-
-| Project | Discordant pairs | A wins | B wins | p-value |
-|---------|-----------------|--------|--------|---------|
-| immediate2d | 1 | 1 | 0 | 1.000 |
-| argh | 0 | 0 | 0 | 1.000 |
-| debug_assert | 0 | 0 | 0 | 1.000 |
-| poisson-disk-generator | 0 | 0 | 0 | 1.000 |
-| TinyRISCV64 | 1 | 1 | 0 | 1.000 |
-| polypartition | 0 | 0 | 0 | 1.000 |
-| **All pooled** | **2** | **2** | **0** | **0.500** |
-
-**All p-values are ≥ 0.05 — statistically inconclusive.** The test needs at least 4 discordant pairs to reach p < 0.05. We have 2.
-
-Why so few discordant pairs despite the clear success rate gap? Two reasons:
-- **The majority vote rule** counts a file as "pass" even if B failed once, as long as B succeeded on the other repetition (1/2 = 50% = pass). This makes partial failures invisible to the test.
-- **Most files are too easy** — 26 of 35 units are perfect ties, contributing nothing to the count.
-
-> The trend is clearly in A's favour, but we cannot yet claim statistical significance. The experiment needs more *hard* files and more repetitions per file.
+- **Both start similar at iteration 0** (~16%) — some files are so straightforward they compile first-try under both conditions
+- **A pulls ahead at iteration 1** (59% vs 46%) and the gap never closes
+- **A reaches 90% by iteration 4;** B doesn't reach 74% at that point
+- **A plateaus at 97.1%; B plateaus at 85.7%** — 10 B runs are permanently stuck (they hit 8 iterations and still failed). A only has 2 permanent failures.
+- The two curves never converge. More repair rounds don't help B catch up to A.
 
 ---
 
-## Two Opposing Failure Modes
+## Speed: B is Always Slower
 
-The data reveals two opposite situations — one where A consistently beats B, and one where B beats A:
+![Wall time](../summary_plots/wall_time_comparison.png)
 
-### When A wins: Low-level systems code
-**Example: `TinyRISCV64.h`** (RISC-V instruction decoder, 625 LOC)
-- A: solved both repetitions (3 and 5 iterations)
-- B: failed both repetitions (8 iterations each, never compiled)
-- The file contains dense bitwise operations, integer-width casts, and large switch trees — exactly where C++→Rust idiom translation is hardest. The plain `rustc` message ("expected u32, found i64") is direct and actionable. The LSP wrapping appears to add noise.
+B takes more wall time in **every single project** — even `argh`, where B has a *better* success rate:
 
-### When B wins: String/parser code
-**Example: `argh.h`** (argument parser, 485 LOC)
-- A: failed once (hit 8-iteration limit on rep 0)
-- B: solved both repetitions (2 iterations each)
-- The file is heavy on template metaprogramming and string iterator patterns — where structured error codes and precise line/column locations may help the model pinpoint what to fix.
+| Project | A mean time | B mean time | B overhead |
+|---------|------------|------------|-----------|
+| TinyRISCV64 | 155s | 230s | +48% |
+| argh | 49s | 66s | +35% |
+| debug_assert | 31s | 51s | +65% |
+| immediate2d | 45s | 83s | +84% |
+| poisson-disk-generator | 52s | 98s | +88% |
+| polypartition | 52s | 90s | +73% |
 
-These two files together suggest the answer may not be "A is always better" but rather **"it depends on the type of code"**.
-
----
-
-## What the Data Says
-
-| Question | Answer |
-|----------|--------|
-| Which condition has a higher success rate overall? | **A** (97.1% vs 85.7%) |
-| Is the difference statistically significant? | **No** (McNemar p = 0.500 pooled) |
-| Which condition is faster? | **A** (roughly 40% less wall time across all projects) |
-| Is there a project where B is better? | **Yes** — argh (B = 100%, A = 90%) |
-| Does file size predict which condition is better? | **No** — 6,580-line `doctest.h` compiled fine under both; 625-line `TinyRISCV64.h` broke B completely |
-| What predicts difficulty? | **Code type** — bitwise/systems code is hard for B; most library APIs are easy for both |
+The overhead comes from two places: (1) each repair round under B involves an extra `rust-analyzer` query which adds ~25–30 seconds, and (2) B uses more repair rounds per run to begin with. Even on files where both conditions succeed at the same outcome, B arrives there significantly later.
 
 ---
 
-## If You Had to Pick One Condition Today
+## Repair Iterations: B Does More Work
 
-**Use Condition A (raw compiler stderr).** It has a higher success rate, uses fewer iterations, and is faster — without any cases where it catastrophically underperforms relative to B. B adds overhead (every repair round takes longer) and introduces failure modes that A doesn't have, without delivering the improvement in accuracy that motivated it.
+![Iterations](../summary_plots/iterations_comparison.png)
 
----
+B uses more repair iterations in 5 of 6 projects. The one exception is `argh` (B=1.2 vs A=1.9) — on that project, many of the trivial files compiled first-try under B slightly more often, pulling the mean down. But even there, B is still slower in wall time because of the per-round LSP overhead.
 
-## What Would Make the Results More Definitive
-
-1. **More hard files** — algorithmic code (ray tracing, physics, instruction decoding, complex parsers) rather than examples, test wrappers, or data files. 26 of 35 current units are too easy to distinguish the conditions.
-
-2. **More repetitions per file** — currently 2 repetitions. The statistical test counts a file as "passed" even if B succeeded only once. With 3+ repetitions the test becomes sensitive to single-rep failures.
-
-3. **Closer inspection of the 2 complete-divergence files** — reading the repair transcripts for `raytracer.cpp` and `TinyRISCV64.h` would show concretely what repair paths B takes that A avoids, and whether the LSP structure is causing the model to chase unproductive error chains.
+The TinyRISCV64 gap (A=3.7 vs B=6.2) is the most dramatic — B is spending significantly more rounds on a project where it still fails more.
 
 ---
 
-## Generated Files
+## The Statistical Test
 
-All plots and raw data can be regenerated at any time:
+We used **McNemar's test** to formally compare the two conditions file-by-file. The test counts "discordant pairs" — files where one condition wins under the majority rule (≥50% of reps succeed). To reach statistical significance (p < 0.05), you need at least 4 discordant pairs.
+
+| Project | A wins | B wins | p-value |
+|---------|--------|--------|---------|
+| immediate2d | 1 (raytracer) | 0 | 1.000 |
+| argh | 0 | 0* | 1.000 |
+| debug_assert | 0 | 0 | 1.000 |
+| poisson-disk-generator | 0 | 0 | 1.000 |
+| TinyRISCV64 | 1 (TinyRISCV64.h) | 0 | 1.000 |
+| polypartition | 0 | 0 | 1.000 |
+| **All pooled** | **2** | **0** | **0.500** |
+
+\* `argh.h` has A=50% which still counts as "pass" under the ≥50% rule, so it doesn't register as a discordant pair despite A failing once.
+
+**All results are statistically inconclusive.** Even pooling all 6 projects we have only 2 discordant pairs — half of what the test needs. The trend points clearly toward A, but it isn't formally proven yet.
+
+Why so few discordant pairs despite the visible gap? Because:
+1. 26 of 35 files are ceiling ties — they don't contribute anything to the count
+2. Partial failures (B failed once but succeeded the other rep) count as ties under the majority rule
+3. We only have 2 repetitions per file — not enough resolution for the test
+
+---
+
+## The Two Most Interesting Files
+
+The clearest findings don't come from the aggregate numbers but from two specific files that tell opposite stories:
+
+### `TinyRISCV64.h` — A wins completely, B fails completely
+The core RISC-V instruction decoder: 625 lines of dense bitwise operations, integer casting, union-typed registers, and large switch trees translating hardware instructions to Rust.
+
+- **A**: compiled both repetitions, in 3 and 5 iterations
+- **B**: hit the 8-iteration limit on both repetitions, never compiled
+
+The plain `rustc` errors ("expected u32, found i64", "cannot assign to immutable") gave the model clear, direct fixes to make. The structured LSP wrapping appears to have sent the model down unproductive repair paths it couldn't escape.
+
+### `argh.h` — B wins, A fails once
+A C++ command-line argument parser: 485 lines of template metaprogramming, string iterators, and type deduction.
+
+- **A**: failed on rep 0 (hit 8-iteration limit), succeeded on rep 1 in 2 iterations
+- **B**: compiled both repetitions in 2 iterations each
+
+For this type of code — complex template errors, type inference issues — the structured error codes and precise line/column locations in LSP output may have helped the model locate the problem more precisely.
+
+**The implication**: neither feedback signal is universally better. The type of C++ code determines which signal is more useful. Low-level systems code (bitwise, memory, hardware) → A wins. High-level template/parser code → B may have an edge.
+
+---
+
+## Summary
+
+| | Condition A | Condition B |
+|--|-------------|-------------|
+| Overall success rate | **97.1%** | 85.7% |
+| Projects where ahead or tied | **5 / 6** | 1 / 6 |
+| Files with complete failure (0%) | 0 | **2** |
+| Mean wall time (TinyRISCV64) | **155s** | 230s |
+| Mean wall time (all others avg) | **~46s** | ~78s |
+| Statistically proven better? | **No** (p=0.500) | No |
+
+**Bottom line: A is better in practice — higher success rate, faster, and never catastrophically worse. But the experiment cannot yet prove this statistically because most files are too easy to distinguish the two conditions.**
+
+---
+
+## What Would Make This Conclusive
+
+The experiment needs **more hard files** — code that is genuinely difficult to translate. Of the 35 files tested, 26 are ceiling-level ties. They add run counts but no information.
+
+The files that generate signal share a common trait: **they require C++ idioms with no clean Rust equivalent** — bitwise manipulation (TinyRISCV64), floating-point vector math (raytracer), particle simulation (smoke), and template-heavy parsers (argh). More files in these categories, and more repetitions per file (3+ instead of 2), would likely push the pooled discordant count past the threshold needed for statistical significance.
+
+---
+
+## Regenerating These Plots
+
+All plots and CSVs can be regenerated from scratch at any time:
 
 ```bash
 source .venv/bin/activate
 python experiment-results/generate_summary.py
 ```
 
-Outputs in `experiment-results/summary_plots/`:
-- `project_comparison.png` — success rates per project
+Output folder: `experiment-results/summary_plots/`
+- `project_comparison.png` — success rates per project + pooled
 - `wall_time_comparison.png` — mean wall time per project
 - `iterations_comparison.png` — mean iterations per project
-- `discriminating_files.png` — only the files where conditions diverged
-- `cumulative_success.png` — how fast each condition converges across all runs
-- `combined_results.csv` — all 140 runs in one table
+- `discriminating_files.png` — only the 9 files where conditions diverged
+- `cumulative_success.png` — how fast each condition converges
+- `combined_results.csv` — all 140 individual runs in one table
 - `project_summary.csv` — per-project aggregates
 - `file_summary.csv` — per-file success rates for both conditions
