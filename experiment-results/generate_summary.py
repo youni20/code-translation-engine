@@ -32,7 +32,7 @@ OUT_DIR.mkdir(exist_ok=True)
 COL_A = "#E69F00"   # amber  — Condition A
 COL_B = "#56B4E9"   # sky blue — Condition B
 A_COND = "A: compiler stderr"
-B_COND = "B: LSP diagnostics"
+B_COND = "B: stderr + LSP diagnostics"
 
 # ── load & merge all results.csv files ───────────────────────────────────────
 dfs = []
@@ -113,7 +113,7 @@ x = np.arange(len(labels))
 w = 0.35
 fig, ax = plt.subplots(figsize=(11, 5))
 ba = ax.bar(x - w / 2, a_rates, w, color=COL_A, label="A: compiler stderr", zorder=3)
-bb = ax.bar(x + w / 2, b_rates, w, color=COL_B, label="B: LSP diagnostics", zorder=3)
+bb = ax.bar(x + w / 2, b_rates, w, color=COL_B, label="B: stderr + LSP diagnostics", zorder=3)
 add_labels(ax, ba, a_rates)
 add_labels(ax, bb, b_rates)
 ax.axvline(len(PROJECTS) - 0.5, color="grey", linestyle="--", linewidth=0.9)
@@ -140,7 +140,7 @@ for p in PROJECTS:
 x2 = np.arange(len(PROJECTS))
 fig, ax = plt.subplots(figsize=(10, 5))
 ba = ax.bar(x2 - w / 2, a_times, w, color=COL_A, label="A: compiler stderr", zorder=3)
-bb = ax.bar(x2 + w / 2, b_times, w, color=COL_B, label="B: LSP diagnostics", zorder=3)
+bb = ax.bar(x2 + w / 2, b_times, w, color=COL_B, label="B: stderr + LSP diagnostics", zorder=3)
 add_labels(ax, ba, a_times, fmt="{:.0f}s")
 add_labels(ax, bb, b_times, fmt="{:.0f}s")
 ax.set_xticks(x2)
@@ -163,7 +163,7 @@ for p in PROJECTS:
 
 fig, ax = plt.subplots(figsize=(10, 5))
 ba = ax.bar(x2 - w / 2, a_iters, w, color=COL_A, label="A: compiler stderr", zorder=3)
-bb = ax.bar(x2 + w / 2, b_iters, w, color=COL_B, label="B: LSP diagnostics", zorder=3)
+bb = ax.bar(x2 + w / 2, b_iters, w, color=COL_B, label="B: stderr + LSP diagnostics", zorder=3)
 add_labels(ax, ba, a_iters, fmt="{:.1f}", offset=0.05)
 add_labels(ax, bb, b_iters, fmt="{:.1f}", offset=0.05)
 ax.set_xticks(x2)
@@ -199,7 +199,7 @@ disc["label"] = (
 fig, ax = plt.subplots(figsize=(9, max(4, len(disc) * 0.85 + 1.5)))
 y = np.arange(len(disc))
 ba = ax.barh(y - 0.2, disc["A_pct"], 0.35, color=COL_A, label="A: compiler stderr", zorder=3)
-bb = ax.barh(y + 0.2, disc["B_pct"], 0.35, color=COL_B, label="B: LSP diagnostics", zorder=3)
+bb = ax.barh(y + 0.2, disc["B_pct"], 0.35, color=COL_B, label="B: stderr + LSP diagnostics", zorder=3)
 ax.set_yticks(y)
 ax.set_yticklabels(disc["label"], fontsize=9)
 ax.set_xlabel("Success rate (%)")
@@ -223,7 +223,7 @@ print("  discriminating_files.png")
 # ── plot 5: pooled cumulative success ────────────────────────────────────────
 max_iter = int(df["iterations_used"].max())
 fig, ax = plt.subplots(figsize=(8, 5))
-for cond, col, label in [(A_COND, COL_A, "A: compiler stderr"), (B_COND, COL_B, "B: LSP diagnostics")]:
+for cond, col, label in [(A_COND, COL_A, "A: compiler stderr"), (B_COND, COL_B, "B: stderr + LSP diagnostics")]:
     sub = df[df["condition"] == cond]
     n = len(sub)
     cum = [sub[(sub["success"]) & (sub["iterations_used"] <= i)].shape[0] / n * 100

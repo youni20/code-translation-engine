@@ -17,13 +17,13 @@ except ImportError:
 
 CONDITION_LABELS = {
     "A": "A: compiler stderr",
-    "B": "B: LSP diagnostics",
+    "B": "B: stderr + LSP diagnostics",
 }
 
 # Wong (2011) colourblind-safe palette
 CONDITION_PALETTE = {
     "A: compiler stderr": "#0072B2",
-    "B: LSP diagnostics": "#D55E00",
+    "B: stderr + LSP diagnostics": "#D55E00",
 }
 
 Z_95 = 1.959964

@@ -31,7 +31,7 @@ def run_translation_pipeline(
         unit: The C++ source unit to translate.
         translator: Agent for the initial C++ to Rust translation.
         repairer: Agent for fixing compilation errors.
-        condition: "A" for raw compiler stderr feedback, "B" for LSP diagnostics.
+        condition: "A" for raw compiler stderr feedback, "B" for stderr + LSP diagnostics.
         repetition: Which repetition of this (unit, condition) pair this run represents.
         max_iterations: Maximum number of repair attempts after the initial translation.
 
@@ -40,7 +40,7 @@ def run_translation_pipeline(
     """
     start_time = time.monotonic()
     feedback_history: list[str] = []
-    feedback_source = "compiler stderr" if condition == "A" else "LSP diagnostics"
+    feedback_source = "compiler stderr" if condition == "A" else "compiler stderr + LSP diagnostics"
 
     # Initial translation
     print("    [translate] generating initial Rust translation ...")
@@ -70,7 +70,8 @@ def run_translation_pipeline(
         if condition == "A":
             feedback = stderr
         elif condition == "B":
-            feedback = get_lsp_diagnostics(rust_code=rust_code)
+            lsp = get_lsp_diagnostics(rust_code=rust_code)
+            feedback = f"Compiler stderr:\n{stderr}\n\nLSP diagnostics:\n{lsp}"
         else:
             raise ValueError(f"Unknown condition: {condition!r}. Use 'A' or 'B'.")
 

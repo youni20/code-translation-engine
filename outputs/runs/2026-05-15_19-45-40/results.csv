@@ -1,0 +1,5 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+kilo/kilo.cpp,kilo,kilo.cpp,1308,A: compiler stderr,0,False,8,470.2059048659994,2026-05-15 17:53:30.927402+00:00,8
+kilo/kilo.cpp,kilo,kilo.cpp,1308,A: compiler stderr,1,False,8,309.85995613399973,2026-05-15 17:58:40.789202+00:00,8
+kilo/kilo.cpp,kilo,kilo.cpp,1308,B: LSP diagnostics,0,False,8,267.01985904899993,2026-05-15 18:03:07.810329+00:00,8
+kilo/kilo.cpp,kilo,kilo.cpp,1308,B: LSP diagnostics,1,False,8,174.48950917600087,2026-05-15 18:06:02.301504+00:00,8
