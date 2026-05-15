@@ -200,17 +200,17 @@ impl VM {
     }
 
     fn imm_b(&self) -> i64 {
-        (self.inst as i32 & 0x80000000) as i64 >> 19
-            | (self.inst & 0x80) as i64 << 4
-            | ((self.inst >> 20) & 0x7e0) as i64
-            | ((self.inst >> 7) & 0x1e) as i64
+        ((self.inst as i32 & 0x80000000) as i64 >> 19)
+            | ((self.inst & 0x80) as i64 << 4)
+            | (((self.inst >> 20) & 0x7e0) as i64)
+            | (((self.inst >> 7) & 0x1e) as i64)
     }
 
     fn imm_j(&self) -> i64 {
-        (self.inst as i32 & 0x80000000) as i64 >> 11
-            | (self.inst & 0xff000) as i64
-            | ((self.inst >> 9) & 0x800) as i64
-            | ((self.inst >> 20) & 0x7fe) as i64
+        ((self.inst as i32 & 0x80000000) as i64 >> 11)
+            | ((self.inst & 0xff000) as i64)
+            | (((self.inst >> 9) & 0x800) as i64)
+            | (((self.inst >> 20) & 0x7fe) as i64)
     }
 
     fn imm_u(&self) -> u64 {
@@ -335,12 +335,11 @@ impl VM {
     }
 
     fn exec_alu_imm(&mut self, funct3: u8, rd: u8, rs1: u8, imm: i64) {
-        use std::cmp::Ordering::*;
         self.x[rd as usize] = match funct3 {
             0 => self.x[rs1 as usize].wrapping_add(imm as u64), // ADDI
             1 => self.x[rs1 as usize] << (imm & 0x3f), // SLLI
-            2 => (self.x[rs1 as usize] as i64).cmp(&imm) == Less { 1 } else { 0 }, // SLTI
-            3 => self.x[rs1 as usize].cmp(&(imm as u64)) == Less { 1 } else { 0 }, // SLTIU
+            2 => if (self.x[rs1 as usize] as i64) < imm { 1 } else { 0 }, // SLTI
+            3 => if self.x[rs1 as usize] < imm as u64 { 1 } else { 0 }, // SLTIU
             4 => self.x[rs1 as usize] ^ imm as u64, // XORI
             5 => {
                 if (imm & 0x400) == 0 {
@@ -363,7 +362,7 @@ impl VM {
                 if (imm & 0x400) == 0 {
                     (self.x[rs1 as usize] as u32 >> (imm & 0x1f)) as i32 // SRLIW
                 } else {
-                    (self.x[rs1 as usize] as i32 >> (imm & 0x1f)) as i32 // SRAIW
+                    (self.x[rs1 as usize] as i32 >> (imm & 0x1f)) // SRAIW
                 }
             }
             _ => panic!("Unknown alu_imm32 operation"),
@@ -376,8 +375,8 @@ impl VM {
         self.x[rd as usize] = match op {
             0x00 => self.x[rs1 as usize].wrapping_add(self.x[rs2 as usize]), // ADD
             0x01 => self.x[rs1 as usize] << (self.x[rs2 as usize] & 0x3f), // SLL
-            0x02 => (self.x[rs1 as usize] as i64).cmp(&(self.x[rs2 as usize] as i64)) == std::cmp::Ordering::Less { 1 } else { 0 }, // SLT
-            0x03 => self.x[rs1 as usize].cmp(&self.x[rs2 as usize]) == std::cmp::Ordering::Less { 1 } else { 0 }, // SLTU
+            0x02 => if (self.x[rs1 as usize] as i64) < (self.x[rs2 as usize] as i64) { 1 } else { 0 }, // SLT
+            0x03 => if self.x[rs1 as usize] < self.x[rs2 as usize] { 1 } else { 0 }, // SLTU
             0x04 => self.x[rs1 as usize] ^ self.x[rs2 as usize], // XOR
             0x05 => self.x[rs1 as usize] >> (self.x[rs2 as usize] & 0x3f), // SRL
             0x06 => self.x[rs1 as usize] | self.x[rs2 as usize], // OR
