@@ -6,6 +6,8 @@ use std::collections::LinkedList;
 // Assuming external modules are available as separate files in the same directory.
 
 mod polypartition {
+    use std::collections::LinkedList;
+
     pub struct TPPLPoly {
         // Placeholder for actual properties.
     }
@@ -66,7 +68,7 @@ mod image {
             self.height
         }
 
-        pub fn draw_line(&mut self, _: i32, _: i32, _: i32, _: i32, _: Pixel) {}
+        pub fn draw_line(&mut self, _: i32, _: i32, _: i32, _: i32, _: &Pixel) {}
         
         pub fn clear(&mut self, _: Pixel) {}
     }
@@ -102,8 +104,8 @@ fn read_poly<R: BufRead>(reader: &mut R, poly: &mut TPPLPoly) -> io::Result<()> 
         line.clear();
         reader.read_line(&mut line)?;
         let mut coords = line.split_whitespace();
-        let x: f32 = coords.next().unwrap().parse().unwrap();
-        let y: f32 = coords.next().unwrap().parse().unwrap();
+        let _x: f32 = coords.next().unwrap().parse().unwrap();
+        let _y: f32 = coords.next().unwrap().parse().unwrap();
         // Placeholder statement to mimic storing the points.
     }
 
@@ -183,8 +185,8 @@ fn write_poly_list_to_file(filename: &str, polys: &LinkedList<TPPLPoly>) {
 }
 
 fn draw_poly(img: &mut Image, poly: &TPPLPoly, xmin: f32, xmax: f32, ymin: f32, ymax: f32) {
-    let mut p1img = TPPLPoint::default();
-    let mut p2img = TPPLPoint::default();
+    let mut p1img;
+    let mut p2img;
     let polymin = TPPLPoint { x: xmin, y: ymin };
 
     let imgmin = TPPLPoint { x: 5.0, y: 5.0 };
@@ -229,7 +231,7 @@ fn draw_poly(img: &mut Image, poly: &TPPLPoly, xmin: f32, xmax: f32, ymin: f32, 
             y: (p2.y - polymin.y) * scale + imgmin.y,
         };
 
-        img.draw_line(p1img.x as i32, p1img.y as i32, p2img.x as i32, p2img.y as i32, color);
+        img.draw_line(p1img.x as i32, p1img.y as i32, p2img.x as i32, p2img.y as i32, &color);
     }
 }
 
@@ -305,7 +307,7 @@ fn compare_poly(p1: &TPPLPoly, p2: &TPPLPoly) -> bool {
     if p1.get_num_points() != p2.get_num_points() {
         return false;
     }
-    for i in 0..p1.get_num_points() {
+    for _ in 0..p1.get_num_points() {
         // Placeholder check
         if false {
             return false;
