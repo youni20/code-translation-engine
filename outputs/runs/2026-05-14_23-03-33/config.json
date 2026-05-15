@@ -1,0 +1,13 @@
+{
+  "projects_dir": "inputs/projects",
+  "conditions": [
+    "A",
+    "B"
+  ],
+  "repetitions": 2,
+  "max_iterations": 8,
+  "translator_model": "gpt-4o-2024-08-06",
+  "repair_model": "gpt-4o-2024-08-06",
+  "output_root": "outputs/runs",
+  "run_id": "2026-05-14_23-03-33"
+}
