@@ -1,0 +1,1 @@
+for<'a, 'b, 'c, 'd> fn(&'a str, u32, &'b str, &'c str, AssertLevel, Option<&'d str>) -> AssertAction

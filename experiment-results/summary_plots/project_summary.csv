@@ -1,4 +1,6 @@
 project,condition,n_runs,successes,success_rate,mean_iterations,median_iterations,mean_wall_time_s,median_wall_time_s,success_pct
+PPK_ASSERT,A: compiler stderr,24,21,0.875,2.5416666666666665,1.0,26.568303154416753,14.578138435499568,87.5
+PPK_ASSERT,B: stderr + LSP diagnostics,24,21,0.875,2.5,1.0,38.32583730979172,23.905237296999985,87.5
 TinyRISCV64,A: compiler stderr,10,8,0.8,4.6,4.0,128.0308579618001,91.08609359449974,80.0
 TinyRISCV64,B: stderr + LSP diagnostics,10,9,0.9,4.7,5.0,163.20715519389995,105.48857492549996,90.0
 argh,A: compiler stderr,10,8,0.8,2.3,1.0,43.3632772351,19.384402394000006,80.0

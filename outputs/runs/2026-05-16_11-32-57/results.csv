@@ -1,0 +1,49 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,A: compiler stderr,0,True,1,14.203162305999285,2026-05-16 09:33:12.078872+00:00,1
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,A: compiler stderr,1,True,0,7.243135892998907,2026-05-16 09:33:19.322890+00:00,0
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,A: compiler stderr,2,True,1,12.26234183700035,2026-05-16 09:33:31.586149+00:00,1
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,A: compiler stderr,3,True,1,12.312736493000557,2026-05-16 09:33:43.899958+00:00,1
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,B: stderr + LSP diagnostics,0,True,1,13.161539390999678,2026-05-16 09:33:57.062342+00:00,1
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,B: stderr + LSP diagnostics,1,True,0,6.085609986999771,2026-05-16 09:34:03.148746+00:00,0
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,B: stderr + LSP diagnostics,2,True,0,4.027102714000648,2026-05-16 09:34:07.176419+00:00,0
+PPK_ASSERT/example/main.cpp,PPK_ASSERT,example/main.cpp,119,B: stderr + LSP diagnostics,3,True,0,6.190897557999051,2026-05-16 09:34:13.368128+00:00,0
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,A: compiler stderr,0,True,1,26.899872405998394,2026-05-16 09:34:40.268579+00:00,1
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,A: compiler stderr,1,True,1,17.275400819000424,2026-05-16 09:34:57.544497+00:00,1
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,A: compiler stderr,2,True,7,93.75034583300112,2026-05-16 09:36:31.295946+00:00,7
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,A: compiler stderr,3,False,8,89.02028656100083,2026-05-16 09:38:00.317091+00:00,8
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,B: stderr + LSP diagnostics,0,True,5,69.8729976070008,2026-05-16 09:39:10.190895+00:00,5
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,B: stderr + LSP diagnostics,1,False,8,112.53880705299889,2026-05-16 09:41:02.730486+00:00,8
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,B: stderr + LSP diagnostics,2,True,1,25.17931466600021,2026-05-16 09:41:27.911144+00:00,1
+PPK_ASSERT/src/ppk_assert.cpp,PPK_ASSERT,src/ppk_assert.cpp,497,B: stderr + LSP diagnostics,3,True,5,101.01531745099965,2026-05-16 09:43:08.927447+00:00,5
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,A: compiler stderr,0,False,8,51.1011622749993,2026-05-16 09:44:00.029363+00:00,8
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,A: compiler stderr,1,True,1,13.177101209999819,2026-05-16 09:44:13.207474+00:00,1
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,A: compiler stderr,2,True,3,29.404672173001018,2026-05-16 09:44:42.612737+00:00,3
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,A: compiler stderr,3,True,1,12.467982496000332,2026-05-16 09:44:55.082043+00:00,1
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,B: stderr + LSP diagnostics,0,True,2,34.44589977800024,2026-05-16 09:45:29.528631+00:00,2
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,B: stderr + LSP diagnostics,1,True,1,18.26858674000141,2026-05-16 09:45:47.797939+00:00,1
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,B: stderr + LSP diagnostics,2,True,3,40.34000615900004,2026-05-16 09:46:28.138587+00:00,3
+PPK_ASSERT/src/ppk_assert.h,PPK_ASSERT,src/ppk_assert.h,621,B: stderr + LSP diagnostics,3,True,2,29.353575967001234,2026-05-16 09:46:57.493117+00:00,2
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,A: compiler stderr,0,True,0,12.968630160999965,2026-05-16 09:47:10.463018+00:00,0
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,A: compiler stderr,1,True,1,14.95311456499985,2026-05-16 09:47:25.416634+00:00,1
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,A: compiler stderr,2,True,1,12.766775467000116,2026-05-16 09:47:38.183951+00:00,1
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,A: compiler stderr,3,False,8,55.29004501700001,2026-05-16 09:48:33.475104+00:00,8
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,B: stderr + LSP diagnostics,0,True,2,29.472916692999206,2026-05-16 09:49:02.948867+00:00,2
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,B: stderr + LSP diagnostics,1,False,8,104.31165929599956,2026-05-16 09:50:47.261458+00:00,8
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,B: stderr + LSP diagnostics,2,False,8,121.33020012999987,2026-05-16 09:52:48.592408+00:00,8
+PPK_ASSERT/test/gtest/gtest-all.cc,PPK_ASSERT,test/gtest/gtest-all.cc,10410,B: stderr + LSP diagnostics,3,True,5,47.69944297500115,2026-05-16 09:53:36.292908+00:00,5
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,A: compiler stderr,0,True,1,1.7231868470007612,2026-05-16 09:53:38.016763+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,A: compiler stderr,1,True,1,2.186269329999049,2026-05-16 09:53:40.203572+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,A: compiler stderr,2,True,1,2.001857907000158,2026-05-16 09:53:42.205913+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,A: compiler stderr,3,True,1,2.342764562999946,2026-05-16 09:53:44.549167+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,B: stderr + LSP diagnostics,0,True,1,20.58299329700094,2026-05-16 09:54:05.132706+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,B: stderr + LSP diagnostics,1,True,1,15.57098603600025,2026-05-16 09:54:20.704283+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,B: stderr + LSP diagnostics,2,True,1,17.243166771999313,2026-05-16 09:54:37.948284+00:00,1
+PPK_ASSERT/test/gtest/gtest.h,PPK_ASSERT,test/gtest/gtest.h,21192,B: stderr + LSP diagnostics,3,True,1,15.398396775999572,2026-05-16 09:54:53.347373+00:00,1
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,A: compiler stderr,0,True,4,22.919432939001126,2026-05-16 09:55:16.267385+00:00,4
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,A: compiler stderr,1,True,4,42.243333307000285,2026-05-16 09:55:58.511266+00:00,4
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,A: compiler stderr,2,True,1,48.921363372001,2026-05-16 09:56:47.433348+00:00,1
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,A: compiler stderr,3,True,5,40.204301928999485,2026-05-16 09:57:27.638423+00:00,5
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,B: stderr + LSP diagnostics,0,True,1,22.63115992799976,2026-05-16 09:57:50.270524+00:00,1
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,B: stderr + LSP diagnostics,1,True,3,43.9094341,2026-05-16 09:58:34.184596+00:00,3
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,B: stderr + LSP diagnostics,2,True,1,13.45242661500015,2026-05-16 09:58:47.637989+00:00,1
+PPK_ASSERT/test/ppk_assert_test.cpp,PPK_ASSERT,test/ppk_assert_test.cpp,447,B: stderr + LSP diagnostics,3,True,0,7.737657745999968,2026-05-16 09:58:55.376624+00:00,0

@@ -1,0 +1,12 @@
+McNemar's test (paired design)
+========================================
+Paired units:                  6
+A pass, B fail (A wins):       0
+A fail, B pass (B wins):       0
+Discordant pairs (b + c):      0
+p-value (two-sided):           1.0000
+
+Contingency (rows = A, cols = B):
+         B: fail  B: pass
+A: fail        0        0
+A: pass        0        6

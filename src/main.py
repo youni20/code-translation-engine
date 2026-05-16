@@ -13,7 +13,7 @@ if __name__ == "__main__":
     config = ExperimentConfig(
         projects_dir=Path("./inputs/projects"),
         conditions=("A", "B"),  # For only one condition do:  conditions=("A",),
-        repetitions=2,
+        repetitions=4,
         max_iterations=8,
         translator_model="gpt-4o-2024-08-06",  # gpt-4o-2024-08-06
         repair_model="gpt-4o-2024-08-06",

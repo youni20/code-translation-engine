@@ -1,4 +1,16 @@
 project,relative_path,loc,condition,n_runs,successes,success_rate,mean_iterations,mean_wall_time_s,success_pct
+PPK_ASSERT,example/main.cpp,119,A: compiler stderr,4,4,1.0,0.75,11.505344132249775,100.0
+PPK_ASSERT,example/main.cpp,119,B: stderr + LSP diagnostics,4,4,1.0,0.25,7.366287412499787,100.0
+PPK_ASSERT,src/ppk_assert.cpp,497,A: compiler stderr,4,3,0.75,4.25,56.73647640475019,75.0
+PPK_ASSERT,src/ppk_assert.cpp,497,B: stderr + LSP diagnostics,4,3,0.75,4.75,77.15160919424989,75.0
+PPK_ASSERT,src/ppk_assert.h,621,A: compiler stderr,4,3,0.75,3.25,26.537729538500116,75.0
+PPK_ASSERT,src/ppk_assert.h,621,B: stderr + LSP diagnostics,4,4,1.0,2.0,30.60201716100073,100.0
+PPK_ASSERT,test/gtest/gtest-all.cc,10410,A: compiler stderr,4,3,0.75,2.5,23.994641302499986,75.0
+PPK_ASSERT,test/gtest/gtest-all.cc,10410,B: stderr + LSP diagnostics,4,2,0.5,5.75,75.70355477349995,50.0
+PPK_ASSERT,test/gtest/gtest.h,21192,A: compiler stderr,4,4,1.0,1.0,2.0635196617499787,100.0
+PPK_ASSERT,test/gtest/gtest.h,21192,B: stderr + LSP diagnostics,4,4,1.0,1.0,17.19888572025002,100.0
+PPK_ASSERT,test/ppk_assert_test.cpp,447,A: compiler stderr,4,4,1.0,3.5,38.57210788675047,100.0
+PPK_ASSERT,test/ppk_assert_test.cpp,447,B: stderr + LSP diagnostics,4,4,1.0,1.25,21.93266959724997,100.0
 TinyRISCV64,Examples/stdio_VM_runner/stdio_VM_runner.cpp,64,A: compiler stderr,2,1,0.5,5.5,53.436514141000316,50.0
 TinyRISCV64,Examples/stdio_VM_runner/stdio_VM_runner.cpp,64,B: stderr + LSP diagnostics,2,2,1.0,4.0,65.14030963549976,100.0
 TinyRISCV64,Test/STP/rv64im_stp_runner.cpp,125,A: compiler stderr,2,1,0.5,7.0,80.90185324649974,50.0

@@ -1,0 +1,4 @@
+(dyn for<'a, 'b, 'c, 'd> Fn(&'a str, i32, &'b str, &'c str, i32, Option<&'d str>) -> AssertAction + 'static)
+std::ptr::Unique<(dyn for<'a, 'b, 'c, 'd> Fn(&'a str, i32, &'b str, &'c str, i32, Option<&'d str>) -> AssertAction + 'static)>
+Box<(dyn for<'a, 'b, 'c, 'd> Fn(&'a str, i32, &'b str, &'c str, i32, Option<&'d str>) -> AssertAction + 'static)>
+std::sync::Mutex<Box<(dyn for<'a, 'b, 'c, 'd> Fn(&'a str, i32, &'b str, &'c str, i32, Option<&'d str>) -> AssertAction + 'static)>>

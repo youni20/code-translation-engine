@@ -1,0 +1,170 @@
+unit_id,condition,repetition,iteration,passed
+PPK_ASSERT/example/main.cpp,A: compiler stderr,0,0,False
+PPK_ASSERT/example/main.cpp,A: compiler stderr,0,1,True
+PPK_ASSERT/example/main.cpp,A: compiler stderr,1,0,True
+PPK_ASSERT/example/main.cpp,A: compiler stderr,2,0,False
+PPK_ASSERT/example/main.cpp,A: compiler stderr,2,1,True
+PPK_ASSERT/example/main.cpp,A: compiler stderr,3,0,False
+PPK_ASSERT/example/main.cpp,A: compiler stderr,3,1,True
+PPK_ASSERT/example/main.cpp,B: stderr + LSP diagnostics,0,0,False
+PPK_ASSERT/example/main.cpp,B: stderr + LSP diagnostics,0,1,True
+PPK_ASSERT/example/main.cpp,B: stderr + LSP diagnostics,1,0,True
+PPK_ASSERT/example/main.cpp,B: stderr + LSP diagnostics,2,0,True
+PPK_ASSERT/example/main.cpp,B: stderr + LSP diagnostics,3,0,True
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,0,0,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,0,1,True
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,1,0,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,1,1,True
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,0,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,1,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,2,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,3,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,4,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,5,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,6,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,2,7,True
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,0,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,1,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,2,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,3,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,4,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,5,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,6,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,7,False
+PPK_ASSERT/src/ppk_assert.cpp,A: compiler stderr,3,8,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,0,0,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,0,1,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,0,2,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,0,3,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,0,4,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,0,5,True
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,0,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,1,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,2,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,3,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,4,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,5,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,6,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,7,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,1,8,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,2,0,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,2,1,True
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,3,0,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,3,1,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,3,2,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,3,3,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,3,4,False
+PPK_ASSERT/src/ppk_assert.cpp,B: stderr + LSP diagnostics,3,5,True
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,0,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,1,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,2,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,3,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,4,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,5,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,6,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,7,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,0,8,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,1,0,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,1,1,True
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,2,0,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,2,1,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,2,2,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,2,3,True
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,3,0,False
+PPK_ASSERT/src/ppk_assert.h,A: compiler stderr,3,1,True
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,0,0,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,0,1,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,0,2,True
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,1,0,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,1,1,True
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,2,0,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,2,1,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,2,2,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,2,3,True
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,3,0,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,3,1,False
+PPK_ASSERT/src/ppk_assert.h,B: stderr + LSP diagnostics,3,2,True
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,0,0,True
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,1,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,1,1,True
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,2,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,2,1,True
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,1,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,2,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,3,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,4,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,5,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,6,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,7,False
+PPK_ASSERT/test/gtest/gtest-all.cc,A: compiler stderr,3,8,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,0,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,0,1,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,0,2,True
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,1,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,2,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,3,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,4,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,5,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,6,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,7,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,1,8,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,1,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,2,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,3,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,4,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,5,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,6,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,7,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,2,8,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,3,0,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,3,1,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,3,2,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,3,3,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,3,4,False
+PPK_ASSERT/test/gtest/gtest-all.cc,B: stderr + LSP diagnostics,3,5,True
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,0,0,False
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,0,1,True
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,1,0,False
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,1,1,True
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,2,0,False
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,2,1,True
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,3,0,False
+PPK_ASSERT/test/gtest/gtest.h,A: compiler stderr,3,1,True
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,0,0,False
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,0,1,True
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,1,0,False
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,1,1,True
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,2,0,False
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,2,1,True
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,3,0,False
+PPK_ASSERT/test/gtest/gtest.h,B: stderr + LSP diagnostics,3,1,True
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,0,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,0,1,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,0,2,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,0,3,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,0,4,True
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,1,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,1,1,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,1,2,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,1,3,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,1,4,True
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,2,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,2,1,True
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,3,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,3,1,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,3,2,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,3,3,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,3,4,False
+PPK_ASSERT/test/ppk_assert_test.cpp,A: compiler stderr,3,5,True
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,0,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,0,1,True
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,1,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,1,1,False
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,1,2,False
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,1,3,True
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,2,0,False
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,2,1,True
+PPK_ASSERT/test/ppk_assert_test.cpp,B: stderr + LSP diagnostics,3,0,True
