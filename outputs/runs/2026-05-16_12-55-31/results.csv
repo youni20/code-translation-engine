@@ -1,0 +1,145 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,A: compiler stderr,0,True,2,36.29479664599967,2026-05-16 10:56:08.203949+00:00,2
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,A: compiler stderr,1,True,1,13.924142564999784,2026-05-16 10:56:22.128661+00:00,1
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,A: compiler stderr,2,True,1,17.94087902800129,2026-05-16 10:56:40.070124+00:00,1
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,A: compiler stderr,3,True,2,22.039803035999284,2026-05-16 10:57:02.110433+00:00,2
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,B: stderr + LSP diagnostics,0,True,2,26.272088009000072,2026-05-16 10:57:28.383013+00:00,2
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,B: stderr + LSP diagnostics,1,True,1,17.654176383999584,2026-05-16 10:57:46.037786+00:00,1
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,B: stderr + LSP diagnostics,2,True,1,15.635282178000125,2026-05-16 10:58:01.673708+00:00,1
+hash-library/crc32.cpp,hash-library,crc32.cpp,431,B: stderr + LSP diagnostics,3,True,1,19.446309147999273,2026-05-16 10:58:21.120656+00:00,1
+hash-library/crc32.h,hash-library,crc32.h,69,A: compiler stderr,0,True,1,10.37182252799903,2026-05-16 10:58:31.493358+00:00,1
+hash-library/crc32.h,hash-library,crc32.h,69,A: compiler stderr,1,True,1,10.522917672000403,2026-05-16 10:58:42.016865+00:00,1
+hash-library/crc32.h,hash-library,crc32.h,69,A: compiler stderr,2,True,2,9.946897160001754,2026-05-16 10:58:51.964630+00:00,2
+hash-library/crc32.h,hash-library,crc32.h,69,A: compiler stderr,3,True,0,4.308849073999227,2026-05-16 10:58:56.273993+00:00,0
+hash-library/crc32.h,hash-library,crc32.h,69,B: stderr + LSP diagnostics,0,True,1,14.708460078998542,2026-05-16 10:59:10.983208+00:00,1
+hash-library/crc32.h,hash-library,crc32.h,69,B: stderr + LSP diagnostics,1,True,1,11.78848173300139,2026-05-16 10:59:22.772352+00:00,1
+hash-library/crc32.h,hash-library,crc32.h,69,B: stderr + LSP diagnostics,2,True,3,26.788302072998704,2026-05-16 10:59:49.561412+00:00,3
+hash-library/crc32.h,hash-library,crc32.h,69,B: stderr + LSP diagnostics,3,True,1,15.028883858998597,2026-05-16 11:00:04.590847+00:00,1
+hash-library/digest.cpp,hash-library,digest.cpp,109,A: compiler stderr,0,True,1,18.74380290999943,2026-05-16 11:00:23.335458+00:00,1
+hash-library/digest.cpp,hash-library,digest.cpp,109,A: compiler stderr,1,True,3,33.69338923599935,2026-05-16 11:00:57.029619+00:00,3
+hash-library/digest.cpp,hash-library,digest.cpp,109,A: compiler stderr,2,True,3,43.080798297,2026-05-16 11:01:40.111075+00:00,3
+hash-library/digest.cpp,hash-library,digest.cpp,109,A: compiler stderr,3,True,1,16.742797728998994,2026-05-16 11:01:56.854773+00:00,1
+hash-library/digest.cpp,hash-library,digest.cpp,109,B: stderr + LSP diagnostics,0,True,2,33.314793472998645,2026-05-16 11:02:30.170208+00:00,2
+hash-library/digest.cpp,hash-library,digest.cpp,109,B: stderr + LSP diagnostics,1,True,2,37.311671400000705,2026-05-16 11:03:07.482572+00:00,2
+hash-library/digest.cpp,hash-library,digest.cpp,109,B: stderr + LSP diagnostics,2,True,3,42.58107100400048,2026-05-16 11:03:50.064858+00:00,3
+hash-library/digest.cpp,hash-library,digest.cpp,109,B: stderr + LSP diagnostics,3,True,1,20.535640510999656,2026-05-16 11:04:10.601698+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,A: compiler stderr,0,True,1,5.011819309000202,2026-05-16 11:04:15.614591+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,A: compiler stderr,1,True,1,5.903661053000178,2026-05-16 11:04:21.519118+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,A: compiler stderr,2,True,1,4.925936656998601,2026-05-16 11:04:26.445618+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,A: compiler stderr,3,True,1,4.232050954000442,2026-05-16 11:04:30.678785+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,B: stderr + LSP diagnostics,0,True,1,9.579957773999922,2026-05-16 11:04:40.259506+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,B: stderr + LSP diagnostics,1,True,1,7.629981789999874,2026-05-16 11:04:47.890226+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,B: stderr + LSP diagnostics,2,True,1,9.401167490999796,2026-05-16 11:04:57.292138+00:00,1
+hash-library/hash.h,hash-library,hash.h,28,B: stderr + LSP diagnostics,3,True,1,8.504783428999872,2026-05-16 11:05:05.797582+00:00,1
+hash-library/hmac.h,hash-library,hmac.h,83,A: compiler stderr,0,True,1,18.487676349999674,2026-05-16 11:05:24.285836+00:00,1
+hash-library/hmac.h,hash-library,hmac.h,83,A: compiler stderr,1,True,1,14.142016058000081,2026-05-16 11:05:38.428411+00:00,1
+hash-library/hmac.h,hash-library,hmac.h,83,A: compiler stderr,2,True,1,13.230742566000117,2026-05-16 11:05:51.659781+00:00,1
+hash-library/hmac.h,hash-library,hmac.h,83,A: compiler stderr,3,True,0,7.336109092000697,2026-05-16 11:05:58.996860+00:00,0
+hash-library/hmac.h,hash-library,hmac.h,83,B: stderr + LSP diagnostics,0,True,2,21.975669479001226,2026-05-16 11:06:20.972985+00:00,2
+hash-library/hmac.h,hash-library,hmac.h,83,B: stderr + LSP diagnostics,1,True,1,22.784907080000266,2026-05-16 11:06:43.758766+00:00,1
+hash-library/hmac.h,hash-library,hmac.h,83,B: stderr + LSP diagnostics,2,True,1,17.714503739000065,2026-05-16 11:07:01.473887+00:00,1
+hash-library/hmac.h,hash-library,hmac.h,83,B: stderr + LSP diagnostics,3,True,1,15.130166904000362,2026-05-16 11:07:16.604811+00:00,1
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,A: compiler stderr,0,True,2,47.699435161999645,2026-05-16 11:08:04.304756+00:00,2
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,A: compiler stderr,1,True,1,32.49346291300026,2026-05-16 11:08:36.799170+00:00,1
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,A: compiler stderr,2,True,2,51.76696042799995,2026-05-16 11:09:28.566793+00:00,2
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,A: compiler stderr,3,True,1,35.0037192539985,2026-05-16 11:10:03.571176+00:00,1
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,B: stderr + LSP diagnostics,0,True,2,54.603077570000096,2026-05-16 11:10:58.174852+00:00,2
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,B: stderr + LSP diagnostics,1,True,4,109.84299552999983,2026-05-16 11:12:48.473456+00:00,4
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,B: stderr + LSP diagnostics,2,True,1,40.19925818200136,2026-05-16 11:13:28.673510+00:00,1
+hash-library/keccak.cpp,hash-library,keccak.cpp,298,B: stderr + LSP diagnostics,3,True,1,34.60893339499853,2026-05-16 11:14:03.283404+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,A: compiler stderr,0,True,1,13.083769867998853,2026-05-16 11:14:16.367763+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,A: compiler stderr,1,True,1,11.934028335999756,2026-05-16 11:14:28.302536+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,A: compiler stderr,2,True,1,11.319108141999095,2026-05-16 11:14:39.622149+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,A: compiler stderr,3,True,1,12.563743034001163,2026-05-16 11:14:52.186667+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,B: stderr + LSP diagnostics,0,True,1,16.14157997500115,2026-05-16 11:15:08.329016+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,B: stderr + LSP diagnostics,1,True,1,16.294901741999638,2026-05-16 11:15:24.624608+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,B: stderr + LSP diagnostics,2,True,1,12.229184702002385,2026-05-16 11:15:36.854488+00:00,1
+hash-library/keccak.h,hash-library,keccak.h,81,B: stderr + LSP diagnostics,3,True,1,15.029568620997452,2026-05-16 11:15:51.884730+00:00,1
+hash-library/md5.cpp,hash-library,md5.cpp,380,A: compiler stderr,0,True,1,65.95743216600022,2026-05-16 11:16:57.842885+00:00,1
+hash-library/md5.cpp,hash-library,md5.cpp,380,A: compiler stderr,1,True,1,64.12461555999835,2026-05-16 11:18:01.968297+00:00,1
+hash-library/md5.cpp,hash-library,md5.cpp,380,A: compiler stderr,2,True,1,72.85163684299914,2026-05-16 11:19:14.820538+00:00,1
+hash-library/md5.cpp,hash-library,md5.cpp,380,A: compiler stderr,3,True,1,21.394108831002086,2026-05-16 11:19:36.215598+00:00,1
+hash-library/md5.cpp,hash-library,md5.cpp,380,B: stderr + LSP diagnostics,0,True,2,82.34555822499897,2026-05-16 11:20:58.562147+00:00,2
+hash-library/md5.cpp,hash-library,md5.cpp,380,B: stderr + LSP diagnostics,1,True,2,42.1735890150012,2026-05-16 11:21:40.736495+00:00,2
+hash-library/md5.cpp,hash-library,md5.cpp,380,B: stderr + LSP diagnostics,2,True,5,126.09695106900108,2026-05-16 11:23:46.833987+00:00,5
+hash-library/md5.cpp,hash-library,md5.cpp,380,B: stderr + LSP diagnostics,3,True,1,59.17846807800015,2026-05-16 11:24:46.013593+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,A: compiler stderr,0,True,1,9.363243321000482,2026-05-16 11:24:55.377589+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,A: compiler stderr,1,True,1,13.923908004999248,2026-05-16 11:25:09.302525+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,A: compiler stderr,2,True,1,6.865152927999588,2026-05-16 11:25:16.168506+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,A: compiler stderr,3,True,1,10.916015559996595,2026-05-16 11:25:27.085014+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,B: stderr + LSP diagnostics,0,True,1,13.416041435997613,2026-05-16 11:25:40.501985+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,B: stderr + LSP diagnostics,1,True,1,14.734515792999446,2026-05-16 11:25:55.237113+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,B: stderr + LSP diagnostics,2,True,1,12.921606171999883,2026-05-16 11:26:08.159601+00:00,1
+hash-library/md5.h,hash-library,md5.h,78,B: stderr + LSP diagnostics,3,True,1,15.73213308800041,2026-05-16 11:26:23.892378+00:00,1
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,A: compiler stderr,0,True,3,72.03698512399933,2026-05-16 11:27:35.930002+00:00,3
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,A: compiler stderr,1,True,6,145.65528291199735,2026-05-16 11:30:01.585866+00:00,6
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,A: compiler stderr,2,True,2,51.85742410799867,2026-05-16 11:30:53.443924+00:00,2
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,A: compiler stderr,3,True,2,60.24548243699974,2026-05-16 11:31:53.690098+00:00,2
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,B: stderr + LSP diagnostics,0,True,3,95.92783455500103,2026-05-16 11:33:29.618630+00:00,3
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,B: stderr + LSP diagnostics,1,True,1,48.44051086900072,2026-05-16 11:34:18.060187+00:00,1
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,B: stderr + LSP diagnostics,2,True,1,46.00809654900149,2026-05-16 11:35:04.069019+00:00,1
+hash-library/sha1.cpp,hash-library,sha1.cpp,326,B: stderr + LSP diagnostics,3,True,1,48.46777062199908,2026-05-16 11:35:52.537951+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,A: compiler stderr,0,True,1,14.297574837997672,2026-05-16 11:36:06.836231+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,A: compiler stderr,1,True,1,9.508801001000393,2026-05-16 11:36:16.345657+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,A: compiler stderr,2,True,1,9.822221711001475,2026-05-16 11:36:26.168369+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,A: compiler stderr,3,True,1,12.165391022001131,2026-05-16 11:36:38.334259+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,B: stderr + LSP diagnostics,0,True,1,15.041145790000883,2026-05-16 11:36:53.375995+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,B: stderr + LSP diagnostics,1,True,2,32.16475164000076,2026-05-16 11:37:25.541666+00:00,2
+hash-library/sha1.h,hash-library,sha1.h,78,B: stderr + LSP diagnostics,2,True,1,16.581432181999844,2026-05-16 11:37:42.123880+00:00,1
+hash-library/sha1.h,hash-library,sha1.h,78,B: stderr + LSP diagnostics,3,True,0,5.15081769400058,2026-05-16 11:37:47.275319+00:00,0
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,A: compiler stderr,0,True,1,42.60897541200029,2026-05-16 11:38:29.885228+00:00,1
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,A: compiler stderr,1,True,1,32.32019746899823,2026-05-16 11:39:02.206334+00:00,1
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,A: compiler stderr,2,True,1,36.2920332299982,2026-05-16 11:39:38.499025+00:00,1
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,A: compiler stderr,3,True,2,65.97494623999955,2026-05-16 11:40:44.474854+00:00,2
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,B: stderr + LSP diagnostics,0,True,7,162.93358229899968,2026-05-16 11:43:27.408997+00:00,7
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,B: stderr + LSP diagnostics,1,True,1,44.63937082600023,2026-05-16 11:44:12.049174+00:00,1
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,B: stderr + LSP diagnostics,2,True,1,45.191757321001205,2026-05-16 11:44:57.241569+00:00,1
+hash-library/sha256.cpp,hash-library,sha256.cpp,428,B: stderr + LSP diagnostics,3,True,1,40.68906652299847,2026-05-16 11:45:37.931301+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,A: compiler stderr,0,True,0,5.129967507000401,2026-05-16 11:45:43.061930+00:00,0
+hash-library/sha256.h,hash-library,sha256.h,78,A: compiler stderr,1,True,1,12.41637221000201,2026-05-16 11:45:55.478759+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,A: compiler stderr,2,True,1,16.869615876999887,2026-05-16 11:46:12.348866+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,A: compiler stderr,3,True,1,13.950832927999727,2026-05-16 11:46:26.300332+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,B: stderr + LSP diagnostics,0,True,1,12.51639008300117,2026-05-16 11:46:38.817627+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,B: stderr + LSP diagnostics,1,True,1,12.203480767999281,2026-05-16 11:46:51.021759+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,B: stderr + LSP diagnostics,2,True,1,15.45324290699864,2026-05-16 11:47:06.475583+00:00,1
+hash-library/sha256.h,hash-library,sha256.h,78,B: stderr + LSP diagnostics,3,True,1,12.778646383001615,2026-05-16 11:47:19.254853+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,A: compiler stderr,0,True,3,58.85895815300319,2026-05-16 11:48:18.114742+00:00,3
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,A: compiler stderr,1,True,1,35.68496208099896,2026-05-16 11:48:53.800387+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,A: compiler stderr,2,True,1,37.54321524199986,2026-05-16 11:49:31.344195+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,A: compiler stderr,3,True,1,34.494780836001155,2026-05-16 11:50:05.839632+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,B: stderr + LSP diagnostics,0,True,1,42.47249570099666,2026-05-16 11:50:48.312806+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,B: stderr + LSP diagnostics,1,True,1,37.040746296999714,2026-05-16 11:51:25.354572+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,B: stderr + LSP diagnostics,2,True,1,33.51182237499961,2026-05-16 11:51:58.866905+00:00,1
+hash-library/sha3.cpp,hash-library,sha3.cpp,300,B: stderr + LSP diagnostics,3,True,1,35.17117001199949,2026-05-16 11:52:34.038789+00:00,1
+hash-library/sha3.h,hash-library,sha3.h,81,A: compiler stderr,0,True,1,7.802733511998667,2026-05-16 11:52:41.842259+00:00,1
+hash-library/sha3.h,hash-library,sha3.h,81,A: compiler stderr,1,True,1,11.899062268003036,2026-05-16 11:52:53.742237+00:00,1
+hash-library/sha3.h,hash-library,sha3.h,81,A: compiler stderr,2,True,0,4.313130829999864,2026-05-16 11:52:58.056004+00:00,0
+hash-library/sha3.h,hash-library,sha3.h,81,A: compiler stderr,3,True,4,30.819930566998664,2026-05-16 11:53:28.876512+00:00,4
+hash-library/sha3.h,hash-library,sha3.h,81,B: stderr + LSP diagnostics,0,True,1,15.084386974998779,2026-05-16 11:53:43.961510+00:00,1
+hash-library/sha3.h,hash-library,sha3.h,81,B: stderr + LSP diagnostics,1,True,2,25.535715309000807,2026-05-16 11:54:09.497877+00:00,2
+hash-library/sha3.h,hash-library,sha3.h,81,B: stderr + LSP diagnostics,2,True,1,10.67524594799761,2026-05-16 11:54:20.173755+00:00,1
+hash-library/sha3.h,hash-library,sha3.h,81,B: stderr + LSP diagnostics,3,True,1,11.710195076000673,2026-05-16 11:54:31.884816+00:00,1
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,A: compiler stderr,0,True,2,12.863327654002205,2026-05-16 11:54:44.748827+00:00,2
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,A: compiler stderr,1,True,0,3.953881983001338,2026-05-16 11:54:48.703361+00:00,0
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,A: compiler stderr,2,True,0,5.529252322001412,2026-05-16 11:54:54.233244+00:00,0
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,A: compiler stderr,3,True,0,6.2860771080013365,2026-05-16 11:55:00.519885+00:00,0
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,B: stderr + LSP diagnostics,0,True,0,6.351555725999788,2026-05-16 11:55:06.872137+00:00,0
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,B: stderr + LSP diagnostics,1,True,6,77.33015810000143,2026-05-16 11:56:24.203409+00:00,6
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,B: stderr + LSP diagnostics,2,True,2,15.428376330997708,2026-05-16 11:56:39.632976+00:00,2
+hash-library/tests/github-issue2.cpp,hash-library,tests/github-issue2.cpp,64,B: stderr + LSP diagnostics,3,True,1,9.329064866997214,2026-05-16 11:56:48.962940+00:00,1
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,A: compiler stderr,0,True,0,2.06997278199924,2026-05-16 11:56:51.033575+00:00,0
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,A: compiler stderr,1,True,0,2.821976944997004,2026-05-16 11:56:53.856291+00:00,0
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,A: compiler stderr,2,False,8,26.699490381000942,2026-05-16 11:57:20.556364+00:00,8
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,A: compiler stderr,3,True,0,2.91043403599906,2026-05-16 11:57:23.467782+00:00,0
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,B: stderr + LSP diagnostics,0,True,0,2.81377624200104,2026-05-16 11:57:26.282099+00:00,0
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,B: stderr + LSP diagnostics,1,True,0,3.501403293001203,2026-05-16 11:57:29.784056+00:00,0
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,B: stderr + LSP diagnostics,2,True,0,2.934803315998579,2026-05-16 11:57:32.719353+00:00,0
+hash-library/tests/github-issue6.cpp,hash-library,tests/github-issue6.cpp,16,B: stderr + LSP diagnostics,3,True,2,16.280844471002638,2026-05-16 11:57:49.000651+00:00,2
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,A: compiler stderr,0,True,4,45.97383427599925,2026-05-16 11:58:34.975027+00:00,4
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,A: compiler stderr,1,True,4,113.78691388600055,2026-05-16 12:00:28.762659+00:00,4
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,A: compiler stderr,2,True,5,118.68671008599995,2026-05-16 12:02:27.450526+00:00,5
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,A: compiler stderr,3,True,2,362.7057452959998,2026-05-16 12:08:30.156916+00:00,2
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,B: stderr + LSP diagnostics,0,True,7,144.33845398199992,2026-05-16 12:10:54.496155+00:00,7
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,B: stderr + LSP diagnostics,1,False,8,57.69446040600087,2026-05-16 12:11:52.191920+00:00,8
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,B: stderr + LSP diagnostics,2,False,8,46.77370240500022,2026-05-16 12:12:38.966156+00:00,8
+hash-library/tests/tests.cpp,hash-library,tests/tests.cpp,361,B: stderr + LSP diagnostics,3,False,8,46.87901597100063,2026-05-16 12:13:25.845699+00:00,8

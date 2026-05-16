@@ -1,0 +1,379 @@
+unit_id,condition,repetition,iteration,passed
+hash-library/crc32.cpp,A: compiler stderr,0,0,False
+hash-library/crc32.cpp,A: compiler stderr,0,1,False
+hash-library/crc32.cpp,A: compiler stderr,0,2,True
+hash-library/crc32.cpp,A: compiler stderr,1,0,False
+hash-library/crc32.cpp,A: compiler stderr,1,1,True
+hash-library/crc32.cpp,A: compiler stderr,2,0,False
+hash-library/crc32.cpp,A: compiler stderr,2,1,True
+hash-library/crc32.cpp,A: compiler stderr,3,0,False
+hash-library/crc32.cpp,A: compiler stderr,3,1,False
+hash-library/crc32.cpp,A: compiler stderr,3,2,True
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,0,2,True
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,1,1,True
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,2,1,True
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/crc32.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/crc32.h,A: compiler stderr,0,0,False
+hash-library/crc32.h,A: compiler stderr,0,1,True
+hash-library/crc32.h,A: compiler stderr,1,0,False
+hash-library/crc32.h,A: compiler stderr,1,1,True
+hash-library/crc32.h,A: compiler stderr,2,0,False
+hash-library/crc32.h,A: compiler stderr,2,1,False
+hash-library/crc32.h,A: compiler stderr,2,2,True
+hash-library/crc32.h,A: compiler stderr,3,0,True
+hash-library/crc32.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/crc32.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/crc32.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/crc32.h,B: stderr + LSP diagnostics,1,1,True
+hash-library/crc32.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/crc32.h,B: stderr + LSP diagnostics,2,1,False
+hash-library/crc32.h,B: stderr + LSP diagnostics,2,2,False
+hash-library/crc32.h,B: stderr + LSP diagnostics,2,3,True
+hash-library/crc32.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/crc32.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/digest.cpp,A: compiler stderr,0,0,False
+hash-library/digest.cpp,A: compiler stderr,0,1,True
+hash-library/digest.cpp,A: compiler stderr,1,0,False
+hash-library/digest.cpp,A: compiler stderr,1,1,False
+hash-library/digest.cpp,A: compiler stderr,1,2,False
+hash-library/digest.cpp,A: compiler stderr,1,3,True
+hash-library/digest.cpp,A: compiler stderr,2,0,False
+hash-library/digest.cpp,A: compiler stderr,2,1,False
+hash-library/digest.cpp,A: compiler stderr,2,2,False
+hash-library/digest.cpp,A: compiler stderr,2,3,True
+hash-library/digest.cpp,A: compiler stderr,3,0,False
+hash-library/digest.cpp,A: compiler stderr,3,1,True
+hash-library/digest.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,0,2,True
+hash-library/digest.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,1,1,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,1,2,True
+hash-library/digest.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,2,1,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,2,2,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,2,3,True
+hash-library/digest.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/digest.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/hash.h,A: compiler stderr,0,0,False
+hash-library/hash.h,A: compiler stderr,0,1,True
+hash-library/hash.h,A: compiler stderr,1,0,False
+hash-library/hash.h,A: compiler stderr,1,1,True
+hash-library/hash.h,A: compiler stderr,2,0,False
+hash-library/hash.h,A: compiler stderr,2,1,True
+hash-library/hash.h,A: compiler stderr,3,0,False
+hash-library/hash.h,A: compiler stderr,3,1,True
+hash-library/hash.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/hash.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/hash.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/hash.h,B: stderr + LSP diagnostics,1,1,True
+hash-library/hash.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/hash.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/hash.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/hash.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/hmac.h,A: compiler stderr,0,0,False
+hash-library/hmac.h,A: compiler stderr,0,1,True
+hash-library/hmac.h,A: compiler stderr,1,0,False
+hash-library/hmac.h,A: compiler stderr,1,1,True
+hash-library/hmac.h,A: compiler stderr,2,0,False
+hash-library/hmac.h,A: compiler stderr,2,1,True
+hash-library/hmac.h,A: compiler stderr,3,0,True
+hash-library/hmac.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/hmac.h,B: stderr + LSP diagnostics,0,1,False
+hash-library/hmac.h,B: stderr + LSP diagnostics,0,2,True
+hash-library/hmac.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/hmac.h,B: stderr + LSP diagnostics,1,1,True
+hash-library/hmac.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/hmac.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/hmac.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/hmac.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/keccak.cpp,A: compiler stderr,0,0,False
+hash-library/keccak.cpp,A: compiler stderr,0,1,False
+hash-library/keccak.cpp,A: compiler stderr,0,2,True
+hash-library/keccak.cpp,A: compiler stderr,1,0,False
+hash-library/keccak.cpp,A: compiler stderr,1,1,True
+hash-library/keccak.cpp,A: compiler stderr,2,0,False
+hash-library/keccak.cpp,A: compiler stderr,2,1,False
+hash-library/keccak.cpp,A: compiler stderr,2,2,True
+hash-library/keccak.cpp,A: compiler stderr,3,0,False
+hash-library/keccak.cpp,A: compiler stderr,3,1,True
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,0,2,True
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,1,1,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,1,2,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,1,3,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,1,4,True
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,2,1,True
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/keccak.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/keccak.h,A: compiler stderr,0,0,False
+hash-library/keccak.h,A: compiler stderr,0,1,True
+hash-library/keccak.h,A: compiler stderr,1,0,False
+hash-library/keccak.h,A: compiler stderr,1,1,True
+hash-library/keccak.h,A: compiler stderr,2,0,False
+hash-library/keccak.h,A: compiler stderr,2,1,True
+hash-library/keccak.h,A: compiler stderr,3,0,False
+hash-library/keccak.h,A: compiler stderr,3,1,True
+hash-library/keccak.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/keccak.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/keccak.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/keccak.h,B: stderr + LSP diagnostics,1,1,True
+hash-library/keccak.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/keccak.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/keccak.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/keccak.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/md5.cpp,A: compiler stderr,0,0,False
+hash-library/md5.cpp,A: compiler stderr,0,1,True
+hash-library/md5.cpp,A: compiler stderr,1,0,False
+hash-library/md5.cpp,A: compiler stderr,1,1,True
+hash-library/md5.cpp,A: compiler stderr,2,0,False
+hash-library/md5.cpp,A: compiler stderr,2,1,True
+hash-library/md5.cpp,A: compiler stderr,3,0,False
+hash-library/md5.cpp,A: compiler stderr,3,1,True
+hash-library/md5.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,0,2,True
+hash-library/md5.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,1,1,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,1,2,True
+hash-library/md5.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,2,1,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,2,2,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,2,3,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,2,4,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,2,5,True
+hash-library/md5.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/md5.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/md5.h,A: compiler stderr,0,0,False
+hash-library/md5.h,A: compiler stderr,0,1,True
+hash-library/md5.h,A: compiler stderr,1,0,False
+hash-library/md5.h,A: compiler stderr,1,1,True
+hash-library/md5.h,A: compiler stderr,2,0,False
+hash-library/md5.h,A: compiler stderr,2,1,True
+hash-library/md5.h,A: compiler stderr,3,0,False
+hash-library/md5.h,A: compiler stderr,3,1,True
+hash-library/md5.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/md5.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/md5.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/md5.h,B: stderr + LSP diagnostics,1,1,True
+hash-library/md5.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/md5.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/md5.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/md5.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/sha1.cpp,A: compiler stderr,0,0,False
+hash-library/sha1.cpp,A: compiler stderr,0,1,False
+hash-library/sha1.cpp,A: compiler stderr,0,2,False
+hash-library/sha1.cpp,A: compiler stderr,0,3,True
+hash-library/sha1.cpp,A: compiler stderr,1,0,False
+hash-library/sha1.cpp,A: compiler stderr,1,1,False
+hash-library/sha1.cpp,A: compiler stderr,1,2,False
+hash-library/sha1.cpp,A: compiler stderr,1,3,False
+hash-library/sha1.cpp,A: compiler stderr,1,4,False
+hash-library/sha1.cpp,A: compiler stderr,1,5,False
+hash-library/sha1.cpp,A: compiler stderr,1,6,True
+hash-library/sha1.cpp,A: compiler stderr,2,0,False
+hash-library/sha1.cpp,A: compiler stderr,2,1,False
+hash-library/sha1.cpp,A: compiler stderr,2,2,True
+hash-library/sha1.cpp,A: compiler stderr,3,0,False
+hash-library/sha1.cpp,A: compiler stderr,3,1,False
+hash-library/sha1.cpp,A: compiler stderr,3,2,True
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,0,2,False
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,0,3,True
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,1,1,True
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,2,1,True
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/sha1.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/sha1.h,A: compiler stderr,0,0,False
+hash-library/sha1.h,A: compiler stderr,0,1,True
+hash-library/sha1.h,A: compiler stderr,1,0,False
+hash-library/sha1.h,A: compiler stderr,1,1,True
+hash-library/sha1.h,A: compiler stderr,2,0,False
+hash-library/sha1.h,A: compiler stderr,2,1,True
+hash-library/sha1.h,A: compiler stderr,3,0,False
+hash-library/sha1.h,A: compiler stderr,3,1,True
+hash-library/sha1.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/sha1.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/sha1.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/sha1.h,B: stderr + LSP diagnostics,1,1,False
+hash-library/sha1.h,B: stderr + LSP diagnostics,1,2,True
+hash-library/sha1.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/sha1.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/sha1.h,B: stderr + LSP diagnostics,3,0,True
+hash-library/sha256.cpp,A: compiler stderr,0,0,False
+hash-library/sha256.cpp,A: compiler stderr,0,1,True
+hash-library/sha256.cpp,A: compiler stderr,1,0,False
+hash-library/sha256.cpp,A: compiler stderr,1,1,True
+hash-library/sha256.cpp,A: compiler stderr,2,0,False
+hash-library/sha256.cpp,A: compiler stderr,2,1,True
+hash-library/sha256.cpp,A: compiler stderr,3,0,False
+hash-library/sha256.cpp,A: compiler stderr,3,1,False
+hash-library/sha256.cpp,A: compiler stderr,3,2,True
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,2,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,3,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,4,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,5,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,6,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,0,7,True
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,1,1,True
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,2,1,True
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/sha256.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/sha256.h,A: compiler stderr,0,0,True
+hash-library/sha256.h,A: compiler stderr,1,0,False
+hash-library/sha256.h,A: compiler stderr,1,1,True
+hash-library/sha256.h,A: compiler stderr,2,0,False
+hash-library/sha256.h,A: compiler stderr,2,1,True
+hash-library/sha256.h,A: compiler stderr,3,0,False
+hash-library/sha256.h,A: compiler stderr,3,1,True
+hash-library/sha256.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/sha256.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/sha256.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/sha256.h,B: stderr + LSP diagnostics,1,1,True
+hash-library/sha256.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/sha256.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/sha256.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/sha256.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/sha3.cpp,A: compiler stderr,0,0,False
+hash-library/sha3.cpp,A: compiler stderr,0,1,False
+hash-library/sha3.cpp,A: compiler stderr,0,2,False
+hash-library/sha3.cpp,A: compiler stderr,0,3,True
+hash-library/sha3.cpp,A: compiler stderr,1,0,False
+hash-library/sha3.cpp,A: compiler stderr,1,1,True
+hash-library/sha3.cpp,A: compiler stderr,2,0,False
+hash-library/sha3.cpp,A: compiler stderr,2,1,True
+hash-library/sha3.cpp,A: compiler stderr,3,0,False
+hash-library/sha3.cpp,A: compiler stderr,3,1,True
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,0,1,True
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,1,1,True
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,2,1,True
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/sha3.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/sha3.h,A: compiler stderr,0,0,False
+hash-library/sha3.h,A: compiler stderr,0,1,True
+hash-library/sha3.h,A: compiler stderr,1,0,False
+hash-library/sha3.h,A: compiler stderr,1,1,True
+hash-library/sha3.h,A: compiler stderr,2,0,True
+hash-library/sha3.h,A: compiler stderr,3,0,False
+hash-library/sha3.h,A: compiler stderr,3,1,False
+hash-library/sha3.h,A: compiler stderr,3,2,False
+hash-library/sha3.h,A: compiler stderr,3,3,False
+hash-library/sha3.h,A: compiler stderr,3,4,True
+hash-library/sha3.h,B: stderr + LSP diagnostics,0,0,False
+hash-library/sha3.h,B: stderr + LSP diagnostics,0,1,True
+hash-library/sha3.h,B: stderr + LSP diagnostics,1,0,False
+hash-library/sha3.h,B: stderr + LSP diagnostics,1,1,False
+hash-library/sha3.h,B: stderr + LSP diagnostics,1,2,True
+hash-library/sha3.h,B: stderr + LSP diagnostics,2,0,False
+hash-library/sha3.h,B: stderr + LSP diagnostics,2,1,True
+hash-library/sha3.h,B: stderr + LSP diagnostics,3,0,False
+hash-library/sha3.h,B: stderr + LSP diagnostics,3,1,True
+hash-library/tests/github-issue2.cpp,A: compiler stderr,0,0,False
+hash-library/tests/github-issue2.cpp,A: compiler stderr,0,1,False
+hash-library/tests/github-issue2.cpp,A: compiler stderr,0,2,True
+hash-library/tests/github-issue2.cpp,A: compiler stderr,1,0,True
+hash-library/tests/github-issue2.cpp,A: compiler stderr,2,0,True
+hash-library/tests/github-issue2.cpp,A: compiler stderr,3,0,True
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,0,0,True
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,1,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,2,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,3,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,4,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,5,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,1,6,True
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,2,1,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,2,2,True
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/tests/github-issue2.cpp,B: stderr + LSP diagnostics,3,1,True
+hash-library/tests/github-issue6.cpp,A: compiler stderr,0,0,True
+hash-library/tests/github-issue6.cpp,A: compiler stderr,1,0,True
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,0,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,1,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,2,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,3,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,4,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,5,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,6,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,7,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,2,8,False
+hash-library/tests/github-issue6.cpp,A: compiler stderr,3,0,True
+hash-library/tests/github-issue6.cpp,B: stderr + LSP diagnostics,0,0,True
+hash-library/tests/github-issue6.cpp,B: stderr + LSP diagnostics,1,0,True
+hash-library/tests/github-issue6.cpp,B: stderr + LSP diagnostics,2,0,True
+hash-library/tests/github-issue6.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/tests/github-issue6.cpp,B: stderr + LSP diagnostics,3,1,False
+hash-library/tests/github-issue6.cpp,B: stderr + LSP diagnostics,3,2,True
+hash-library/tests/tests.cpp,A: compiler stderr,0,0,False
+hash-library/tests/tests.cpp,A: compiler stderr,0,1,False
+hash-library/tests/tests.cpp,A: compiler stderr,0,2,False
+hash-library/tests/tests.cpp,A: compiler stderr,0,3,False
+hash-library/tests/tests.cpp,A: compiler stderr,0,4,True
+hash-library/tests/tests.cpp,A: compiler stderr,1,0,False
+hash-library/tests/tests.cpp,A: compiler stderr,1,1,False
+hash-library/tests/tests.cpp,A: compiler stderr,1,2,False
+hash-library/tests/tests.cpp,A: compiler stderr,1,3,False
+hash-library/tests/tests.cpp,A: compiler stderr,1,4,True
+hash-library/tests/tests.cpp,A: compiler stderr,2,0,False
+hash-library/tests/tests.cpp,A: compiler stderr,2,1,False
+hash-library/tests/tests.cpp,A: compiler stderr,2,2,False
+hash-library/tests/tests.cpp,A: compiler stderr,2,3,False
+hash-library/tests/tests.cpp,A: compiler stderr,2,4,False
+hash-library/tests/tests.cpp,A: compiler stderr,2,5,True
+hash-library/tests/tests.cpp,A: compiler stderr,3,0,False
+hash-library/tests/tests.cpp,A: compiler stderr,3,1,False
+hash-library/tests/tests.cpp,A: compiler stderr,3,2,True
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,0,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,1,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,2,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,3,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,4,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,5,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,6,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,0,7,True
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,0,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,1,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,2,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,3,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,4,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,5,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,6,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,7,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,1,8,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,0,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,1,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,2,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,3,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,4,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,5,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,6,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,7,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,2,8,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,0,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,1,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,2,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,3,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,4,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,5,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,6,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,7,False
+hash-library/tests/tests.cpp,B: stderr + LSP diagnostics,3,8,False
