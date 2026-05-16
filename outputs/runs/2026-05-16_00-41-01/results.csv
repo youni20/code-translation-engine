@@ -1,0 +1,29 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+polypartition/src/polypartition.cpp,polypartition,src/polypartition.cpp,1846,A: compiler stderr,0,True,3,144.3516931410004,2026-05-15 22:43:25.638747+00:00,3
+polypartition/src/polypartition.cpp,polypartition,src/polypartition.cpp,1846,A: compiler stderr,1,True,4,126.15773895199982,2026-05-15 22:45:31.796897+00:00,4
+polypartition/src/polypartition.cpp,polypartition,src/polypartition.cpp,1846,B: stderr + LSP diagnostics,0,True,1,26.93206146800003,2026-05-15 22:45:58.729359+00:00,1
+polypartition/src/polypartition.cpp,polypartition,src/polypartition.cpp,1846,B: stderr + LSP diagnostics,1,True,4,123.03999458600083,2026-05-15 22:48:01.769806+00:00,4
+polypartition/src/polypartition.h,polypartition,src/polypartition.h,424,A: compiler stderr,0,True,3,67.33591140299995,2026-05-15 22:49:09.106108+00:00,3
+polypartition/src/polypartition.h,polypartition,src/polypartition.h,424,A: compiler stderr,1,True,1,28.12682098299956,2026-05-15 22:49:37.233385+00:00,1
+polypartition/src/polypartition.h,polypartition,src/polypartition.h,424,B: stderr + LSP diagnostics,0,True,0,14.819329298999946,2026-05-15 22:49:52.054051+00:00,0
+polypartition/src/polypartition.h,polypartition,src/polypartition.h,424,B: stderr + LSP diagnostics,1,True,1,25.85237932400014,2026-05-15 22:50:17.907865+00:00,1
+polypartition/test/image.cpp,polypartition,test/image.cpp,390,A: compiler stderr,0,True,1,63.77663720599958,2026-05-15 22:51:21.685551+00:00,1
+polypartition/test/image.cpp,polypartition,test/image.cpp,390,A: compiler stderr,1,True,1,54.9094223889997,2026-05-15 22:52:16.596087+00:00,1
+polypartition/test/image.cpp,polypartition,test/image.cpp,390,B: stderr + LSP diagnostics,0,True,2,95.53204796099999,2026-05-15 22:53:52.129652+00:00,2
+polypartition/test/image.cpp,polypartition,test/image.cpp,390,B: stderr + LSP diagnostics,1,True,1,60.552662645000055,2026-05-15 22:54:52.684158+00:00,1
+polypartition/test/image.h,polypartition,test/image.h,220,A: compiler stderr,0,True,1,22.75022504700064,2026-05-15 22:55:15.436141+00:00,1
+polypartition/test/image.h,polypartition,test/image.h,220,A: compiler stderr,1,True,1,18.29639376600062,2026-05-15 22:55:33.733693+00:00,1
+polypartition/test/image.h,polypartition,test/image.h,220,B: stderr + LSP diagnostics,0,True,1,22.543102405000354,2026-05-15 22:55:56.278149+00:00,1
+polypartition/test/image.h,polypartition,test/image.h,220,B: stderr + LSP diagnostics,1,True,1,24.797792219000257,2026-05-15 22:56:21.077352+00:00,1
+polypartition/test/imageio.cpp,polypartition,test/imageio.cpp,512,A: compiler stderr,0,True,1,79.53464636400076,2026-05-15 22:57:40.613193+00:00,1
+polypartition/test/imageio.cpp,polypartition,test/imageio.cpp,512,A: compiler stderr,1,True,1,74.87610025000049,2026-05-15 22:58:55.490213+00:00,1
+polypartition/test/imageio.cpp,polypartition,test/imageio.cpp,512,B: stderr + LSP diagnostics,0,True,1,76.79435989300055,2026-05-15 23:00:12.285441+00:00,1
+polypartition/test/imageio.cpp,polypartition,test/imageio.cpp,512,B: stderr + LSP diagnostics,1,True,1,84.4700965029997,2026-05-15 23:01:36.756345+00:00,1
+polypartition/test/imageio.h,polypartition,test/imageio.h,86,A: compiler stderr,0,True,1,23.460907825000504,2026-05-15 23:02:00.218189+00:00,1
+polypartition/test/imageio.h,polypartition,test/imageio.h,86,A: compiler stderr,1,True,1,27.912370629999714,2026-05-15 23:02:28.131982+00:00,1
+polypartition/test/imageio.h,polypartition,test/imageio.h,86,B: stderr + LSP diagnostics,0,True,1,23.63983302699944,2026-05-15 23:02:51.772811+00:00,1
+polypartition/test/imageio.h,polypartition,test/imageio.h,86,B: stderr + LSP diagnostics,1,True,1,25.1901379359997,2026-05-15 23:03:16.963681+00:00,1
+polypartition/test/test.cpp,polypartition,test/test.cpp,415,A: compiler stderr,0,True,2,87.77780634299961,2026-05-15 23:04:44.742569+00:00,2
+polypartition/test/test.cpp,polypartition,test/test.cpp,415,A: compiler stderr,1,True,3,73.55575317700004,2026-05-15 23:05:58.299838+00:00,3
+polypartition/test/test.cpp,polypartition,test/test.cpp,415,B: stderr + LSP diagnostics,0,True,6,302.52562608300013,2026-05-15 23:11:00.826382+00:00,6
+polypartition/test/test.cpp,polypartition,test/test.cpp,415,B: stderr + LSP diagnostics,1,True,1,70.38417078400016,2026-05-15 23:12:11.211978+00:00,1

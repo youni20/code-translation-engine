@@ -1,0 +1,21 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+argh/argh.h,argh,argh.h,485,A: compiler stderr,0,False,8,141.754859605,2026-05-15 21:15:53.334911+00:00,8
+argh/argh.h,argh,argh.h,485,A: compiler stderr,1,True,1,44.93126185900002,2026-05-15 21:16:38.266589+00:00,1
+argh/argh.h,argh,argh.h,485,B: stderr + LSP diagnostics,0,True,1,40.15093363999995,2026-05-15 21:17:18.417960+00:00,1
+argh/argh.h,argh,argh.h,485,B: stderr + LSP diagnostics,1,True,3,63.849931423999976,2026-05-15 21:18:22.268390+00:00,3
+argh/argh_tests.cpp,argh,argh_tests.cpp,885,A: compiler stderr,0,True,1,22.835192794000022,2026-05-15 21:18:45.103936+00:00,1
+argh/argh_tests.cpp,argh,argh_tests.cpp,885,A: compiler stderr,1,True,1,10.707438077999939,2026-05-15 21:18:55.811661+00:00,1
+argh/argh_tests.cpp,argh,argh_tests.cpp,885,B: stderr + LSP diagnostics,0,True,1,23.659048675999998,2026-05-15 21:19:19.470988+00:00,1
+argh/argh_tests.cpp,argh,argh_tests.cpp,885,B: stderr + LSP diagnostics,1,True,0,5.920591400000035,2026-05-15 21:19:25.391915+00:00,0
+argh/doctest.h,argh,doctest.h,6580,A: compiler stderr,0,True,2,54.123306997999975,2026-05-15 21:20:19.515668+00:00,2
+argh/doctest.h,argh,doctest.h,6580,A: compiler stderr,1,False,8,133.72241364700005,2026-05-15 21:22:33.238413+00:00,8
+argh/doctest.h,argh,doctest.h,6580,B: stderr + LSP diagnostics,0,True,0,20.262158913999997,2026-05-15 21:22:53.500969+00:00,0
+argh/doctest.h,argh,doctest.h,6580,B: stderr + LSP diagnostics,1,True,1,35.46011544300006,2026-05-15 21:23:28.961477+00:00,1
+argh/example.cpp,argh,example.cpp,32,A: compiler stderr,0,True,2,15.933611993999989,2026-05-15 21:23:44.895703+00:00,2
+argh/example.cpp,argh,example.cpp,32,A: compiler stderr,1,True,0,6.146919125999943,2026-05-15 21:23:51.042927+00:00,0
+argh/example.cpp,argh,example.cpp,32,B: stderr + LSP diagnostics,0,True,0,3.494849411000018,2026-05-15 21:23:54.538235+00:00,0
+argh/example.cpp,argh,example.cpp,32,B: stderr + LSP diagnostics,1,True,0,3.9260729960000162,2026-05-15 21:23:58.464691+00:00,0
+argh/test_package/test_package.cpp,argh,test_package/test_package.cpp,14,A: compiler stderr,0,True,0,1.4871457039999991,2026-05-15 21:23:59.952111+00:00,0
+argh/test_package/test_package.cpp,argh,test_package/test_package.cpp,14,A: compiler stderr,1,True,0,1.9906225460000542,2026-05-15 21:24:01.943115+00:00,0
+argh/test_package/test_package.cpp,argh,test_package/test_package.cpp,14,B: stderr + LSP diagnostics,0,True,0,1.752293510000072,2026-05-15 21:24:03.695697+00:00,0
+argh/test_package/test_package.cpp,argh,test_package/test_package.cpp,14,B: stderr + LSP diagnostics,1,True,0,1.495090602999994,2026-05-15 21:24:05.191068+00:00,0

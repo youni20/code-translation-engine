@@ -1,0 +1,22 @@
+unit_id,condition,repetition,iteration,passed
+poisson-disk-generator/Poisson.cpp,A: compiler stderr,0,0,False
+poisson-disk-generator/Poisson.cpp,A: compiler stderr,0,1,False
+poisson-disk-generator/Poisson.cpp,A: compiler stderr,0,2,True
+poisson-disk-generator/Poisson.cpp,A: compiler stderr,1,0,False
+poisson-disk-generator/Poisson.cpp,A: compiler stderr,1,1,False
+poisson-disk-generator/Poisson.cpp,A: compiler stderr,1,2,True
+poisson-disk-generator/Poisson.cpp,B: stderr + LSP diagnostics,0,0,False
+poisson-disk-generator/Poisson.cpp,B: stderr + LSP diagnostics,0,1,False
+poisson-disk-generator/Poisson.cpp,B: stderr + LSP diagnostics,0,2,True
+poisson-disk-generator/Poisson.cpp,B: stderr + LSP diagnostics,1,0,False
+poisson-disk-generator/Poisson.cpp,B: stderr + LSP diagnostics,1,1,True
+poisson-disk-generator/PoissonGenerator.h,A: compiler stderr,0,0,False
+poisson-disk-generator/PoissonGenerator.h,A: compiler stderr,0,1,True
+poisson-disk-generator/PoissonGenerator.h,A: compiler stderr,1,0,False
+poisson-disk-generator/PoissonGenerator.h,A: compiler stderr,1,1,False
+poisson-disk-generator/PoissonGenerator.h,A: compiler stderr,1,2,True
+poisson-disk-generator/PoissonGenerator.h,B: stderr + LSP diagnostics,0,0,False
+poisson-disk-generator/PoissonGenerator.h,B: stderr + LSP diagnostics,0,1,True
+poisson-disk-generator/PoissonGenerator.h,B: stderr + LSP diagnostics,1,0,False
+poisson-disk-generator/PoissonGenerator.h,B: stderr + LSP diagnostics,1,1,False
+poisson-disk-generator/PoissonGenerator.h,B: stderr + LSP diagnostics,1,2,True

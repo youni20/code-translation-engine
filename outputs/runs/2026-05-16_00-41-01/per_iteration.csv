@@ -1,0 +1,75 @@
+unit_id,condition,repetition,iteration,passed
+polypartition/src/polypartition.cpp,A: compiler stderr,0,0,False
+polypartition/src/polypartition.cpp,A: compiler stderr,0,1,False
+polypartition/src/polypartition.cpp,A: compiler stderr,0,2,False
+polypartition/src/polypartition.cpp,A: compiler stderr,0,3,True
+polypartition/src/polypartition.cpp,A: compiler stderr,1,0,False
+polypartition/src/polypartition.cpp,A: compiler stderr,1,1,False
+polypartition/src/polypartition.cpp,A: compiler stderr,1,2,False
+polypartition/src/polypartition.cpp,A: compiler stderr,1,3,False
+polypartition/src/polypartition.cpp,A: compiler stderr,1,4,True
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,0,0,False
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,0,1,True
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,1,0,False
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,1,1,False
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,1,2,False
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,1,3,False
+polypartition/src/polypartition.cpp,B: stderr + LSP diagnostics,1,4,True
+polypartition/src/polypartition.h,A: compiler stderr,0,0,False
+polypartition/src/polypartition.h,A: compiler stderr,0,1,False
+polypartition/src/polypartition.h,A: compiler stderr,0,2,False
+polypartition/src/polypartition.h,A: compiler stderr,0,3,True
+polypartition/src/polypartition.h,A: compiler stderr,1,0,False
+polypartition/src/polypartition.h,A: compiler stderr,1,1,True
+polypartition/src/polypartition.h,B: stderr + LSP diagnostics,0,0,True
+polypartition/src/polypartition.h,B: stderr + LSP diagnostics,1,0,False
+polypartition/src/polypartition.h,B: stderr + LSP diagnostics,1,1,True
+polypartition/test/image.cpp,A: compiler stderr,0,0,False
+polypartition/test/image.cpp,A: compiler stderr,0,1,True
+polypartition/test/image.cpp,A: compiler stderr,1,0,False
+polypartition/test/image.cpp,A: compiler stderr,1,1,True
+polypartition/test/image.cpp,B: stderr + LSP diagnostics,0,0,False
+polypartition/test/image.cpp,B: stderr + LSP diagnostics,0,1,False
+polypartition/test/image.cpp,B: stderr + LSP diagnostics,0,2,True
+polypartition/test/image.cpp,B: stderr + LSP diagnostics,1,0,False
+polypartition/test/image.cpp,B: stderr + LSP diagnostics,1,1,True
+polypartition/test/image.h,A: compiler stderr,0,0,False
+polypartition/test/image.h,A: compiler stderr,0,1,True
+polypartition/test/image.h,A: compiler stderr,1,0,False
+polypartition/test/image.h,A: compiler stderr,1,1,True
+polypartition/test/image.h,B: stderr + LSP diagnostics,0,0,False
+polypartition/test/image.h,B: stderr + LSP diagnostics,0,1,True
+polypartition/test/image.h,B: stderr + LSP diagnostics,1,0,False
+polypartition/test/image.h,B: stderr + LSP diagnostics,1,1,True
+polypartition/test/imageio.cpp,A: compiler stderr,0,0,False
+polypartition/test/imageio.cpp,A: compiler stderr,0,1,True
+polypartition/test/imageio.cpp,A: compiler stderr,1,0,False
+polypartition/test/imageio.cpp,A: compiler stderr,1,1,True
+polypartition/test/imageio.cpp,B: stderr + LSP diagnostics,0,0,False
+polypartition/test/imageio.cpp,B: stderr + LSP diagnostics,0,1,True
+polypartition/test/imageio.cpp,B: stderr + LSP diagnostics,1,0,False
+polypartition/test/imageio.cpp,B: stderr + LSP diagnostics,1,1,True
+polypartition/test/imageio.h,A: compiler stderr,0,0,False
+polypartition/test/imageio.h,A: compiler stderr,0,1,True
+polypartition/test/imageio.h,A: compiler stderr,1,0,False
+polypartition/test/imageio.h,A: compiler stderr,1,1,True
+polypartition/test/imageio.h,B: stderr + LSP diagnostics,0,0,False
+polypartition/test/imageio.h,B: stderr + LSP diagnostics,0,1,True
+polypartition/test/imageio.h,B: stderr + LSP diagnostics,1,0,False
+polypartition/test/imageio.h,B: stderr + LSP diagnostics,1,1,True
+polypartition/test/test.cpp,A: compiler stderr,0,0,False
+polypartition/test/test.cpp,A: compiler stderr,0,1,False
+polypartition/test/test.cpp,A: compiler stderr,0,2,True
+polypartition/test/test.cpp,A: compiler stderr,1,0,False
+polypartition/test/test.cpp,A: compiler stderr,1,1,False
+polypartition/test/test.cpp,A: compiler stderr,1,2,False
+polypartition/test/test.cpp,A: compiler stderr,1,3,True
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,0,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,1,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,2,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,3,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,4,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,5,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,0,6,True
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,1,0,False
+polypartition/test/test.cpp,B: stderr + LSP diagnostics,1,1,True

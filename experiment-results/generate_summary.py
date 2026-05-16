@@ -47,6 +47,9 @@ if not dfs:
 df = pd.concat(dfs, ignore_index=True)
 df["success"] = df["success"].astype(bool)
 
+# Drop any rows from old runs where B was LSP-only (pre-condition-change)
+df = df[df["condition"].isin([A_COND, B_COND])].copy()
+
 # ── export CSVs ──────────────────────────────────────────────────────────────
 df.to_csv(OUT_DIR / "combined_results.csv", index=False)
 print(f"  combined_results.csv  ({len(df)} rows across {df['project'].nunique()} projects)")

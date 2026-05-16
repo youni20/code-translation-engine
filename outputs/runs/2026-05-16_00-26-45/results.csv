@@ -1,0 +1,9 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+poisson-disk-generator/Poisson.cpp,poisson-disk-generator,Poisson.cpp,520,A: compiler stderr,0,True,2,176.85525886300002,2026-05-15 22:29:42.580325+00:00,2
+poisson-disk-generator/Poisson.cpp,poisson-disk-generator,Poisson.cpp,520,A: compiler stderr,1,True,2,93.26560562699979,2026-05-15 22:31:15.846646+00:00,2
+poisson-disk-generator/Poisson.cpp,poisson-disk-generator,Poisson.cpp,520,B: stderr + LSP diagnostics,0,True,2,159.42714555600014,2026-05-15 22:33:55.274145+00:00,2
+poisson-disk-generator/Poisson.cpp,poisson-disk-generator,Poisson.cpp,520,B: stderr + LSP diagnostics,1,True,1,66.37683832599942,2026-05-15 22:35:01.651382+00:00,1
+poisson-disk-generator/PoissonGenerator.h,poisson-disk-generator,PoissonGenerator.h,387,A: compiler stderr,0,True,1,39.98559848900004,2026-05-15 22:35:41.637544+00:00,1
+poisson-disk-generator/PoissonGenerator.h,poisson-disk-generator,PoissonGenerator.h,387,A: compiler stderr,1,True,2,63.34737357799986,2026-05-15 22:36:44.985279+00:00,2
+poisson-disk-generator/PoissonGenerator.h,poisson-disk-generator,PoissonGenerator.h,387,B: stderr + LSP diagnostics,0,True,1,38.91744764499981,2026-05-15 22:37:23.903071+00:00,1
+poisson-disk-generator/PoissonGenerator.h,poisson-disk-generator,PoissonGenerator.h,387,B: stderr + LSP diagnostics,1,True,2,64.40665041000011,2026-05-15 22:38:28.310058+00:00,2

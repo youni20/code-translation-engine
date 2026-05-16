@@ -1,0 +1,47 @@
+unit_id,condition,repetition,iteration,passed
+debug_assert/debug_assert.hpp,A: compiler stderr,0,0,False
+debug_assert/debug_assert.hpp,A: compiler stderr,0,1,False
+debug_assert/debug_assert.hpp,A: compiler stderr,0,2,False
+debug_assert/debug_assert.hpp,A: compiler stderr,0,3,True
+debug_assert/debug_assert.hpp,A: compiler stderr,1,0,False
+debug_assert/debug_assert.hpp,A: compiler stderr,1,1,False
+debug_assert/debug_assert.hpp,A: compiler stderr,1,2,False
+debug_assert/debug_assert.hpp,A: compiler stderr,1,3,True
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,0,0,False
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,0,1,False
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,0,2,False
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,0,3,False
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,0,4,True
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,1,0,False
+debug_assert/debug_assert.hpp,B: stderr + LSP diagnostics,1,1,True
+debug_assert/example.cpp,A: compiler stderr,0,0,False
+debug_assert/example.cpp,A: compiler stderr,0,1,False
+debug_assert/example.cpp,A: compiler stderr,0,2,False
+debug_assert/example.cpp,A: compiler stderr,0,3,False
+debug_assert/example.cpp,A: compiler stderr,0,4,False
+debug_assert/example.cpp,A: compiler stderr,0,5,False
+debug_assert/example.cpp,A: compiler stderr,0,6,True
+debug_assert/example.cpp,A: compiler stderr,1,0,False
+debug_assert/example.cpp,A: compiler stderr,1,1,True
+debug_assert/example.cpp,B: stderr + LSP diagnostics,0,0,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,0,1,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,0,2,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,0,3,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,0,4,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,0,5,True
+debug_assert/example.cpp,B: stderr + LSP diagnostics,1,0,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,1,1,False
+debug_assert/example.cpp,B: stderr + LSP diagnostics,1,2,True
+debug_assert/test_package/example.cpp,A: compiler stderr,0,0,False
+debug_assert/test_package/example.cpp,A: compiler stderr,0,1,False
+debug_assert/test_package/example.cpp,A: compiler stderr,0,2,False
+debug_assert/test_package/example.cpp,A: compiler stderr,0,3,True
+debug_assert/test_package/example.cpp,A: compiler stderr,1,0,False
+debug_assert/test_package/example.cpp,A: compiler stderr,1,1,False
+debug_assert/test_package/example.cpp,A: compiler stderr,1,2,True
+debug_assert/test_package/example.cpp,B: stderr + LSP diagnostics,0,0,False
+debug_assert/test_package/example.cpp,B: stderr + LSP diagnostics,0,1,False
+debug_assert/test_package/example.cpp,B: stderr + LSP diagnostics,0,2,True
+debug_assert/test_package/example.cpp,B: stderr + LSP diagnostics,1,0,False
+debug_assert/test_package/example.cpp,B: stderr + LSP diagnostics,1,1,False
+debug_assert/test_package/example.cpp,B: stderr + LSP diagnostics,1,2,True

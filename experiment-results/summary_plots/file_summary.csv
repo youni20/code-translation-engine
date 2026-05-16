@@ -1,71 +1,71 @@
 project,relative_path,loc,condition,n_runs,successes,success_rate,mean_iterations,mean_wall_time_s,success_pct
-TinyRISCV64,Examples/stdio_VM_runner/stdio_VM_runner.cpp,64,A: compiler stderr,2,2,1.0,2.0,24.839966347000086,100.0
-TinyRISCV64,Examples/stdio_VM_runner/stdio_VM_runner.cpp,64,B: LSP diagnostics,2,1,0.5,5.5,77.15598251649999,50.0
-TinyRISCV64,Test/STP/rv64im_stp_runner.cpp,125,A: compiler stderr,2,2,1.0,4.0,54.14074672300001,100.0
-TinyRISCV64,Test/STP/rv64im_stp_runner.cpp,125,B: LSP diagnostics,2,2,1.0,5.5,91.12543160949997,100.0
-TinyRISCV64,Test/stress/stress.cpp,220,A: compiler stderr,2,2,1.0,3.0,59.67957023349993,100.0
-TinyRISCV64,Test/stress/stress.cpp,220,B: LSP diagnostics,2,2,1.0,4.0,84.72920500349994,100.0
-TinyRISCV64,TinyElfRISCV64.h,658,A: compiler stderr,2,1,0.5,5.5,287.86710765199985,50.0
-TinyRISCV64,TinyElfRISCV64.h,658,B: LSP diagnostics,2,1,0.5,8.0,379.0364991000001,50.0
-TinyRISCV64,TinyRISCV64.h,625,A: compiler stderr,2,2,1.0,4.0,346.52428853950005,100.0
-TinyRISCV64,TinyRISCV64.h,625,B: LSP diagnostics,2,0,0.0,8.0,518.4800498385002,0.0
-argh,argh.h,485,A: compiler stderr,2,1,0.5,5.0,102.1192779209996,50.0
-argh,argh.h,485,B: LSP diagnostics,2,2,1.0,2.0,62.756612280998525,100.0
-argh,argh_tests.cpp,885,A: compiler stderr,2,2,1.0,0.5,18.790485691997674,100.0
-argh,argh_tests.cpp,885,B: LSP diagnostics,2,2,1.0,0.0,5.597980021999319,100.0
-argh,doctest.h,6580,A: compiler stderr,2,2,1.0,3.5,116.27942553399953,100.0
-argh,doctest.h,6580,B: LSP diagnostics,2,2,1.0,4.0,254.51523192750028,100.0
-argh,example.cpp,32,A: compiler stderr,2,2,1.0,0.5,7.3293749445001595,100.0
-argh,example.cpp,32,B: LSP diagnostics,2,2,1.0,0.0,3.5852395109995987,100.0
-argh,test_package/test_package.cpp,14,A: compiler stderr,2,2,1.0,0.0,1.8314935535017867,100.0
-argh,test_package/test_package.cpp,14,B: LSP diagnostics,2,2,1.0,0.0,1.9445084774997663,100.0
-debug_assert,debug_assert.hpp,370,A: compiler stderr,2,2,1.0,2.0,31.881042213999535,100.0
-debug_assert,debug_assert.hpp,370,B: LSP diagnostics,2,2,1.0,4.0,87.25919897200038,100.0
-debug_assert,example.cpp,55,A: compiler stderr,2,2,1.0,2.5,25.05808614450143,100.0
-debug_assert,example.cpp,55,B: LSP diagnostics,2,2,1.0,2.0,33.16903468500095,100.0
-debug_assert,test_package/example.cpp,68,A: compiler stderr,2,2,1.0,2.5,34.9760736570006,100.0
-debug_assert,test_package/example.cpp,68,B: LSP diagnostics,2,2,1.0,2.0,31.55714194149914,100.0
-immediate2d,example1_helloWorld.cpp,19,A: compiler stderr,2,2,1.0,0.5,3.8444975025013264,100.0
-immediate2d,example1_helloWorld.cpp,19,B: LSP diagnostics,2,2,1.0,0.5,7.177644429000793,100.0
-immediate2d,example2_blink.cpp,34,A: compiler stderr,2,2,1.0,0.0,3.1465859665004245,100.0
-immediate2d,example2_blink.cpp,34,B: LSP diagnostics,2,2,1.0,0.5,6.383459151000352,100.0
-immediate2d,example3_button.cpp,63,A: compiler stderr,2,2,1.0,1.5,14.913374768999347,100.0
-immediate2d,example3_button.cpp,63,B: LSP diagnostics,2,2,1.0,0.5,12.836286097501215,100.0
-immediate2d,example4_paint.cpp,117,A: compiler stderr,2,2,1.0,1.0,13.728799995000372,100.0
-immediate2d,example4_paint.cpp,117,B: LSP diagnostics,2,1,0.5,5.0,56.746749216501485,50.0
-immediate2d,example5_graphing.cpp,57,A: compiler stderr,2,2,1.0,0.0,5.968998927999564,100.0
-immediate2d,example5_graphing.cpp,57,B: LSP diagnostics,2,2,1.0,0.5,9.855411661501421,100.0
-immediate2d,example6_text.cpp,131,A: compiler stderr,2,2,1.0,1.0,30.297765897001227,100.0
-immediate2d,example6_text.cpp,131,B: LSP diagnostics,2,2,1.0,1.5,32.73755887449988,100.0
-immediate2d,example7_nibbles.cpp,503,A: compiler stderr,2,2,1.0,2.5,115.7870446500001,100.0
-immediate2d,example7_nibbles.cpp,503,B: LSP diagnostics,2,2,1.0,5.0,261.89447024900073,100.0
-immediate2d,example8_smoke.cpp,306,A: compiler stderr,2,2,1.0,1.0,59.78206839250015,100.0
-immediate2d,example8_smoke.cpp,306,B: LSP diagnostics,2,1,0.5,5.0,205.09749028899935,50.0
-immediate2d,example9_raytracer.cpp,255,A: compiler stderr,2,2,1.0,6.0,192.1089936715016,100.0
-immediate2d,example9_raytracer.cpp,255,B: LSP diagnostics,2,0,0.0,8.0,274.2880004814997,0.0
-immediate2d,exampleA_snow.cpp,198,A: compiler stderr,2,2,1.0,3.0,68.77365570250186,100.0
-immediate2d,exampleA_snow.cpp,198,B: LSP diagnostics,2,2,1.0,4.0,89.77587559350104,100.0
-immediate2d,exampleB_game.cpp,689,A: compiler stderr,2,2,1.0,1.5,42.180919329501194,100.0
-immediate2d,exampleB_game.cpp,689,B: LSP diagnostics,2,2,1.0,2.0,48.157293677501,100.0
-immediate2d,exampleData/littleGame/levels.h,167,A: compiler stderr,2,2,1.0,1.5,12.096168500500426,100.0
-immediate2d,exampleData/littleGame/levels.h,167,B: LSP diagnostics,2,2,1.0,1.5,22.03378952950152,100.0
-immediate2d,immediate2d.h,1485,A: compiler stderr,2,2,1.0,1.5,24.167054925499542,100.0
-immediate2d,immediate2d.h,1485,B: LSP diagnostics,2,2,1.0,2.5,48.60547240199958,100.0
-poisson-disk-generator,Poisson.cpp,520,A: compiler stderr,2,2,1.0,1.0,64.90283792050104,100.0
-poisson-disk-generator,Poisson.cpp,520,B: LSP diagnostics,2,2,1.0,3.0,148.78919058799875,100.0
-poisson-disk-generator,PoissonGenerator.h,387,A: compiler stderr,2,2,1.0,1.0,39.887056180999934,100.0
-poisson-disk-generator,PoissonGenerator.h,387,B: LSP diagnostics,2,2,1.0,1.0,47.69715093749983,100.0
-polypartition,src/polypartition.cpp,1846,A: compiler stderr,2,2,1.0,0.5,22.07476530099939,100.0
-polypartition,src/polypartition.cpp,1846,B: LSP diagnostics,2,2,1.0,1.5,56.231726401499145,100.0
-polypartition,src/polypartition.h,424,A: compiler stderr,2,2,1.0,1.0,27.850526460000765,100.0
-polypartition,src/polypartition.h,424,B: LSP diagnostics,2,2,1.0,0.5,23.28936721899936,100.0
-polypartition,test/image.cpp,390,A: compiler stderr,2,2,1.0,1.0,52.8466428845004,100.0
-polypartition,test/image.cpp,390,B: LSP diagnostics,2,1,0.5,5.5,223.5178745634994,50.0
-polypartition,test/image.h,220,A: compiler stderr,2,2,1.0,1.0,17.67991538750084,100.0
-polypartition,test/image.h,220,B: LSP diagnostics,2,2,1.0,1.5,46.08407160449951,100.0
-polypartition,test/imageio.cpp,512,A: compiler stderr,2,2,1.0,1.0,50.66822582650093,100.0
-polypartition,test/imageio.cpp,512,B: LSP diagnostics,2,2,1.0,1.0,78.75662917699992,100.0
-polypartition,test/imageio.h,86,A: compiler stderr,2,2,1.0,1.0,21.99808948650025,100.0
-polypartition,test/imageio.h,86,B: LSP diagnostics,2,2,1.0,1.0,25.57763302949934,100.0
-polypartition,test/test.cpp,415,A: compiler stderr,2,2,1.0,4.0,169.6803340030001,100.0
-polypartition,test/test.cpp,415,B: LSP diagnostics,2,1,0.5,4.5,179.96541000199977,50.0
+TinyRISCV64,Examples/stdio_VM_runner/stdio_VM_runner.cpp,64,A: compiler stderr,2,1,0.5,5.5,53.436514141000316,50.0
+TinyRISCV64,Examples/stdio_VM_runner/stdio_VM_runner.cpp,64,B: stderr + LSP diagnostics,2,2,1.0,4.0,65.14030963549976,100.0
+TinyRISCV64,Test/STP/rv64im_stp_runner.cpp,125,A: compiler stderr,2,1,0.5,7.0,80.90185324649974,50.0
+TinyRISCV64,Test/STP/rv64im_stp_runner.cpp,125,B: stderr + LSP diagnostics,2,2,1.0,4.5,70.09085433250038,100.0
+TinyRISCV64,Test/stress/stress.cpp,220,A: compiler stderr,2,2,1.0,4.5,123.05283710050026,100.0
+TinyRISCV64,Test/stress/stress.cpp,220,B: stderr + LSP diagnostics,2,1,0.5,7.0,173.93985441399946,50.0
+TinyRISCV64,TinyElfRISCV64.h,658,A: compiler stderr,2,2,1.0,2.0,79.50919109450024,100.0
+TinyRISCV64,TinyElfRISCV64.h,658,B: stderr + LSP diagnostics,2,2,1.0,2.5,127.36859414999981,100.0
+TinyRISCV64,TinyRISCV64.h,625,A: compiler stderr,2,2,1.0,4.0,303.25389422650005,100.0
+TinyRISCV64,TinyRISCV64.h,625,B: stderr + LSP diagnostics,2,2,1.0,5.5,379.4961634375004,100.0
+argh,argh.h,485,A: compiler stderr,2,1,0.5,4.5,93.34306073200001,50.0
+argh,argh.h,485,B: stderr + LSP diagnostics,2,2,1.0,2.0,52.00043253199996,100.0
+argh,argh_tests.cpp,885,A: compiler stderr,2,2,1.0,1.0,16.77131543599998,100.0
+argh,argh_tests.cpp,885,B: stderr + LSP diagnostics,2,2,1.0,0.5,14.789820038000018,100.0
+argh,doctest.h,6580,A: compiler stderr,2,1,0.5,5.0,93.92286032250001,50.0
+argh,doctest.h,6580,B: stderr + LSP diagnostics,2,2,1.0,0.5,27.86113717850003,100.0
+argh,example.cpp,32,A: compiler stderr,2,2,1.0,1.0,11.040265559999966,100.0
+argh,example.cpp,32,B: stderr + LSP diagnostics,2,2,1.0,0.0,3.710461203500017,100.0
+argh,test_package/test_package.cpp,14,A: compiler stderr,2,2,1.0,0.0,1.7388841250000269,100.0
+argh,test_package/test_package.cpp,14,B: stderr + LSP diagnostics,2,2,1.0,0.0,1.623692056500033,100.0
+debug_assert,debug_assert.hpp,370,A: compiler stderr,2,2,1.0,3.0,40.9252955070001,100.0
+debug_assert,debug_assert.hpp,370,B: stderr + LSP diagnostics,2,2,1.0,2.5,37.56593956000006,100.0
+debug_assert,example.cpp,55,A: compiler stderr,2,2,1.0,3.5,27.397303513999987,100.0
+debug_assert,example.cpp,55,B: stderr + LSP diagnostics,2,2,1.0,3.5,37.37541114750002,100.0
+debug_assert,test_package/example.cpp,68,A: compiler stderr,2,2,1.0,2.5,15.810021594499972,100.0
+debug_assert,test_package/example.cpp,68,B: stderr + LSP diagnostics,2,2,1.0,2.0,26.294657629000085,100.0
+immediate2d,example1_helloWorld.cpp,19,A: compiler stderr,2,2,1.0,0.5,3.2374362069999734,100.0
+immediate2d,example1_helloWorld.cpp,19,B: stderr + LSP diagnostics,2,2,1.0,0.0,2.5356748710000825,100.0
+immediate2d,example2_blink.cpp,34,A: compiler stderr,2,2,1.0,0.0,3.122511859500036,100.0
+immediate2d,example2_blink.cpp,34,B: stderr + LSP diagnostics,2,2,1.0,0.0,2.6268463805000692,100.0
+immediate2d,example3_button.cpp,63,A: compiler stderr,2,2,1.0,1.0,9.406143529000133,100.0
+immediate2d,example3_button.cpp,63,B: stderr + LSP diagnostics,2,2,1.0,0.5,10.023141258999885,100.0
+immediate2d,example4_paint.cpp,117,A: compiler stderr,2,1,0.5,4.5,47.66455394100001,50.0
+immediate2d,example4_paint.cpp,117,B: stderr + LSP diagnostics,2,2,1.0,3.0,47.96076812150011,100.0
+immediate2d,example5_graphing.cpp,57,A: compiler stderr,2,2,1.0,0.5,9.065493980999918,100.0
+immediate2d,example5_graphing.cpp,57,B: stderr + LSP diagnostics,2,2,1.0,0.0,3.4748895989999937,100.0
+immediate2d,example6_text.cpp,131,A: compiler stderr,2,2,1.0,0.5,16.78810447500007,100.0
+immediate2d,example6_text.cpp,131,B: stderr + LSP diagnostics,2,2,1.0,1.0,27.664450041999885,100.0
+immediate2d,example7_nibbles.cpp,503,A: compiler stderr,2,2,1.0,1.0,54.552427117499974,100.0
+immediate2d,example7_nibbles.cpp,503,B: stderr + LSP diagnostics,2,2,1.0,1.5,89.55142060200001,100.0
+immediate2d,example8_smoke.cpp,306,A: compiler stderr,2,2,1.0,2.0,71.94179202149985,100.0
+immediate2d,example8_smoke.cpp,306,B: stderr + LSP diagnostics,2,2,1.0,1.5,94.8690935054999,100.0
+immediate2d,example9_raytracer.cpp,255,A: compiler stderr,2,1,0.5,7.5,215.67060993950008,50.0
+immediate2d,example9_raytracer.cpp,255,B: stderr + LSP diagnostics,2,1,0.5,6.0,222.0620603514999,50.0
+immediate2d,exampleA_snow.cpp,198,A: compiler stderr,2,2,1.0,3.0,72.07559480199984,100.0
+immediate2d,exampleA_snow.cpp,198,B: stderr + LSP diagnostics,2,2,1.0,1.0,32.99635276749996,100.0
+immediate2d,exampleB_game.cpp,689,A: compiler stderr,2,2,1.0,1.0,25.58599995900022,100.0
+immediate2d,exampleB_game.cpp,689,B: stderr + LSP diagnostics,2,2,1.0,3.5,86.58190689050002,100.0
+immediate2d,exampleData/littleGame/levels.h,167,A: compiler stderr,2,2,1.0,1.5,28.03048513549993,100.0
+immediate2d,exampleData/littleGame/levels.h,167,B: stderr + LSP diagnostics,2,2,1.0,1.5,29.90561763300002,100.0
+immediate2d,immediate2d.h,1485,A: compiler stderr,2,2,1.0,2.0,63.34805343149969,100.0
+immediate2d,immediate2d.h,1485,B: stderr + LSP diagnostics,2,2,1.0,1.5,90.13204724849993,100.0
+poisson-disk-generator,Poisson.cpp,520,A: compiler stderr,2,2,1.0,2.0,135.0604322449999,100.0
+poisson-disk-generator,Poisson.cpp,520,B: stderr + LSP diagnostics,2,2,1.0,1.5,112.90199194099978,100.0
+poisson-disk-generator,PoissonGenerator.h,387,A: compiler stderr,2,2,1.0,1.5,51.66648603349995,100.0
+poisson-disk-generator,PoissonGenerator.h,387,B: stderr + LSP diagnostics,2,2,1.0,1.5,51.66204902749996,100.0
+polypartition,src/polypartition.cpp,1846,A: compiler stderr,2,2,1.0,3.5,135.2547160465001,100.0
+polypartition,src/polypartition.cpp,1846,B: stderr + LSP diagnostics,2,2,1.0,2.5,74.98602802700043,100.0
+polypartition,src/polypartition.h,424,A: compiler stderr,2,2,1.0,2.0,47.73136619299976,100.0
+polypartition,src/polypartition.h,424,B: stderr + LSP diagnostics,2,2,1.0,0.5,20.335854311500043,100.0
+polypartition,test/image.cpp,390,A: compiler stderr,2,2,1.0,1.0,59.34302979749964,100.0
+polypartition,test/image.cpp,390,B: stderr + LSP diagnostics,2,2,1.0,1.5,78.04235530300002,100.0
+polypartition,test/image.h,220,A: compiler stderr,2,2,1.0,1.0,20.52330940650063,100.0
+polypartition,test/image.h,220,B: stderr + LSP diagnostics,2,2,1.0,1.0,23.670447312000306,100.0
+polypartition,test/imageio.cpp,512,A: compiler stderr,2,2,1.0,1.0,77.20537330700063,100.0
+polypartition,test/imageio.cpp,512,B: stderr + LSP diagnostics,2,2,1.0,1.0,80.63222819800012,100.0
+polypartition,test/imageio.h,86,A: compiler stderr,2,2,1.0,1.0,25.68663922750011,100.0
+polypartition,test/imageio.h,86,B: stderr + LSP diagnostics,2,2,1.0,1.0,24.41498548149957,100.0
+polypartition,test/test.cpp,415,A: compiler stderr,2,2,1.0,2.5,80.66677975999983,100.0
+polypartition,test/test.cpp,415,B: stderr + LSP diagnostics,2,2,1.0,3.5,186.45489843350015,100.0

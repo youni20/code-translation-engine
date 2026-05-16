@@ -1,0 +1,145 @@
+unit_id,condition,repetition,iteration,passed
+immediate2d/example1_helloWorld.cpp,A: compiler stderr,0,0,False
+immediate2d/example1_helloWorld.cpp,A: compiler stderr,0,1,True
+immediate2d/example1_helloWorld.cpp,A: compiler stderr,1,0,True
+immediate2d/example1_helloWorld.cpp,B: stderr + LSP diagnostics,0,0,True
+immediate2d/example1_helloWorld.cpp,B: stderr + LSP diagnostics,1,0,True
+immediate2d/example2_blink.cpp,A: compiler stderr,0,0,True
+immediate2d/example2_blink.cpp,A: compiler stderr,1,0,True
+immediate2d/example2_blink.cpp,B: stderr + LSP diagnostics,0,0,True
+immediate2d/example2_blink.cpp,B: stderr + LSP diagnostics,1,0,True
+immediate2d/example3_button.cpp,A: compiler stderr,0,0,False
+immediate2d/example3_button.cpp,A: compiler stderr,0,1,True
+immediate2d/example3_button.cpp,A: compiler stderr,1,0,False
+immediate2d/example3_button.cpp,A: compiler stderr,1,1,True
+immediate2d/example3_button.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/example3_button.cpp,B: stderr + LSP diagnostics,0,1,True
+immediate2d/example3_button.cpp,B: stderr + LSP diagnostics,1,0,True
+immediate2d/example4_paint.cpp,A: compiler stderr,0,0,False
+immediate2d/example4_paint.cpp,A: compiler stderr,0,1,True
+immediate2d/example4_paint.cpp,A: compiler stderr,1,0,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,1,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,2,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,3,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,4,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,5,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,6,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,7,False
+immediate2d/example4_paint.cpp,A: compiler stderr,1,8,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,0,1,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,0,2,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,0,3,True
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,1,1,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,1,2,False
+immediate2d/example4_paint.cpp,B: stderr + LSP diagnostics,1,3,True
+immediate2d/example5_graphing.cpp,A: compiler stderr,0,0,True
+immediate2d/example5_graphing.cpp,A: compiler stderr,1,0,False
+immediate2d/example5_graphing.cpp,A: compiler stderr,1,1,True
+immediate2d/example5_graphing.cpp,B: stderr + LSP diagnostics,0,0,True
+immediate2d/example5_graphing.cpp,B: stderr + LSP diagnostics,1,0,True
+immediate2d/example6_text.cpp,A: compiler stderr,0,0,False
+immediate2d/example6_text.cpp,A: compiler stderr,0,1,True
+immediate2d/example6_text.cpp,A: compiler stderr,1,0,True
+immediate2d/example6_text.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/example6_text.cpp,B: stderr + LSP diagnostics,0,1,True
+immediate2d/example6_text.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/example6_text.cpp,B: stderr + LSP diagnostics,1,1,True
+immediate2d/example7_nibbles.cpp,A: compiler stderr,0,0,False
+immediate2d/example7_nibbles.cpp,A: compiler stderr,0,1,True
+immediate2d/example7_nibbles.cpp,A: compiler stderr,1,0,False
+immediate2d/example7_nibbles.cpp,A: compiler stderr,1,1,True
+immediate2d/example7_nibbles.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/example7_nibbles.cpp,B: stderr + LSP diagnostics,0,1,True
+immediate2d/example7_nibbles.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/example7_nibbles.cpp,B: stderr + LSP diagnostics,1,1,False
+immediate2d/example7_nibbles.cpp,B: stderr + LSP diagnostics,1,2,True
+immediate2d/example8_smoke.cpp,A: compiler stderr,0,0,False
+immediate2d/example8_smoke.cpp,A: compiler stderr,0,1,False
+immediate2d/example8_smoke.cpp,A: compiler stderr,0,2,True
+immediate2d/example8_smoke.cpp,A: compiler stderr,1,0,False
+immediate2d/example8_smoke.cpp,A: compiler stderr,1,1,False
+immediate2d/example8_smoke.cpp,A: compiler stderr,1,2,True
+immediate2d/example8_smoke.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/example8_smoke.cpp,B: stderr + LSP diagnostics,0,1,True
+immediate2d/example8_smoke.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/example8_smoke.cpp,B: stderr + LSP diagnostics,1,1,False
+immediate2d/example8_smoke.cpp,B: stderr + LSP diagnostics,1,2,True
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,0,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,1,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,2,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,3,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,4,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,5,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,6,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,0,7,True
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,0,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,1,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,2,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,3,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,4,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,5,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,6,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,7,False
+immediate2d/example9_raytracer.cpp,A: compiler stderr,1,8,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,1,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,2,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,3,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,4,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,5,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,6,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,7,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,0,8,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,1,1,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,1,2,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,1,3,False
+immediate2d/example9_raytracer.cpp,B: stderr + LSP diagnostics,1,4,True
+immediate2d/exampleA_snow.cpp,A: compiler stderr,0,0,False
+immediate2d/exampleA_snow.cpp,A: compiler stderr,0,1,False
+immediate2d/exampleA_snow.cpp,A: compiler stderr,0,2,False
+immediate2d/exampleA_snow.cpp,A: compiler stderr,0,3,False
+immediate2d/exampleA_snow.cpp,A: compiler stderr,0,4,False
+immediate2d/exampleA_snow.cpp,A: compiler stderr,0,5,True
+immediate2d/exampleA_snow.cpp,A: compiler stderr,1,0,False
+immediate2d/exampleA_snow.cpp,A: compiler stderr,1,1,True
+immediate2d/exampleA_snow.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/exampleA_snow.cpp,B: stderr + LSP diagnostics,0,1,True
+immediate2d/exampleA_snow.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/exampleA_snow.cpp,B: stderr + LSP diagnostics,1,1,True
+immediate2d/exampleB_game.cpp,A: compiler stderr,0,0,False
+immediate2d/exampleB_game.cpp,A: compiler stderr,0,1,True
+immediate2d/exampleB_game.cpp,A: compiler stderr,1,0,False
+immediate2d/exampleB_game.cpp,A: compiler stderr,1,1,True
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,0,0,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,0,1,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,0,2,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,0,3,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,0,4,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,0,5,True
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,1,0,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,1,1,False
+immediate2d/exampleB_game.cpp,B: stderr + LSP diagnostics,1,2,True
+immediate2d/exampleData/littleGame/levels.h,A: compiler stderr,0,0,False
+immediate2d/exampleData/littleGame/levels.h,A: compiler stderr,0,1,True
+immediate2d/exampleData/littleGame/levels.h,A: compiler stderr,1,0,False
+immediate2d/exampleData/littleGame/levels.h,A: compiler stderr,1,1,False
+immediate2d/exampleData/littleGame/levels.h,A: compiler stderr,1,2,True
+immediate2d/exampleData/littleGame/levels.h,B: stderr + LSP diagnostics,0,0,False
+immediate2d/exampleData/littleGame/levels.h,B: stderr + LSP diagnostics,0,1,False
+immediate2d/exampleData/littleGame/levels.h,B: stderr + LSP diagnostics,0,2,True
+immediate2d/exampleData/littleGame/levels.h,B: stderr + LSP diagnostics,1,0,False
+immediate2d/exampleData/littleGame/levels.h,B: stderr + LSP diagnostics,1,1,True
+immediate2d/immediate2d.h,A: compiler stderr,0,0,False
+immediate2d/immediate2d.h,A: compiler stderr,0,1,False
+immediate2d/immediate2d.h,A: compiler stderr,0,2,True
+immediate2d/immediate2d.h,A: compiler stderr,1,0,False
+immediate2d/immediate2d.h,A: compiler stderr,1,1,False
+immediate2d/immediate2d.h,A: compiler stderr,1,2,True
+immediate2d/immediate2d.h,B: stderr + LSP diagnostics,0,0,False
+immediate2d/immediate2d.h,B: stderr + LSP diagnostics,0,1,True
+immediate2d/immediate2d.h,B: stderr + LSP diagnostics,1,0,False
+immediate2d/immediate2d.h,B: stderr + LSP diagnostics,1,1,False
+immediate2d/immediate2d.h,B: stderr + LSP diagnostics,1,2,True

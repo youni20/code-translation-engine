@@ -1,0 +1,13 @@
+unit_id,project,relative_path,loc,condition,repetition,success,iterations_used,wall_time_seconds,timestamp,n_feedback_rounds
+debug_assert/debug_assert.hpp,debug_assert,debug_assert.hpp,370,A: compiler stderr,0,True,3,36.26329903100009,2026-05-15 21:30:28.359597+00:00,3
+debug_assert/debug_assert.hpp,debug_assert,debug_assert.hpp,370,A: compiler stderr,1,True,3,45.587291983000114,2026-05-15 21:31:13.947282+00:00,3
+debug_assert/debug_assert.hpp,debug_assert,debug_assert.hpp,370,B: stderr + LSP diagnostics,0,True,4,54.00662192100003,2026-05-15 21:32:07.954400+00:00,4
+debug_assert/debug_assert.hpp,debug_assert,debug_assert.hpp,370,B: stderr + LSP diagnostics,1,True,1,21.12525719900009,2026-05-15 21:32:29.080095+00:00,1
+debug_assert/example.cpp,debug_assert,example.cpp,55,A: compiler stderr,0,True,6,45.873547446999964,2026-05-15 21:33:14.954104+00:00,6
+debug_assert/example.cpp,debug_assert,example.cpp,55,A: compiler stderr,1,True,1,8.921059581000009,2026-05-15 21:33:23.875690+00:00,1
+debug_assert/example.cpp,debug_assert,example.cpp,55,B: stderr + LSP diagnostics,0,True,5,49.66580155700012,2026-05-15 21:34:13.541764+00:00,5
+debug_assert/example.cpp,debug_assert,example.cpp,55,B: stderr + LSP diagnostics,1,True,2,25.085020737999912,2026-05-15 21:34:38.627166+00:00,2
+debug_assert/test_package/example.cpp,debug_assert,test_package/example.cpp,68,A: compiler stderr,0,True,3,18.616198050999856,2026-05-15 21:34:57.243746+00:00,3
+debug_assert/test_package/example.cpp,debug_assert,test_package/example.cpp,68,A: compiler stderr,1,True,2,13.003845138000088,2026-05-15 21:35:10.247952+00:00,2
+debug_assert/test_package/example.cpp,debug_assert,test_package/example.cpp,68,B: stderr + LSP diagnostics,0,True,2,23.771610266000152,2026-05-15 21:35:34.019890+00:00,2
+debug_assert/test_package/example.cpp,debug_assert,test_package/example.cpp,68,B: stderr + LSP diagnostics,1,True,2,28.817704992000017,2026-05-15 21:36:02.837941+00:00,2

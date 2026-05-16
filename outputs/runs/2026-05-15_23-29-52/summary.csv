@@ -1,0 +1,3 @@
+condition,n_runs,n_units,success_rate,success_rate_wilson_low,success_rate_wilson_high,mean_iterations,median_iterations,mean_wall_time_s,median_wall_time_s
+A: compiler stderr,6,3,1.0,0.6097,1.0,3.0,3.0,28.0442,27.4397
+B: stderr + LSP diagnostics,6,3,1.0,0.6097,1.0,2.6667,2.0,33.7453,26.9514
