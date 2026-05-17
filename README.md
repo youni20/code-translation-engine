@@ -7,11 +7,17 @@ Thesis pipeline for comparing two feedback signals in agentic **C++ → Rust** t
 
 Everything else (model, prompts, iteration cap, input code) is held constant. The primary endpoint is **strict compile success** after a fixed number of repair iterations; secondary endpoints are **iterations used** and the **profile of errors resolved** (recorded as `feedback_history` per run).
 
-## How it works
+## System Architecture
 
-![Pipeline flow chart](images/cte_pipeline_diagram.png)
+![System architecture](images/system_architecture.png)
 
-For each C++ translation unit × condition × repetition: the translation agent emits a Rust file, then `rustc` compiles it in a tempdir. If compilation fails, the repair agent is invoked with the broken code plus condition-specific feedback (A = raw stderr, B = LSP diagnostics) and emits a new file. Loop until it compiles or `max_iterations` is reached.
+The experiment loads a dataset of C++ files, initialises two GPT-4o agents (translator and repairer) and a results writer, then runs a triple-nested loop over every `(unit, condition, repetition)` triple. Each iteration calls the translation pipeline and appends a `RunResult` to `results.jsonl`. After all runs complete, `visualize_results()` reads that file and produces CSV exports, a McNemar's test report, and five publication-quality plots.
+
+## Translation Pipeline
+
+![Translation pipeline](images/translation_pipeline.png)
+
+For each C++ translation unit × condition × repetition: the translator agent emits a Rust file, `rustc` compiles it in a tempdir, and on success the run is recorded immediately. On failure the repair agent is invoked with the broken code plus condition-specific feedback — Condition A passes raw `rustc` stderr; Condition B also spawns `rust-analyzer` via a minimal stdio LSP client, collects `textDocument/publishDiagnostics` notifications (3 s settle window, 30 s hard cap), and formats them as structured `[severity] code at line:col: message` strings. The repaired code loops back to `rustc` until it compiles or `max_iterations` is exhausted.
 
 ## Layout
 
