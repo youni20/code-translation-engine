@@ -237,7 +237,7 @@ for cond, col, label in [(A_COND, COL_A, "A: compiler stderr"), (B_COND, COL_B, 
 
 ax.set_xlabel("Number of repair iterations")
 ax.set_ylabel("% of all runs that have compiled by this point")
-ax.set_title("Cumulative Success Rate Across All 6 Projects", fontsize=12, fontweight="bold")
+ax.set_title("Cumulative Success Rate Across All 8 Projects", fontsize=12, fontweight="bold")
 ax.set_ylim(0, 108)
 ax.set_xlim(-0.2, max_iter + 1)
 ax.legend()
